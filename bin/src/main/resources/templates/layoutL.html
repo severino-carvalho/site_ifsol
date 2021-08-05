@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt" lange="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:
+	th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymealf/layout">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+	crossorigin="anonymous">
+
+<title></title>
+</head>
+<body>
+
+
+
+	<!-- Menu -->
+
+
+
+	<nav class="navbar navbar-light bg" style="background-color: #FFFFF0;">
+
+		<a class="navbar-brand" href="#"> <img
+			src="/Imagens/logoifsol.png" alt="" width="120px" height="70px">
+		</a>
+		<ul class="nav justify-content-end">
+			<li class="nav-item"><a class="nav-link active text-secondary"
+				aria-current="page" href="/adm">Página de Controle</a></li>
+			<li class="nav-item"><a class="nav-link text-secondary"
+				href="/usuario/cadastroem" target="_self">Cadastro de
+					Empreendimentos</a></li>
+			<li class="nav-item"><a class="nav-link text-secondary"
+				href="/usuarios/buscaem " target="_self">Busca de
+					empreendimentos</a></li>
+					<li class="nav-item"><a class="nav-link text-secondary"
+				href="/usuario/cadastro"  sec:authorize="hasAuthority('ADMIN')" target="_self">Cadastro de
+					Usuarios</a></li>
+			<li class="nav-item"><a class="nav-link text-secondary"
+				href="/usuarios/busca " sec:authorize="hasAuthority('ADMIN')" target="_self">Busca de Adm's</a></li>
+
+		</ul>
+
+	</nav>
+
+	<!-- finalMenu -->
+
+	<br />
+
+	<div class="row">
+
+		<div class="col-12">
+
+			<section layout:fragment="corpo2"></section>
+		</div>
+	</div>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+
+
+	<div class="row">
+	
+	<div class="alert alert-dark" role="alert">
+
+		<div class="container">
+			<br /> <br />
+
+			<div class="row">
+				<div class="col" style="text-align: right;">
+					<img src="/Imagens/logoifsol.png" alt="" width="125px"
+						height="70px">
+				</div>
+
+				<div class="col">
+					<h6 style="font-weight: bold;">ENDEREÇO</h6>
+					<h7> BR-406 KM 73 3500 Perímetro Rural, João Câmara - RN,
+					59550-000 </h7>
+
+				</div>
+
+				<div class="col">
+					<h6>
+						CONTATO<br>
+					</h6>
+					<div>
+						<a target="_blank"
+							href="https://instagram.com/ifsol.jc?igshid=16owolwsu842l"> <img
+							src="/Imagens/instlogo.png" width="20px" height="20px"></a>
+						@ifsol.jc
+					</div>
+					<div>
+						<a target="_blank"
+							href="https://instagram.com/ifsol.jc?igshid=16owolwsu842l"> <img
+							src="/Imagens/logoemail.png" width="20px" height="20px"></a>
+						ifsol.jc@gmail.com
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<hr>
+
+		<div class="container">
+
+			<div class="row">
+				<div class="col" style="text-align: right; font-size: 14px">
+					<p class="mb-0">Todos os direitos reservados, IFSol 2021</p>
+				</div>
+
+				<div class="col"></div>
+
+				<div class="col"></div>
+			</div>
+
+		</div>
+
+
+	</div>
+	</div>
+
+
+
+	<!-- Optional JavaScript; choose one of the two! -->
+
+	<!-- Option 1: Bootstrap Bundle with Popper -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+		crossorigin="anonymous"></script>
+
+
+
+
+</body>
+</html>

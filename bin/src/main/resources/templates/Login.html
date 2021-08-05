@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lange="pt" layout:decorate="~{layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Inicio</title>
+
+	<!-- FORMULARIO DE LOGIN -->
+
+</head>
+
+<body>
+
+	<section layout:fragment="corpo">
+		<br> <br> <br>
+
+		<div class="container" align="center">
+			<div class="card border-success mb-3" style="max-width: 26rem;" align="center">
+				<div class="card-header" align="center">Login</div>
+				<div class="card-body text-success">
+
+					<div th:replace="fragmentos/mensagens"></div>
+
+					<form th:action="@{/login}" method="post">
+						<div class="mb-3" style="text-align: left;">
+							<label for="exampleInputEmail1" class="form-label">Email
+							</label> <input type="text" name="username" required autofocus class="form-control"
+								id="exampleInputEmail1" aria-describedby="emailHelp">
+
+						</div>
+						<div class="mb-3" style="text-align: left;">
+							<label for="exampleInputPassword1" class="form-label"
+								style="text-align: left;">Senha</label> <input type="password" name="password" required
+								class="form-control" id="exampleInputPassword1">
+							<div id="emailHelp" class="form-text" style="font-size: 13px;">Sua
+								senha deve ter no mínimo 6 dígitos.</div>
+						</div>
+						<div class="mb-3" style="text-align: left;">
+							<input type="checkbox" name="remenber-me" />Lembrar-me
+							</td>
+						</div>
+						<button type="submit">Entrar</button>
+					</form>
+				</div>
+			</div>
+			<div class="col-8">
+				<div class="alert alert-warning" role="alert">Area restrita aos
+					Administradores!</div>
+			</div>
+		</div>
+
+
+
+		<br> <br> <br> <br>
+
+	</section>
+
+
+
+</body>
+
+</html>
