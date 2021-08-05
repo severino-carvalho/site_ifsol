@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lange="pt" layout:decorate="~{layoutL}">
+<head>
+
+</head>
+<body>
+
+	<section layout:fragment="corpo2">
+
+
+		<div class="container">
+			<h1>Bem vindo!</h1>
+			<p>Esta e a pagina de administracao do Website da IFSOL. Aqui a
+				equipe do projeto podera adicionar e administrar os empreendimentos,
+				e os usuarios que podem acessar a pagina de administrador.
+				Lembrando que so usuarios administradores podem cadastrar um usuario</p>
+
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" value="Sair" /><br />
+			</form>
+		</div>
+	</section>
+
+</body>
+</html>

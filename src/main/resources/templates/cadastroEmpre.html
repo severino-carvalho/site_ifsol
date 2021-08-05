@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lange="pt" layout:decorate="~{layoutL}">
+<head>
+
+<title>Cadastro de empreendimentos</title>
+
+<!-- jQuery Autocomplete -->
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<!--FUNÇÃO DO JQUERY QUE EXECUTA O AUTOCOMPLETE NO CAMPO DE CIDADE   -->
+<script>
+	$(function() {
+		$("#cidade").autocomplete({
+			source : "/usuario/autocompleteCidade",
+			minLength : 1,
+			select : function(event, ui) {
+				this.value = ui.item.label;
+				$("#idCidade").val(ui.item.value);
+				return false;
+			}
+		});
+	});
+</script>
+
+
+</head>
+<body>
+
+<!-- FORMULARIO PARA CADASTRAR UM EMPREENDIMENTO 
+th:object DIZ O OBJETO PARA QUAL O FORMULARIO PREENCHERA OS ATRIBUTOS
+th:action AÇÃO QUE AQUELA DETERMINADA TAG VAI FAZER
+th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI SE TRATAR-->
+
+
+
+	<section layout:fragment="corpo2"><!--INFORMA QUE ESSA É A PARTE QUE FICA EM DETERMINADA PARTE DO ARQUIVO DE LAYOUT  -->
+
+		<div class="container" align="center">
+			<div class="card border-success mb-3" style="max-width: 36rem;">
+				<div class="card-header" >Cadastro
+					de empreendimentos</div>
+				<div class="card-body text-success">
+
+					<div th:replace="fragmentos/mensagens"></div>
+				</div>
+
+					<form th:action="@{/usuario/salva}" th:object="${empre}"
+						method="post" align="center" enctype="multipart/form-data">
+
+						<input type="hidden" th:field="${empre.id}" />
+
+						<div class="mb-3" style="text-align: left;">
+							<label for="exampleInputName1" class="form-label">Nome: </label>
+							<input type="text" th:field="${empre.nome}" class="form-control"
+								id="exampleInputName1">
+
+						</div>
+						<div class="mb-3" style="text-align: left;">
+							<label for="exampleInputEmail1" class="form-label"
+								style="text-align: left;">Email</label> <input input
+								type="email" th:field="${empre.email}" class="form-control"
+								id="exampleInputEmail1" aria-describedby="emailHelp">
+						</div>
+						<div class="mb-3" style="text-align: left;">
+							<label for="exampleInputName1" class="form-label">Cidade:
+							</label> <input id="cidade" th:field="${empre.cidade.nome}"
+								class="form-control"> <input
+								id="idCidade" type="hidden" th:field="${empre.cidade.id}" />
+
+						</div>
+						<div class="mb-3" style="text-align: left;">
+							<label for="exampleInputName1" class="form-label">Descrição:
+							</label> <input type="text" th:field="${empre.descricao}"
+								class="form-control" id="exampleInputName1">
+
+						</div>
+						<div class="mb-3" style="text-align: left;">
+						<label for="exampleInputName1" class="form-label">Foto:
+							</label><input type="file" th:name="file" />
+						     <input type="hidden" th:field="${empre.foto.id}" />
+						</div>
+
+						<div class="mb-3" style="text-align: left;">
+							<input type="submit"
+								th:value="${empre.id}  == 0 ? Cadastrar : Editar" /> <input
+								type="submit" value="Cancelar" formaction="/home"
+								formmethod="get" />
+						</div>
+					</form>          <!--QUANDO O FOR PARA CADASTRAR O USUARIO APARECERA O BOTÃO "CADASTRO"E PARA EDITAR "EDITAR"  -->
+
+				
+			</div>
+		</div>
+	</section>
+</body>
+</html>
