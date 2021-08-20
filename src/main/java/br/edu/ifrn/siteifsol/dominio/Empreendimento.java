@@ -17,7 +17,7 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-public class empreendimento {
+public class Empreendimento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,7 +60,7 @@ public class empreendimento {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		empreendimento other = (empreendimento) obj;
+		Empreendimento other = (Empreendimento) obj;
 		if (Id != other.Id)
 			return false;
 		return true;

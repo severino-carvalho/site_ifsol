@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.edu.ifrn.siteifsol.dto.*;
 import br.edu.ifrn.siteifsol.dominio.Arquivo;
 import br.edu.ifrn.siteifsol.dominio.Cidade;
-import br.edu.ifrn.siteifsol.dominio.empreendimento;
+import br.edu.ifrn.siteifsol.dominio.Empreendimento;
 import br.edu.ifrn.siteifsol.repository.ArquivoRepository;
 import br.edu.ifrn.siteifsol.repository.Cidaderepository;
 import br.edu.ifrn.siteifsol.repository.empreendimentorepository;
@@ -34,7 +34,7 @@ public class CadastroEmpreController {
 
 	@GetMapping("/cadastroem") //URL PARA ACESSAR A PAGINA
 	public String entrarCadastro(ModelMap model) {
-		model.addAttribute("empre", new empreendimento());
+		model.addAttribute("empre", new Empreendimento());
 		return "CadastroEmpre";
 	}
 	
@@ -51,7 +51,7 @@ public class CadastroEmpreController {
     
 	//URL PARA ACESSAR A METODO SALVAR E EDITAR OS EMPREENDIMENTOS
 	@PostMapping("/salva")
-	public String salvar(empreendimento empre,@RequestParam("file") MultipartFile arquivo, Model model, RedirectAttributes attr, HttpSession sessao) {
+	public String salvar(Empreendimento empre,@RequestParam("file") MultipartFile arquivo, Model model, RedirectAttributes attr, HttpSession sessao) {
 		
 		List<String> msgValidacao = validaDados(empre); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DO CAMPOS
 		
@@ -119,7 +119,7 @@ public class CadastroEmpreController {
 	 * ELE VER SE OS CAMPOS ESTÃO PREENCHIDOS DE ACORDO COM E O EXIGIDO 
 	 * E RETORNA UMA MENSAGEM DE ERRO CASO NÃO
 	 */
-	private List<String> validaDados(empreendimento empre) {
+	private List<String> validaDados(Empreendimento empre) {
 
 		List<String> msgs = new ArrayList<>(); // LISTA DE MENSAGENS DE ERRO, POIS MUITOS CAMPOS PODE ESTAR INCORRETOS
 

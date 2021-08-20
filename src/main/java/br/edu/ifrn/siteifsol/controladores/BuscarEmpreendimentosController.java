@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.edu.ifrn.siteifsol.dominio.empreendimento;
+import br.edu.ifrn.siteifsol.dominio.Empreendimento;
 import br.edu.ifrn.siteifsol.repository.empreendimentorepository;
 
 @Controller
@@ -42,7 +42,7 @@ public class BuscarEmpreendimentosController {
 			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, HttpSession sessao,
 			ModelMap model) {
 
-		List<empreendimento> empreendimentosEncontrados = empreendimentosrepository.findByEmailAndNome(email, nome);
+		List<Empreendimento> empreendimentosEncontrados = empreendimentosrepository.findByEmailAndNome(email, nome);
 
 		model.addAttribute("empreendimentosEncontrados", empreendimentosEncontrados); // RETORNA OS USUARIOS ENCONTRADOS
 																						// PARA A PÁGINA WEB
@@ -60,7 +60,7 @@ public class BuscarEmpreendimentosController {
 	@GetMapping("/edita/{id}")
 	public String iniciarEdição(@PathVariable("id") Integer idempre, ModelMap model, HttpSession sessao) {
 
-		empreendimento u = empreendimentosrepository.findById(idempre).get();
+		Empreendimento u = empreendimentosrepository.findById(idempre).get();
 
 		model.addAttribute("empre", u);
 
