@@ -8,23 +8,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
-
 /*
  * ENTIDADE ARQUIVO É A TABELA ARQUIVO NO BANDO DE DADOS
  * TODOS OS ATRIBUTOS AQUI SÃO COLINAS NO BANCO DE DADOS
  */
 @Entity
 public class Arquivo {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	
+
 	private String nomeArquivo;
-	
+
 	private String tipoArquivo;
-	
+
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	private byte[] dados;
@@ -38,17 +36,15 @@ public class Arquivo {
 		this.tipoArquivo = tipoArquivo;
 		this.dados = dados;
 	}
-	
-	//CONSTRUTOR VAZIO DA CLASSE ARQUIVO
+
+	// CONSTRUTOR VAZIO DA CLASSE ARQUIVO
 	public Arquivo() {
-		
+
 	}
 
-
 	/*
-	 * METODOS GET`S E SET`S ONDE OS ATRIBUTO SÃO DA ENTIDADE 
-	 * PARA QUE OS ATRIBUTOS POSSAM SER ACESSADOS EM NA
-	 * PÁGINA HMTL
+	 * METODOS GET`S E SET`S ONDE OS ATRIBUTO SÃO DA ENTIDADE PARA QUE OS ATRIBUTOS
+	 * POSSAM SER ACESSADOS EM NA PÁGINA HMTL
 	 */
 	public Long getId() {
 		return id;
@@ -74,19 +70,11 @@ public class Arquivo {
 		this.tipoArquivo = tipoArquivo;
 	}
 
-
 	public byte[] getDados() {
 		return dados;
 	}
 
-
 	public void setDados(byte[] dados) {
 		this.dados = dados;
 	}
-
-	
-	
-	
-	
-
 }

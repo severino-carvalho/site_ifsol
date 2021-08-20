@@ -15,34 +15,31 @@ import javax.persistence.OneToOne;
  * TODOS OS ATRIBUTOS AQUI SÃO COLINAS NO BANCO DE DADOS
  */
 
-
 @Entity
-public class Empreendimento {
+public class empreendimento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
-	
+
 	@Column(nullable = false)
 	private String nome;
-	
+
 	@Column(nullable = false)
 	private String email;
-	
-	@ManyToOne(optional  = false)
+
+	@ManyToOne(optional = false)
 	private Cidade cidade;
-	
+
 	@Column(nullable = false)
 	private String descricao;
-	
+
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Arquivo foto;
 
-
-	
 	/*
-	 * CONSTRUTORES PARA SITEMA POSSA DIFERENCIAR UM ID DO OUTRO
-	 * NÃO ADICIONANDO ASSIM IDS IGUAIS PARA USUARIOS DIFERENTES
+	 * CONSTRUTORES PARA SITEMA POSSA DIFERENCIAR UM ID DO OUTRO NÃO ADICIONANDO
+	 * ASSIM IDS IGUAIS PARA USUARIOS DIFERENTES
 	 */
 	@Override
 	public int hashCode() {
@@ -60,18 +57,17 @@ public class Empreendimento {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Empreendimento other = (Empreendimento) obj;
+		empreendimento other = (empreendimento) obj;
 		if (Id != other.Id)
 			return false;
 		return true;
 	}
-	
+
 	/*
-	 * METODOS GET`S E SET`S ONDE OS ATRIBUTO SÃO DA ENTIDADE 
-	 * PARA QUE OS ATRIBUTOS POSSAM SER ACESSADOS EM NA
-	 * PÁGINA HMTL
+	 * METODOS GET`S E SET`S ONDE OS ATRIBUTO SÃO DA ENTIDADE PARA QUE OS ATRIBUTOS
+	 * POSSAM SER ACESSADOS EM NA PÁGINA HMTL
 	 */
-	
+
 	public Arquivo getFoto() {
 		return foto;
 	}
@@ -95,8 +91,6 @@ public class Empreendimento {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	
 
 	public Cidade getCidade() {
 		return cidade;

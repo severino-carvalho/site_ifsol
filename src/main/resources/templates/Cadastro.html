@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lange="pt" layout:decorate="~{layoutL}">
+
 <head>
-
-
-<title>Entre ou cadastre-se</title>
-
-
-
+	<title>Entre ou cadastre-se</title>
 </head>
+
 <body>
 
-<!-- FORMULARIO PARA CADASTRAR UM USUARIO 
+	<!-- FORMULARIO PARA CADASTRAR UM USUARIO 
 th:object DIZ O OBJETO PARA QUAL O FORMULARIO PREENCHERA OS ATRIBUTOS
 th:action AÇÃO QUE AQUELA DETERMINADA TAG VAI FAZER
 th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI SE TRATAR-->
@@ -18,70 +15,59 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 	<br />
 
-	<section layout:fragment="corpo2"> 
+	<section layout:fragment="corpo2">
 
-		<div class="container"align="center">
+		<div class="container" align="center">
 
 			<div class="card border-dark mb-3" style="max-width: 36rem;">
-				<div class="card-header" >Cadastro
-					de Usu�rios</div>
+				<div class="card-header">Cadastro
+					de Usuários</div>
 				<div class="card-body text-success">
 
 					<div th:replace="fragmentos/mensagens"></div>
 
 				</div>
 
-				<form th:action="@{/usuario/salvar}" th:object="${usuario}"
-					method="post" align="center" >
+				<form th:action="@{/usuario/salvar}" th:object="${usuario}" method="post" align="center">
 
 					<input type="hidden" th:field="${usuario.id}" />
 
 					<div class="mb-3" style="text-align: left;">
 						<label for="exampleInputName1" class="form-label">Nome: </label>
-						<input type="text" th:field="${usuario.nome}" class="form-control"
-							id="exampleInputName1" >
+						<input type="text" th:field="${usuario.nome}" class="form-control" id="exampleInputName1">
 
 					</div>
 					<div class="mb-3" style="text-align: left;">
-						<label for="exampleInputEmail1" class="form-label"
-							style="text-align: left;">Email</label> <input input type="email"
-							th:field="${usuario.email}" class="form-control"
+						<label for="exampleInputEmail1" class="form-label" style="text-align: left;">Email</label>
+						<input input type="email" th:field="${usuario.email}" class="form-control"
 							id="exampleInputEmail1" aria-describedby="emailHelp">
 					</div>
 					<div class="mb-3" style="text-align: left;">
 						<label for="exampleInputPassword1" class="form-label">Senha: </label>
 						<input type="password" th:field="${usuario.senha}" class="form-control"
-							id="exampleInputPassword1" >
+							id="exampleInputPassword1">
 
 					</div>
 					<div class="mb-3" style="text-align: left;">
-						<label for="exampleInputName1" class="form-label">Situa��o: </label>
+						<label for="exampleInputName1" class="form-label">Situação: </label>
 						<select th:field="${usuario.situacao}">
-									<option value="">Selecione...</option>
-									<option th:each="p : ${situacao}" th:text="${p}"
-										th:value="${p}">Selecione...</option>
-							</select>
+							<option value="">Selecione...</option>
+							<option th:each="p : ${situacao}" th:text="${p}" th:value="${p}">Selecione...</option>
+						</select>
 
 					</div>
 					<div class="mb-3" style="text-align: left;">
-						<input type="submit"                                 
-								th:value="${usuario.id}  == 0 ? Cadastrar : Editar" /> <input 
-								type="submit" value="Voltar" formaction="/home" formmethod="get" />
-								</div>
-				</form>                    <!--QUANDO O FOR PARA CADASTRAR O USUARIO APARECERA O BOT�O "CADASTRO"E PARA EDITAR "EDITAR"  -->
-
-				
+						<input type="submit" th:value="${usuario.id}  == 0 ? Cadastrar : Editar" /> <input type="submit"
+							value="Voltar" formaction="/home" formmethod="get" />
+					</div>
+				</form>
+				<!--QUANDO O FOR PARA CADASTRAR O USUARIO APARECERA O BOTÃO "CADASTRO"E PARA EDITAR "EDITAR"  -->
 
 			</div>
-
 		</div>
-
-
 	</section>
 
 
-
-	
-
 </body>
+
 </html>
