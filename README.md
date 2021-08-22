@@ -12,4 +12,6 @@ Esse projeto é referente ao **TCC** cujo a dupla é formada por Felipe Barros e
 > - MySQL.
 > - Bootstrap v5
 > - JQuery
->
+
+**Professor orientador: Nickerson Ferreira**
+**Professor co-orientador: Renan Oliveira**
