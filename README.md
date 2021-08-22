@@ -13,5 +13,6 @@ Esse projeto é referente ao **TCC** cujo a dupla é formada por Felipe Barros e
 > - Bootstrap v5
 > - JQuery
 
-**Professor orientador: Nickerson Ferreira**
+
+**Professor orientador: Nickerson Ferreira**<br>
 **Professor co-orientador: Renan Oliveira**
