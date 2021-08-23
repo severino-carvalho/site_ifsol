@@ -35,23 +35,9 @@ public class Usuario {
 
 	@Column(nullable = false)
 	private String perfil = USUARIO_COMUM;
+	
 
-	public String getPerfil() {
-		return perfil;
-	}
-
-	public void setPerfil(String perfil) {
-		this.perfil = perfil;
-	}
-
-	public static String getAdmin() {
-		return ADMIN;
-	}
-
-	public static String getUsuarioComum() {
-		return USUARIO_COMUM;
-	}
-
+	
 	/*
 	 * CONSTRUTORES PARA SITEMA POSSA DIFERENCIAR UM ID DO OUTRO NÃO ADICIONANDO
 	 * ASSIM IDS IGUAIS PARA USUARIOS DIFERENTES
@@ -78,6 +64,7 @@ public class Usuario {
 		return true;
 
 	}
+	
 
 	/*
 	 * METODOS GET`S E SET`S ONDE OS ATRIBUTO SÃO DA ENTIDADE PARA QUE OS ATRIBUTOS
@@ -121,6 +108,22 @@ public class Usuario {
 
 	public void setSituacao(String situacao) {
 		this.situacao = situacao;
+	}
+	
+	public String getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
+	}
+
+	public static String getAdmin() {
+		return ADMIN;
+	}
+
+	public static String getUsuarioComum() {
+		return USUARIO_COMUM;
 	}
 
 }
