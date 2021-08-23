@@ -11,40 +11,34 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import br.edu.ifrn.siteifsol.dominio.Usuario;
 import br.edu.ifrn.siteifsol.service.UsuarioService;
 
-
 //CLASSE PARA CRIÇÃO SEGURA DO LOGIN
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
-	
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
 	@Autowired
 	private UsuarioService service;
-	
+
 	/*
-	 * METODO QUE CONFIGURA O ACESSO DE PÁGINAS ATRAVES DO LOGIN
-	 * ONDE É DADO PERMISÃO DE ACESSO A PÁGINAS ATRAVES DO LOGIN 
-	 * OU SEM LOGIN
+	 * METODO QUE CONFIGURA O ACESSO DE PÁGINAS ATRAVES DO LOGIN ONDE É DADO
+	 * PERMISÃO DE ACESSO A PÁGINAS ATRAVES DO LOGIN OU SEM LOGIN
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
-		http.authorizeRequests().antMatchers("/css/**","/Imagens/**","/js/**").permitAll()
-		.antMatchers("/publico/**").permitAll() // QUE PODEM SER ACESSADAS SEM LOGIN
-		
-		.antMatchers("/usuario/cadastro","/usuario/salvar","usuario/editar/**",
-				     "/usuario/remover/**").hasAuthority(Usuario.ADMIN)
-		
-		.anyRequest().authenticated()
-		.and().formLogin().loginPage("/login").defaultSuccessUrl("/adm", true)
-		.failureUrl("/login-erro")
-		.permitAll()
-		
-		.and().logout().logoutSuccessUrl("/adm")
-		.and().rememberMe(); // DESFACER O LOGIN, SAIR 
-		
-		
+
+		http.authorizeRequests().antMatchers("/css/**", "/Imagens/**", "/js/**").permitAll().antMatchers("/publico/**")
+				.permitAll() // QUE PODEM SER ACESSADAS SEM LOGIN
+
+				.antMatchers("/usuario/cadastro", "/usuario/salvar", "usuario/editar/**", "/usuario/remover/**")
+				.hasAuthority(Usuario.ADMIN)
+
+				.anyRequest().authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/adm", true)
+				.failureUrl("/login-erro").permitAll()
+
+				.and().logout().logoutSuccessUrl("/adm").and().rememberMe(); // DESFACER O LOGIN, SAIR
+
 	}
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(service).passwordEncoder(new BCryptPasswordEncoder());

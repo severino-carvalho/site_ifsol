@@ -6,19 +6,16 @@
 	<title>Inicio</title>
 
 	<!-- FORMULARIO DE LOGIN -->
-	
-	
-	
+
 </head>
 
 <body>
 
 	<section layout:fragment="corpo">
-		<br> <br> <br>
 
-		<div class="container" align="center">
-			<div class="card border-success mb-3" style="max-width: 26rem;" align="center">
-				<div class="card-header" align="center">Login</div>
+		<div class="container mt-5" align="center">
+			<div class="card border-success mb-5" style="max-width: 26rem;" align="center">
+				<div class="card-header border-success fw-bold alert-success fs-4" align="center">Login</div>
 				<div class="card-body text-success">
 
 					<div th:replace="fragmentos/mensagens"></div>
@@ -46,8 +43,9 @@
 				</div>
 			</div>
 			<div class="col-8">
-				<div class="alert alert-warning" role="alert">Area restrita aos
-					Administradores!</div>
+				<div class="alert alert-warning fw-bold" role="alert">
+					Area restrita aos Administradores!
+				</div>
 			</div>
 		</div>
 

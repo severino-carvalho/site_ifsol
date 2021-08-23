@@ -10,4 +10,6 @@ public class ADMController {
 	public String home() {
 		return "ADM";
 	}
+	
+	
 }
