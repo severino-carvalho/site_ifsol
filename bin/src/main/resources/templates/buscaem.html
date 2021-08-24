@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lange="pt" layout:decorate="~{layoutl}">
+
 <head>
 
-<
-<title>Busca de empreendimentos</title>
+	< <title>Busca de empreendimentos</title>
 </head>
+
 <body>
 
 
 	<!--VAI PARA O METODO DE BUSCAR NO BANCO DE DADOS DA CLASSE CONTROLER  -->
 
-<!-- layout:fragment="corpo2" ,INFORMA QUE ESSA É A PARTE QUE FICA EM DETERMINADA PARTE DO ARQUIVO DE LAYOUT  -->
+	<!-- layout:fragment="corpo2" ,INFORMA QUE ESSA ï¿½ A PARTE QUE FICA EM DETERMINADA PARTE DO ARQUIVO DE LAYOUT  -->
 	<section layout:fragment="corpo2">
-		
+
 		<div class="container" align="center">
 			<div class="card border-success mb-3" ; style="width: 30rem">
 				<div class="card-header">Busca de empreendimentos</div>
@@ -22,28 +23,27 @@
 					E SUCESSO  -->
 					<div th:replace="fragmentos/mensagens"></div>
 
-					<form th:action="@{/usuarios/buscaempre}" method="get"
-						align="center">
+					<form th:action="@{/usuarios/buscaempre}" method="get" align="center">
 						<div class="mb-3" style="text-align: left;">
 							<label for="exampleInputEmail1" class="form-label">Nome:
-							</label> <input type="text" th:name="nome" class="form-control"
-								id="exampleInputEmail1" aria-describedby="emailHelp">
+							</label> <input type="text" th:name="nome" class="form-control" id="exampleInputEmail1"
+								aria-describedby="emailHelp">
 
 						</div>
 						<div class="mb-3" style="text-align: left;">
 							<label for="exampleInputPassword1" class="form-label"
-								style="text-align: left;">Email</label> <input type="email"
-								th:name="email" class="form-control" id="exampleInputPassword1">
+								style="text-align: left;">Email</label> <input type="email" th:name="email"
+								class="form-control" id="exampleInputPassword1">
 						</div>
 
-						<input type="submit" value="Buscar" /> <input type="submit"
-							value="Voltar" formaction="/home" formmethod="get" />
+						<input type="submit" value="Buscar" /> <input type="submit" value="Voltar" formaction="/home"
+							formmethod="get" />
 					</form>
 
 					<br> <br>
 
-					<!--MOSTRA NA PÁGINAS OS EMPREENDIMENTOS EMCONTRADOS E SEUS DADOS
-					E MOSTRA AS OPÇÕES DE EDITAR E REMOVER  -->
+					<!--MOSTRA NA Pï¿½GINAS OS EMPREENDIMENTOS EMCONTRADOS E SEUS DADOS
+					E MOSTRA AS OPï¿½ï¿½ES DE EDITAR E REMOVER  -->
 
 					<div th:if="${empreendimentosEncontrados} != null">
 						<table>
@@ -52,23 +52,22 @@
 								<th>Nome</th>
 								<th>Email</th>
 								<th>Cidade</th>
-								<th th:if="${mostrarTodosDados} == true">Descrição</th>
+								<th th:if="${mostrarTodosDados} == true">Descriï¿½ï¿½o</th>
 
 							</tr>
 
 							<tr th:each="u : ${empreendimentosEncontrados}">
 								<td><img th:if="${u.foto != null}"
-									th:src="@{/download/} + ${u.foto.id} + '?salvar=false'"
-									style="max-height: 128px" /></td>
+										th:src="@{/download/} + ${u.foto.id} + '?salvar=false'"
+										style="max-height: 128px" /></td>
 								<td th:text="${u.nome}"></td>
 								<td th:text="${u.email}"></td>
 								<td th:text="${u.cidade.nome}"></td>
-								<td th:if="${mostrarTodosDados} == true"
-									th:text="${u.descricao}"></td>
+								<td th:if="${mostrarTodosDados} == true" th:text="${u.descricao}"></td>
 
 								<td><a th:href="'/usuarios/edita/' + ${u.id}">Editar</a> <a
-									th:href="'/usuarios/remove/' + ${u.id}"
-									onclick="if (!confirm('deseja realmente remover o usuario')) return false">Remover</a>
+										th:href="'/usuarios/remove/' + ${u.id}"
+										onclick="if (!confirm('deseja realmente remover o usuario')) return false">Remover</a>
 								</td>
 
 							</tr>
@@ -88,4 +87,5 @@
 
 	</section>
 </body>
+
 </html>
