@@ -66,7 +66,7 @@ public class Usuario {
 	}
 	
 	//ifsoljc@ifrn.edu.br
-	//
+	//senha123
 
 	/*
 	 * METODOS GET`S E SET`S ONDE OS ATRIBUTO SÃO DA ENTIDADE PARA QUE OS ATRIBUTOS

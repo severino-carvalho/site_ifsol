@@ -20,42 +20,39 @@
 
 					<div th:replace="fragmentos/mensagens"></div>
 
-					<form th:action="@{/admin}" method="post">
+					<form th:action="@{/login}" method="POST">
 						<div class="mb-3" style="text-align: left;">
-							<label for="exampleInputEmail1" class="form-label">Email
-							</label> <input type="text" name="username" required autofocus class="form-control"
-								id="exampleInputEmail1" aria-describedby="emailHelp">
-
+							<label for="exampleInputEmail1" class="form-label">
+								Email
+							</label>
+							<input type="text" name="username" required autofocus class="form-control"
+								id="exampleInputEmail1" aria-describedby="emailHelp" />
 						</div>
 						<div class="mb-3" style="text-align: left;">
-							<label for="exampleInputPassword1" class="form-label"
-								style="text-align: left;">Senha</label> <input type="password" name="password" required
-								class="form-control" id="exampleInputPassword1">
-							<div id="emailHelp" class="form-text" style="font-size: 13px;">Sua
-								senha deve ter no mínimo 6 dígitos.</div>
+							<label for="exampleInputPassword1" class="form-label" style="text-align: left;">
+								Senha
+							</label>
+							<input type="password" name="password" required class="form-control"
+								id="exampleInputPassword1" />
+							<div id="emailHelp" class="form-text" style="font-size: 13px;">
+								Sua senha deve ter no mínimo 6 dígitos.
+							</div>
 						</div>
 						<div class="mb-3" style="text-align: left;">
 							<input type="checkbox" name="remenber-me" />Lembrar-me
-							</td>
 						</div>
 						<button class="btn btn-outline-success" type="submit">Entrar</button>
 					</form>
 				</div>
 			</div>
-			<div class="col-8">
+			
+			<div class="col-8 mb-5">
 				<div class="alert alert-warning fw-bold" role="alert">
 					Area restrita aos Administradores!
 				</div>
 			</div>
 		</div>
-
-
-
-		<br> <br> <br> <br>
-
 	</section>
-
-
 
 </body>
 
