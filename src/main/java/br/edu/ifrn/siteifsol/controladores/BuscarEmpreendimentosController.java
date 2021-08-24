@@ -23,7 +23,7 @@ public class BuscarEmpreendimentosController {
 
 	@GetMapping("/buscaem") // URL PARA ACESSAR A PAGINA
 	public String entrarBusca() {
-		return "/buscaem";
+		return "buscaem";
 	}
 
 	@Autowired
@@ -37,8 +37,7 @@ public class BuscarEmpreendimentosController {
 	 */
 
 	@GetMapping("/buscaempre")
-	public String buscaempre(
-			@RequestParam(name = "nome", required = false) String nome,
+	public String buscaempre(@RequestParam(name = "nome", required = false) String nome,
 			@RequestParam(name = "email", required = false) String email,
 			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, 
 			HttpSession sessao,
