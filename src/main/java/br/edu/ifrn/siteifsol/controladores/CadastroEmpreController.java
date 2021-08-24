@@ -35,7 +35,7 @@ public class CadastroEmpreController {
 	@GetMapping("/cadastroem") // URL PARA ACESSAR A PAGINA
 	public String entrarCadastro(ModelMap model) {
 		model.addAttribute("empre", new empreendimento());
-		return "CadastroEmpre";
+		return "cadastroEmpre";
 	}
 
 	@Autowired
