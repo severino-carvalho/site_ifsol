@@ -22,18 +22,33 @@
 
 		<a class="navbar-brand" href="#"> <img src="/Imagens/logoifsol.png" alt="" width="120px" height="70px"></a>
 		<ul class="nav justify-content-end">
-			<li class="nav-item"><a class="nav-link active text-secondary" aria-current="page" href="/adm">Página de
-					Controle</a></li>
-			<li class="nav-item"><a class="nav-link text-secondary" href="/usuario/cadastroem" target="_self">Cadastro
-					de
-					Empreendimentos</a></li>
-			<li class="nav-item"><a class="nav-link text-secondary" href="/usuarios/buscaem " target="_self">Busca de
-					empreendimentos</a></li>
-			<li class="nav-item"><a class="nav-link text-secondary" href="/usuario/cadastro"
-					sec:authorize="hasAuthority('ADMIN')" target="_self">Cadastro de
-					Usuarios</a></li>
-			<li class="nav-item"><a class="nav-link text-secondary" href="/usuarios/busca "
-					sec:authorize="hasAuthority('ADMIN')" target="_self">Busca de Adm's</a></li>
+			<li class="nav-item">
+				<a class="nav-link active text-secondary" aria-current="page" href="/adm">
+					Página de Controle
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-secondary" href="/usuario/cadastroem" target="_self">
+					Cadastro de Empreendimentos
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-secondary" href="/usuarios/buscaem " target="_self">
+					Busca de empreendimentos
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-secondary" href="/usuario/cadastro" sec:authorize="hasAuthority('ADMIN')"
+					target="_self">
+					Cadastro de Usuarios
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-secondary" href="/usuarios/busca " sec:authorize="hasAuthority('ADMIN')"
+					target="_self">
+					Busca de Adm's
+				</a>
+			</li>
 
 		</ul>
 
@@ -49,16 +64,7 @@
 		</div>
 	</div>
 
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-
-
-
-	<div class="row">
+	<div class="row mt-5">
 
 		<div class="alert alert-dark" role="alert">
 
@@ -99,15 +105,10 @@
 			<hr>
 
 			<div class="container">
-
 				<div class="row">
-					<div class="col" style="text-align: right; font-size: 14px">
+					<div class="col-12 text-center" style="font-size: 14px">
 						<p class="mb-0">Todos os direitos reservados, IFSol 2021</p>
 					</div>
-
-					<div class="col"></div>
-
-					<div class="col"></div>
 				</div>
 
 			</div>
