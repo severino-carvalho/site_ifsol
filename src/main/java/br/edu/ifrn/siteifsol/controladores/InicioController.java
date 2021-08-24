@@ -18,6 +18,11 @@ public class InicioController {
 	public String login() {
 		return "Login";
 	}
+	
+	@PostMapping("/login")
+	public String logado() {
+		return "ADM";
+	}
 
 	@GetMapping("/login-erro")
 	public String loginErro(ModelMap model) {
