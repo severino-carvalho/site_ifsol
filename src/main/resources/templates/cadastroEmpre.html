@@ -48,7 +48,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 					<div th:replace="fragmentos/mensagens"></div>
 				</div>
 
-				<form class="ps-4 pe-4" th:action="@{/usuario/salva}" th:object="${empre}" method="post" align="center"
+				<form class="ps-4 pe-4" th:action="@{/usuario/salva}" th:object="${empre}" method="POST" align="center"
 					enctype="multipart/form-data">
 
 					<input type="hidden" th:field="${empre.id}" />

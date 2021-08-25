@@ -56,6 +56,12 @@ public class CadastroEmpreController {
 
 		List<String> msgValidacao = validaDados(empre); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DO CAMPOS
 
+		if (!msgValidacao.isEmpty()) {
+
+		} else {
+
+		}
+
 		/*
 		 * O CODIGO A SEGUIR FOI FEITO PARA UPLOAD E DOWNLOAD DE UM ARQUIVO NO BANCO DE
 		 * DADOS E O TRY FOI NECESSARIO PARA CASO OCORRA UM ERRO SEJA LANÇADO UMA
