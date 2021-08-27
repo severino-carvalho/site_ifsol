@@ -40,14 +40,19 @@ public class CadastroUsuarioController {
 
 		List<String> msgValidacao = validarDados(usuario);
 
-		// CRIPTOGRAFANDO A SENHA
-		String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
-		usuario.setSenha(senhaCriptografada);
+		if (msgValidacao.isEmpty()) {
+			// CRIPTOGRAFANDO A SENHA
+			String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
+			usuario.setSenha(senhaCriptografada);
 
-		// CADASTRA O USUARIO DO BANDO DE DADOS E EDITA
-		usuarioRepository.save(usuario);
-		// RETORNA A MENSAGEM PARA O A PÁGINA , PARA O USUSARIO VER
-		attr.addFlashAttribute("msgsSucesso", "O peração realizada com sucesso!");
+			// CADASTRA O USUARIO DO BANDO DE DADOS E EDITA
+			usuarioRepository.save(usuario);
+			// RETORNA A MENSAGEM PARA O A PÁGINA , PARA O USUSARIO VER
+			attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
+
+		} else {
+			attr.addFlashAttribute("msgErro", msgValidacao.get(0));
+		}
 
 		return "redirect:/usuario/cadastro";
 	}
