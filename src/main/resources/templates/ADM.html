@@ -8,17 +8,69 @@
 <body>
 
 	<section layout:fragment="corpo2">
-		<div class="container">
-			<h1>Bem vindo!</h1>
-			<p>
-				Esta e a pagina de administracao do Website da IFSOL. Aqui a equipe do projeto podera adicionar e
-				administrar os empreendimentos, e os usuarios que podem acessar a pagina de administrador. Lembrando que
-				so usuarios administradores podem cadastrar um usuario
-			</p>
 
-			<form th:action="@{/logout}" method="post">
-				<input class="btn btn-danger" type="submit" value="Sair" />
-			</form>
+
+		<div class="container mt-2">
+
+			<div class="alert alert-success alert-dismissible fade show" role="alert">
+				<h4>Bem vindo!</h4>
+				<p style="text-align: justify; font-size: 11pt;">
+					Esta e a pagina de administracao do Website da IFSOL. Aqui a equipe do projeto podera adicionar e
+					administrar os empreendimentos, e os usuarios que podem acessar a pagina de administrador. Lembrando
+					que
+					so usuarios administradores podem cadastrar um usuario
+				</p>
+
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+
+			<div class="row mt-4">
+				<div class="col-md-6">
+
+					<div class="card border-success">
+						<div class="card-header text-center fw-bolder bg-success text-white">
+							Configurações de Usuários
+						</div>
+						<div class="card-body">
+							<p class="card-text fw-bold">
+								Total de usuáros:
+							</p>
+							<p class="card-text fw-bold">
+								Usuáros comuns:
+							</p>
+							<p class="card-text fw-bold">
+								Usuáros adm's:
+							</p>
+							<div>
+								<a href="/usuario/cadastro" sec:authorize="hasAuthority('ADMIN')"
+									class="btn btn-success">Cadastrar</a>
+								<a href="/usuarios/busca " sec:authorize="hasAuthority('ADMIN')"
+									class="btn btn-warning">Visualizar</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-md-6">
+
+					<div class="card border-primary">
+						<div class="card-header text-center fw-bolder bg-primary text-white">
+							Configurações de Empreendimentos
+						</div>
+						<div class="card-body">
+							<p class="card-text fw-bold">
+								Total de empreendimentos:
+							</p>
+							<div>
+								<a href="/usuario/cadastroem" class="btn btn-success">Cadastrar</a>
+								<a href="/usuarios/buscaem" class="btn btn-warning">Visualizar</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
 		</div>
 	</section>
 
