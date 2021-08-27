@@ -19,16 +19,16 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 		<div class="container" align="center">
 
-			<div class="card border-dark mb-3" style="max-width: 36rem;">
-				<div class="card-header">Cadastro
+			<div class="card mb-3" style="max-width: 36rem;">
+				<div class="card-header bg-success text-white fw-bold">Cadastro
 					de Usuários</div>
-				<div class="card-body text-success">
+				<div class="card-body text-success py-3">
 
-					<div th:replace="fragmentos/mensagens"></div>
+					<div class="py-2" th:replace="fragmentos/mensagens"></div>
 
 				</div>
 
-				<form th:action="@{/usuario/salvar}" th:object="${usuario}" method="post" align="center">
+				<form class="px-4" th:action="@{/usuario/salvar}" th:object="${usuario}" method="POST" align="center">
 
 					<input type="hidden" th:field="${usuario.id}" />
 
@@ -50,15 +50,15 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 					</div>
 					<div class="mb-3" style="text-align: left;">
 						<label for="exampleInputName1" class="form-label">Situação: </label>
-						<select th:field="${usuario.situacao}">
-							<option value="">Selecione...</option>
+						<select class="form-select" th:field="${usuario.situacao}">
+							<option value="" class="select" >Selecione...</option>
 							<option th:each="p : ${situacao}" th:text="${p}" th:value="${p}">Selecione...</option>
 						</select>
 
 					</div>
 					<div class="mb-3" style="text-align: left;">
-						<input type="submit" th:value="${usuario.id}  == 0 ? Cadastrar : Editar" /> <input type="submit"
-							value="Voltar" formaction="/home" formmethod="get" />
+						<input class="btn btn-success" type="submit" th:value="${usuario.id}  == 0 ? Cadastrar : Editar" />
+						<input class="btn btn-danger" type="submit" value="Voltar" formaction="/adm" formmethod="GET" />
 					</div>
 				</form>
 				<!--QUANDO O FOR PARA CADASTRAR O USUARIO APARECERA O BOTÃO "CADASTRO"E PARA EDITAR "EDITAR"  -->
