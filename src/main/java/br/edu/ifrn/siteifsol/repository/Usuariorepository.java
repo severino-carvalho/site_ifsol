@@ -15,17 +15,14 @@ import br.edu.ifrn.siteifsol.dominio.Usuario;
  */
 
 public interface Usuariorepository extends JpaRepository<Usuario, Integer> {
+
+	// BUSCA OS USUARIOS PELO NOME E EMAIL
+	@Query("select u from Usuario u where u.email like %:email%  " + "and u.nome like %:nome%")
+	List<Usuario> findByEmailAndNome(@Param("email") String email, @Param("nome") String nome);
+
 	
-	//BUSCA OS USUARIOS PELO NOME E EMAIL
-	@Query("select u from Usuario u where u.email like %:email%  "
-			+ "and u.nome like %:nome%")
-	List<Usuario> findByEmailAndNome(@Param("email") String email,@Param("nome") String nome);
-	
-	
-   //BUSCA SO PELO EMAIL
+	// BUSCA SO PELO EMAIL
 	@Query("select u from Usuario u where u.email like %:email%")
 	Optional<Usuario> findByEmail(@Param("email") String email);
 
-	
-	
 }
