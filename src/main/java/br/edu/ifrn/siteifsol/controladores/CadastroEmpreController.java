@@ -51,13 +51,19 @@ public class CadastroEmpreController {
 
 	// URL PARA ACESSAR A METODO SALVAR E EDITAR OS EMPREENDIMENTOS
 	@PostMapping("/salva")
-	public String salvar(empreendimento empre, @RequestParam("file") MultipartFile arquivo, Model model,
-			RedirectAttributes attr, HttpSession sessao) {
+	public String salvar(
+			empreendimento empre, 
+			@RequestParam("file") MultipartFile arquivo, 
+			Model model,
+			RedirectAttributes attr, 
+			HttpSession sessao) {
 
 		List<String> msgValidacao = validaDados(empre); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DO CAMPOS
-
+		
+		System.out.print(msgValidacao.get(5));
+		System.out.println(empre.getCidade().toString());
 		if (!msgValidacao.isEmpty()) {
-
+			
 		} else {
 
 		}
@@ -135,6 +141,9 @@ public class CadastroEmpreController {
 		}
 		if (empre.getEmail() == null || empre.getEmail().isEmpty()) {
 			msgs.add("O campo Email é obrigatório");
+		}
+		if (empre.getCidade().toString() == null || empre.getCidade().toString().isEmpty()) {
+			msgs.add("O campo Cidade é obrigatório");
 		}
 		if (empre.getDescricao() == null || empre.getDescricao().isEmpty()) {
 			msgs.add("O campo Descrição é obrigatório");
