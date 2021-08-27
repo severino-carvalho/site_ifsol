@@ -2,6 +2,7 @@ package br.edu.ifrn.siteifsol.controladores;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,55 +22,53 @@ import br.edu.ifrn.siteifsol.dominio.Usuario;
 import br.edu.ifrn.siteifsol.repository.Usuariorepository;
 
 @Controller
-@RequestMapping("/usuarios") //URL PARA ACESSAR A PAGINA
+@RequestMapping("/usuarios") // URL PARA ACESSAR A PAGINA
 public class BuscaUsuarioController {
 
-	@GetMapping("/busca") //URL PARA ACESSAR A PAGINA
+	@GetMapping("/busca") // URL PARA ACESSAR A PAGINA
 	public String entrarBusca() {
 		return "/busca";
 	}
-	
+
 	@Autowired
 	private Usuariorepository usuarioRepository;
 
-	
 	/*
-	 * METODO A SEGUIR FAZ AS BUSCAS PELOS USUARIOS CADASTRADOS NO 
-	 * BANCO DE DADOS E RETONA ESSA LISTA DE USUARIOS CADASTRADOS PARA A PÁGINA WEB
+	 * METODO A SEGUIR FAZ AS BUSCAS PELOS USUARIOS CADASTRADOS NO BANCO DE DADOS E
+	 * RETONA ESSA LISTA DE USUARIOS CADASTRADOS PARA A PÁGINA WEB
 	 */
-	@Transactional(readOnly = true) //INFORMA QUE  NÃO FAZ ALTERAÇÕES NO BANCO DE DADOS
-	@GetMapping("/buscar")//URL PARA ACESSAR A METODO BUSCA DE EMPREENDIMENTOS
+	@Transactional(readOnly = true) // INFORMA QUE NÃO FAZ ALTERAÇÕES NO BANCO DE DADOS
+	@GetMapping("/buscar") // URL PARA ACESSAR A METODO BUSCA DE EMPREENDIMENTOS
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public String buscar(@RequestParam(name = "nome", required = false) String nome,@RequestParam(name = "email", required = false) String email,
-			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, HttpSession sessao,
-			ModelMap model) {
+	public String buscar(@RequestParam(name = "nome", required = false) String nome,
+			@RequestParam(name = "email", required = false) String email,
+			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, ModelMap model) {
+
 		
-		
-      //BUSCA OS USUARIOS NO BANCO DE DADOS ATRAVES DO NOME E EMAIL
-      List<Usuario> usuariosEncontrados = usuarioRepository.findByEmailAndNome(email, nome); 
-		
-		model.addAttribute("usuariosEncontrados",usuariosEncontrados); //RETORNA OS USUARIOS ENCONTRADOS PARA A PÁGINA WEB
-		
-		if(mostrarTodosDados != null) {
-			model.addAttribute("mostrarTodosDados",true);
+		// BUSCA OS USUARIOS NO BANCO DE DADOS ATRAVES DO NOME E EMAIL
+		List<Usuario> usuariosEncontrados = usuarioRepository.findByEmailAndNome(email, nome);
+
+		model.addAttribute("usuariosEncontrados", usuariosEncontrados); // RETORNA OS USUARIOS ENCONTRADOS PARA A PÁGINA
+																		// WEB
+		if (mostrarTodosDados != null) {
+			model.addAttribute("mostrarTodosDados", true);
 		}
+
 		return "/busca";
 	}
 
 	/*
 	 * METODO PARA FAZER A EDIÇÃO DE USUARIOS CADASTRADOS
 	 */
-	@Transactional(readOnly = false)// INFORMA QUE FAZ ALTERARÇÕES NO BANCO DE DADOS
-	@GetMapping("/editar/{id}") //URL PARA ACESSAR O METODO
-	public String iniciarEdição(@PathVariable("id") Integer idUsuario, ModelMap model, HttpSession sessao) {
-
+	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERARÇÕES NO BANCO DE DADOS
+	@GetMapping("/editar/{id}") // URL PARA ACESSAR O METODO
+	public String iniciarEdição(@PathVariable("id") Integer idUsuario, ModelMap model) {
 
 		Usuario u = usuarioRepository.findById(idUsuario).get();
 
-	    
-	    model.addAttribute("usuario", u);
+		model.addAttribute("usuario", u);
 
-		return "/cadastro";
+		return "/Cadastro";
 	}
 
 	@ModelAttribute("situacao")
@@ -80,8 +79,8 @@ public class BuscaUsuarioController {
 	/*
 	 * METODO FAZ A REMOÇÃO NO BANCO DE DADOS , DE USUARIOS CADASTRADOS
 	 */
-	
-	@Transactional(readOnly = false)// INFORMA QUE FAZ ALTERARÇÕES NO BANCO DE DADOS
+
+	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERARÇÕES NO BANCO DE DADOS
 	@GetMapping("/remover/{id}")
 	public String remover(@PathVariable("id") Integer idUsuario, HttpSession sessao, RedirectAttributes attr) {
 
