@@ -51,13 +51,15 @@
 					Busca de Adm's
 				</a>
 			</li>
+			<li>
+				<form th:action="@{/logout}" method="post">
+					<input class="btn btn-outline-danger" type="submit" value="Sair" />
+				</form>
+			</li>
 		</ul>
 	</nav>
 
 	<!-- finalMenu -->
-
-	<br />
-
 	<div class="row">
 		<div class="col-12">
 			<section layout:fragment="corpo2"></section>
