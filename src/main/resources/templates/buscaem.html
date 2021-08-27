@@ -4,7 +4,7 @@
 <head>
 
 	<title>Busca de empreendimentos</title>
-	
+
 </head>
 
 <body>
@@ -16,9 +16,9 @@
 	<section layout:fragment="corpo2">
 
 		<div class="container" align="center">
-			<div class="card border-success mb-3" style="width: 30rem;">
-				<div class="card-header">Busca de empreendimentos</div>
-				<div class="card-body text-success">
+			<div class="card border-primary my-3" style="width: 30rem;">
+				<div class="card-header bg-primary fw-bold text-white">Busca de empreendimentos</div>
+				<div class="card-body text-dark">
 
 					<!--IMPORTA PARA ESSA PAGINAS O ARQUIVO QUE CONTEM AS MENSAGENS DE ERRO
 					E SUCESSO  -->
@@ -31,52 +31,60 @@
 								aria-describedby="emailHelp">
 
 						</div>
-						<div class="mb-3" style="text-align: left;">
-							<label for="exampleInputPassword1" class="form-label"
-								style="text-align: left;">Email</label> <input type="email" th:name="email"
-								class="form-control" id="exampleInputPassword1">
+						<div class="mb-4" style="text-align: left;">
+							<label for="inputSenha" class="form-label" style="text-align: left;">Email</label>
+							<input type="email" th:name="email" class="form-control" id="inputSenha" />
 						</div>
 
-						<input type="submit" value="Buscar" /> <input type="submit" value="Voltar" formaction="/home"
-							formmethod="get" />
+						<input class="btn btn-success" type="submit" value="Buscar" />
+						<input class="btn btn-danger" type="submit" value="Voltar" formaction="/adm" formmethod="GET" />
 					</form>
 
-					<br> <br>
+					<div class="mt-3 md-0">
+						<p class="fw-bold my-0 py-0 text-muted" style="font-size: 9pt; text-align: justify;">
+							<span style="color:red;">*</span> Para buscar todos os usuários clíque em buscar sem
+							preencher nenhum dado </p>
+					</div>
 
-					<!--MOSTRA NA PAGINAS OS EMPREENDIMENTOS EMCONTRADOS E SEUS DADOS
+				</div>
+			</div>
+
+			<!--MOSTRA NA PAGINAS OS EMPREENDIMENTOS EMCONTRADOS E SEUS DADOS
 					E MOSTRA AS OPÇõES DE EDITAR E REMOVER  -->
 
-					<div th:if="${empreendimentosEncontrados} != null">
-						<table>
-							<tr>
-								<th>Foto</th>
-								<th>Nome</th>
-								<th>Email</th>
-								<th>Cidade</th>
-								<th th:if="${mostrarTodosDados} == true">Descrição</th>
+			<div class="mt-5" th:if="${empreendimentosEncontrados} != null">
+				<table class="table table-bordered table-striped table-hover">
+					<thead class="text-center">
+						<tr>
+							<th>Foto</th>
+							<th>Nome</th>
+							<th>Email</th>
+							<th>Cidade</th>
+							<th th:if="${mostrarTodosDados} == true">Descrição</th>
+							<th>Operações</th>
+						</tr>
+					</thead>
 
-							</tr>
+					<tbody>
+						<tr th:each="u : ${empreendimentosEncontrados}">
+							<td><img th:if="${u.foto != null}" th:src="@{/download/} + ${u.foto.id} + '?salvar=false'"
+									style="max-height: 128px" /></td>
+							<td th:text="${u.nome}"></td>
+							<td th:text="${u.email}"></td>
+							<td class="text-center" th:text="${u.cidade.nome}"></td>
+							<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${u.descricao}"></td>
 
-							<tr th:each="u : ${empreendimentosEncontrados}">
-								<td><img th:if="${u.foto != null}"
-										th:src="@{/download/} + ${u.foto.id} + '?salvar=false'"
-										style="max-height: 128px" /></td>
-								<td th:text="${u.nome}"></td>
-								<td th:text="${u.email}"></td>
-								<td th:text="${u.cidade.nome}"></td>
-								<td th:if="${mostrarTodosDados} == true" th:text="${u.descricao}"></td>
-
-								<td><a th:href="'/usuarios/edita/' + ${u.id}">Editar</a> <a
-										th:href="'/usuarios/remove/' + ${u.id}"
-										onclick="if (!confirm('deseja realmente remover o usuario')) return false">Remover</a>
-								</td>
-
-							</tr>
-						</table>
-					</div>
-				</div>
-
+							<td class="text-center">
+								<a class="text-decoration-none" th:href="'/usuarios/edita/' + ${u.id}">Editar</a>
+								|
+								<a class="text-decoration-none" th:href="'/usuarios/remove/' + ${u.id}"
+									onclick="if (!confirm('deseja realmente remover o usuario')) return false">Remover</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
+
 		</div>
 	</section>
 </body>

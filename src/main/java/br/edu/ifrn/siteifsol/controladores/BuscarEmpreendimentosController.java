@@ -39,8 +39,7 @@ public class BuscarEmpreendimentosController {
 	@GetMapping("/buscaempre")
 	public String buscaempre(@RequestParam(name = "nome", required = false) String nome,
 			@RequestParam(name = "email", required = false) String email,
-			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, 
-			HttpSession sessao,
+			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, HttpSession sessao,
 			ModelMap model) {
 
 		List<empreendimento> empreendimentosEncontrados = empreendimentosrepository.findByEmailAndNome(email, nome);
@@ -65,7 +64,7 @@ public class BuscarEmpreendimentosController {
 
 		model.addAttribute("empre", u);
 
-		return "/CadastroEmpre";
+		return "cadastroEmpre";
 	}
 
 	/*

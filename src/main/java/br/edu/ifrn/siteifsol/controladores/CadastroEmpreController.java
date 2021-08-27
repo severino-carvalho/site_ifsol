@@ -59,14 +59,6 @@ public class CadastroEmpreController {
 			HttpSession sessao) {
 
 		List<String> msgValidacao = validaDados(empre); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DO CAMPOS
-		
-		System.out.print(msgValidacao.get(5));
-		System.out.println(empre.getCidade().toString());
-		if (!msgValidacao.isEmpty()) {
-			
-		} else {
-
-		}
 
 		/*
 		 * O CODIGO A SEGUIR FOI FEITO PARA UPLOAD E DOWNLOAD DE UM ARQUIVO NO BANCO DE
