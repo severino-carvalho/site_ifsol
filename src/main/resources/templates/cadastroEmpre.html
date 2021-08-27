@@ -40,15 +40,15 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 		<!--INFORMA QUE ESSA � A PARTE QUE FICA EM DETERMINADA PARTE DO ARQUIVO DE LAYOUT  -->
 
 		<div class="container" align="center">
-			<div class="card border-success mb-3" style="max-width: 36rem;">
-				<div class="card-header">
+			<div class="card mb-3" style="max-width: 36rem;">
+				<div class="card-header bg-primary text-white fw-bold">
 					Cadastro de empreendimentos
 				</div>
 				<div class="card-body text-success">
 					<div th:replace="fragmentos/mensagens"></div>
 				</div>
 
-				<form class="ps-4 pe-4" th:action="@{/usuario/salva}" th:object="${empre}" method="POST" align="center"
+				<form class="px-4" th:action="@{/usuario/salva}" th:object="${empre}" method="POST" align="center"
 					enctype="multipart/form-data">
 
 					<input type="hidden" th:field="${empre.id}" />
@@ -63,30 +63,34 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 						<input input type="email" th:field="${empre.email}" class="form-control" id="exampleInputEmail1"
 							aria-describedby="emailHelp">
 					</div>
+					
 					<div class="mb-3" style="text-align: left;">
 						<label for="exampleInputName1" class="form-label">Cidade:
-						</label> <input id="cidade" th:field="${empre.cidade.nome}" class="form-control"> <input
-							id="idCidade" type="hidden" th:field="${empre.cidade.id}" />
+						</label>
+						<input id="cidade" th:field="${empre.cidade.nome}" class="form-control" />
+						<input id="idCidade" type="hidden" th:field="${empre.cidade.id}" />
 
 					</div>
-					<div class="mb-2" style="text-align: left;">
-						<label for="exampleInputName1" class="form-label">Descrição:
-						</label> <input type="text" th:field="${empre.descricao}" class="form-control"
-							id="exampleInputName1">
-
+					
+					<div class="mb-3" style="text-align: left;">
+						<label for="exampleInputName1" class="form-label">
+							Descrição:
+						</label>
+						<input type="text" th:field="${empre.descricao}" class="form-control" id="exampleInputName1" />
 					</div>
-					<div class="mb-2" style="text-align: left;">
-						<label for="exampleInputName1" class="form-label"><br />
+					
+					<div class="mb-3" style="text-align: left;">
+						<label for="exampleInputName1" class="form-label mt-0">
 							Foto:
 						</label>
-						<input type="file" th:name="file" />
+						<input class="form-control" type="file" th:name="file" />
 						<input type="hidden" th:field="${empre.foto.id}" />
 					</div>
 
 					<div class="mb-3 py-2" style="text-align: left;">
 						<input class="btn btn-success" type="submit"
 							th:value="${empre.id}  == 0 ? Cadastrar : Editar" />
-						<input class="btn btn-danger" type="submit" value="Cancelar" formaction="/home"
+						<input class="btn btn-danger" type="submit" value="Cancelar" formaction="/adm"
 							formmethod="GET" />
 					</div>
 				</form>
