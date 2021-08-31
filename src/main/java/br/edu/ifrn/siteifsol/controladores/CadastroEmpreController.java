@@ -47,16 +47,13 @@ public class CadastroEmpreController {
 	@Autowired
 	private ArquivoRepository arquivoRepository;
 
+	@SuppressWarnings("unused")
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
 
 	// URL PARA ACESSAR A METODO SALVAR E EDITAR OS EMPREENDIMENTOS
 	@PostMapping("/salva")
-	public String salvar(
-			empreendimento empre, 
-			@RequestParam("file") MultipartFile arquivo, 
-			Model model,
-			RedirectAttributes attr, 
-			HttpSession sessao) {
+	public String salvar(empreendimento empre, @RequestParam("file") MultipartFile arquivo, Model model,
+			RedirectAttributes attr, HttpSession sessao) {
 
 		List<String> msgValidacao = validaDados(empre); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DO CAMPOS
 
@@ -137,6 +134,7 @@ public class CadastroEmpreController {
 		if (empre.getCidade().toString() == null || empre.getCidade().toString().isEmpty()) {
 			msgs.add("O campo Cidade é obrigatório");
 		}
+		
 		if (empre.getDescricao() == null || empre.getDescricao().isEmpty()) {
 			msgs.add("O campo Descrição é obrigatório");
 		}

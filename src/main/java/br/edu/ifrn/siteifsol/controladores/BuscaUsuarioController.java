@@ -54,7 +54,7 @@ public class BuscaUsuarioController {
 			model.addAttribute("mostrarTodosDados", true);
 		}
 
-		return "/busca";
+		return "/cadastro";
 	}
 
 	/*

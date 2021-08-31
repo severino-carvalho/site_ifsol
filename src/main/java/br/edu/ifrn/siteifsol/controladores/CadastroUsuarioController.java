@@ -28,7 +28,7 @@ public class CadastroUsuarioController {
 	@GetMapping("/cadastro") // URL PARA ACESSAR A PAGINA
 	public String entrarCadastro(ModelMap model) {
 		model.addAttribute("usuario", new Usuario());
-		return "Cadastro";
+		return "cadastro";
 	}
 
 	@Autowired
