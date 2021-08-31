@@ -1,7 +1,15 @@
-<div th:if="${msgSucesso} != null">
+<!--	Mensagem de sucesso que aparecerá no cadastro	-->
+<div th:if="${msgCadSucesso} != null">
 	<b th:text="${msgSucesso}" style="color: blue;"></b>
 </div>
 
-<div th:if="${msgErro} != null">
+<!--	Mensagem de erro que aparecerá no cadastro	-->
+<div th:if="${msgCadErro} != null">
 	<b th:text="${msgErro}" style="color: red;"></b>
 </div>
+
+<!--	Mensagem de erro que aparecerá na busca	-->
+<div th:if="${msgBusErro} != null">
+	<b th:text="${msgErro}" style="color: red;"></b>
+</div>
+
