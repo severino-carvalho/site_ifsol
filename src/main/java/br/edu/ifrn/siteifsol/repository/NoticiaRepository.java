@@ -1,18 +1,19 @@
 package br.edu.ifrn.siteifsol.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import br.edu.ifrn.siteifsol.dominio.Post;
-import br.edu.ifrn.siteifsol.dominio.Usuario;
+import br.edu.ifrn.siteifsol.dominio.Noticia;
 
-public interface PostRepository extends JpaRepository<Post, Integer> {
-	
-	// BUSCA OS POSTS PELO TÍTULO
-	@Query("select p from Usuario p where p.titulo like %:titulo%")
-	List<Usuario> findByTitulo(@Param("email") String email, @Param("nome") String nome);
+public interface NoticiaRepository extends JpaRepository<Noticia, Integer> {
 
+	@Query("select u from Noticia u where u.titulo like %:titulo%  " + "and u.texto like %:texto%")
+	List<Noticia> findByTituloAndTexto(@Param("titulo") String titulo, @Param("texto") String texto);
+
+	@Query("select u from Noticia u where u.titulo like %:titulo%")
+	Optional<Noticia> findByTitulo(@Param("titulo") String titulo);
 }

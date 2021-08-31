@@ -3,14 +3,17 @@ package br.edu.ifrn.siteifsol.dominio;
 import java.util.Calendar;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Post {
+public class Noticia {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,29 +28,32 @@ public class Post {
 	@Column(nullable = false)
 	private Calendar dataPublicacao;
 
-	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private Arquivo foto;
+
 	/*
 	 * CONSTRUTOR PADRÃO DA CLASSE
-	 * */
-	
-	public Post() {
+	 */
+
+	public Noticia() {
 		super();
 	}
-	
+
 	/*
 	 * CONSTRUTOR PARAMETRIZADO DA CLASSE
-	 * */
+	 */
 
-	public Post(String titulo, String texto, Calendar dataPublicacao) {
+	public Noticia(String titulo, String texto, Calendar dataPublicacao, Arquivo foto) {
 		super();
 		this.titulo = titulo;
 		this.texto = texto;
 		this.dataPublicacao = dataPublicacao;
+		this.foto = foto;
 	}
-	
+
 	/*
 	 * METODOS GET'S E SET'S
-	 * */
+	 */
 
 	public int getId() {
 		return id;
@@ -80,11 +86,19 @@ public class Post {
 	public void setDataPublicacao(Calendar dataPublicacao) {
 		this.dataPublicacao = dataPublicacao;
 	}
-	
+
+	public Arquivo getFoto() {
+		return foto;
+	}
+
+	public void setFoto(Arquivo foto) {
+		this.foto = foto;
+	}
+
 	/*
-	 * IMPLEMENTAÇÃO DO EQUALS E HASHCODE
-	 * SERVE PARA INDENTIFICAR CORRETAMENTE CADA POST QUE É CRIADO
-	 * */
+	 * IMPLEMENTAÇÃO DO EQUALS E HASHCODE SERVE PARA INDENTIFICAR CORRETAMENTE CADA
+	 * POST QUE É CRIADO
+	 */
 
 	@Override
 	public int hashCode() {
@@ -99,7 +113,7 @@ public class Post {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Post other = (Post) obj;
+		Noticia other = (Noticia) obj;
 		return id == other.id;
 	}
 
