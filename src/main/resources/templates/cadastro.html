@@ -45,25 +45,30 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							<input type="hidden" th:field="${usuario.id}" />
 
 							<div class="mb-3" style="text-align: left;">
-								<label for="exampleInputName1" class="form-label">Nome: </label>
-								<input type="text" th:field="${usuario.nome}" class="form-control"
-									id="exampleInputName1">
+								<label for="nomeCad" class="form-label">Nome: </label>
+								<input type="text" th:field="${usuario.nome}" class="form-control" id="nomeCad">
 
 							</div>
+
 							<div class="mb-3" style="text-align: left;">
+
 								<label for="exampleInputEmail1" class="form-label"
 									style="text-align: left;">Email</label>
 								<input input type="email" th:field="${usuario.email}" class="form-control"
 									id="exampleInputEmail1" aria-describedby="emailHelp">
 							</div>
+
 							<div class="mb-3" style="text-align: left;">
+
 								<label for="exampleInputPassword1" class="form-label">Senha: </label>
 								<input type="password" th:field="${usuario.senha}" class="form-control"
 									id="exampleInputPassword1">
 
 							</div>
+
 							<div class="mb-3" style="text-align: left;">
-								<label for="exampleInputName1" class="form-label">Situação: </label>
+
+								<label for="exampleInputName1" class="form-label">Função: </label>
 								<select class="form-select" th:field="${usuario.situacao}">
 									<option value="" class="select">Selecione...</option>
 									<option th:each="p : ${situacao}" th:text="${p}" th:value="${p}">Selecione...
@@ -83,7 +88,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 				</div>
 
 				<div class="col-md-6">
-					<div class="card mb-3" ; style="max-width: 36rem">
+					<div class="card mb-3" ; style="max-width: 26rem">
 						<div class="card-header bg-success text-white fw-bold">Busca de Acessos</div>
 						<div class="card-body">
 
@@ -130,40 +135,43 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							</form>
 
 							<!--MOSTRA NA PÁGINAS OS EMPREENDIMENTOS EMCONTRADOS E SEUS DADOS
-					E MOSTRA AS OPÇÕES DE EDITAR E REMOVER  -->
+													   E MOSTRA AS OPÇÕES DE EDITAR E REMOVER  -->
 
 						</div>
 					</div>
 
-					<div th:if="${usuariosEncontrados} != null">
-						<table class="table table-bordered table-striped table-hover">
-							<thead>
-								<tr class="text-center">
-									<th>Nome</th>
-									<th>Email</th>
-									<th th:if="${mostrarTodosDados} == true">Situação</th>
-									<th>Opções</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="u : ${usuariosEncontrados}">
-									<td th:text="${u.nome}"></td>
-									<td th:text="${u.email}"></td>
-									<td class="text-center" th:if="${mostrarTodosDados} == true"
-										th:text="${u.situacao}"></td>
-
-									<td class="text-center">
-										<a class="text-decoration-none"
-											th:href="'/usuarios/editar/' + ${u.id}">Editar</a>
-										|
-										<a class="text-decoration-none" th:href="'/usuarios/remover/' + ${u.id}"
-											onclick="if (!confirm('deseja realmente remover o usuario')) return false">Remover</a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
 				</div>
+			</div>
+
+			<div class="row">
+				<div th:if="${usuariosEncontrados} != null">
+					<table class="table table-bordered table-striped table-hover">
+						<thead>
+							<tr class="text-center">
+								<th>Nome</th>
+								<th>Email</th>
+								<th th:if="${mostrarTodosDados} == true">Perfil</th>
+								<th>Opções</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="u : ${usuariosEncontrados}">
+								<td th:text="${u.nome}"></td>
+								<td th:text="${u.email}"></td>
+								<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${u.situacao}">
+								</td>
+
+								<td class="text-center">
+									<a class="text-decoration-none" th:href="'/usuarios/editar/' + ${u.id}">Editar</a>
+									|
+									<a class="text-decoration-none" th:href="'/usuarios/remover/' + ${u.id}"
+										onclick="if (!confirm('deseja realmente remover o usuario')) return false">Remover</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
 			</div>
 
 		</div>
