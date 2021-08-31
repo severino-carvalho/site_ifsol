@@ -36,6 +36,8 @@ public class empreendimento {
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Arquivo foto;
+	
+	
 
 	/*
 	 * CONSTRUTORES PARA SITEMA POSSA DIFERENCIAR UM ID DO OUTRO NÃO ADICIONANDO

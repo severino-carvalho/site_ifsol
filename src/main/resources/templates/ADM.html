@@ -25,7 +25,7 @@
 			</div>
 
 			<div class="row mt-4">
-				<div class="col-md-6">
+				<div class="col-md-4">
 
 					<div class="card border-success">
 						<div class="card-header text-center fw-bolder bg-success text-white">
@@ -35,12 +35,7 @@
 							<p class="card-text fw-bold">
 								Total de usuáros:
 							</p>
-							<p class="card-text fw-bold">
-								Usuáros comuns:
-							</p>
-							<p class="card-text fw-bold">
-								Usuáros adm's:
-							</p>
+						
 							<div>
 								<a href="/usuario/cadastro" sec:authorize="hasAuthority('ADMIN')"
 									class="btn btn-success">Cadastrar</a>
@@ -52,7 +47,7 @@
 
 				</div>
 
-				<div class="col-md-6">
+				<div class="col-md-4">
 
 					<div class="card border-primary">
 						<div class="card-header text-center fw-bolder bg-primary text-white">
@@ -65,6 +60,27 @@
 							<div>
 								<a href="/usuario/cadastroem" class="btn btn-success">Cadastrar</a>
 								<a href="/usuarios/buscaem" class="btn btn-warning">Visualizar</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-md-4">
+
+					<div class="card border-dark">
+						<div class="card-header text-center fw-bolder bg-dark text-white">
+							Configurações de Notícias
+						</div>
+						<div class="card-body">
+							<p class="card-text fw-bold">
+								Total de usuáros:
+							</p>
+							<div>
+								<a href="/noticia/nova" sec:authorize="hasAuthority('ADMIN')"
+									class="btn btn-success">Criar Nova</a>
+								<a href="/usuarios/busca " sec:authorize="hasAuthority('ADMIN')"
+									class="btn btn-warning">Visualizar</a>
 							</div>
 						</div>
 					</div>

@@ -17,54 +17,157 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 	<section layout:fragment="corpo2">
 
+		<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+			aria-label="breadcrumb" class="w-100">
+			<div class="container">
+				<ol class="breadcrumb py-3">
+					<li class="breadcrumb-item"><a class="text-decoration-none " href="/adm">Início</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Usuário</li>
+				</ol>
+			</div>
+		</nav>
+
 		<div class="container" align="center">
+			<div class="row mt-2">
+				<div class="col-md-6">
+					<div class="card mb-3" style="max-width: 36rem;">
+						<div class="card-header bg-success text-white fw-bold">Cadastro
+							de Usuários</div>
+						<div class="card-body text-success py-3">
 
-			<div class="card mb-3" style="max-width: 36rem;">
-				<div class="card-header bg-success text-white fw-bold">Cadastro
-					de Usuários</div>
-				<div class="card-body text-success py-3">
+							<div class="py-2" th:replace="fragmentos/mensagens"></div>
 
-					<div class="py-2" th:replace="fragmentos/mensagens"></div>
+						</div>
 
+						<form class="px-4" th:action="@{/usuario/salvar}" th:object="${usuario}" method="POST"
+							align="center">
+
+							<input type="hidden" th:field="${usuario.id}" />
+
+							<div class="mb-3" style="text-align: left;">
+								<label for="exampleInputName1" class="form-label">Nome: </label>
+								<input type="text" th:field="${usuario.nome}" class="form-control"
+									id="exampleInputName1">
+
+							</div>
+							<div class="mb-3" style="text-align: left;">
+								<label for="exampleInputEmail1" class="form-label"
+									style="text-align: left;">Email</label>
+								<input input type="email" th:field="${usuario.email}" class="form-control"
+									id="exampleInputEmail1" aria-describedby="emailHelp">
+							</div>
+							<div class="mb-3" style="text-align: left;">
+								<label for="exampleInputPassword1" class="form-label">Senha: </label>
+								<input type="password" th:field="${usuario.senha}" class="form-control"
+									id="exampleInputPassword1">
+
+							</div>
+							<div class="mb-3" style="text-align: left;">
+								<label for="exampleInputName1" class="form-label">Situação: </label>
+								<select class="form-select" th:field="${usuario.situacao}">
+									<option value="" class="select">Selecione...</option>
+									<option th:each="p : ${situacao}" th:text="${p}" th:value="${p}">Selecione...
+									</option>
+								</select>
+
+							</div>
+							<div class="mb-3" style="text-align: left;">
+								<input class="btn btn-success" type="submit"
+									th:value="${usuario.id}  == 0 ? Cadastrar : Editar" />
+								<input class="btn btn-warning" type="reset" value="Refazer" />
+							</div>
+						</form>
+						<!--QUANDO O FOR PARA CADASTRAR O USUARIO APARECERA O BOTÃO "CADASTRO"E PARA EDITAR "EDITAR"  -->
+
+					</div>
 				</div>
 
-				<form class="px-4" th:action="@{/usuario/salvar}" th:object="${usuario}" method="POST" align="center">
+				<div class="col-md-6">
+					<div class="card mb-3" ; style="max-width: 36rem">
+						<div class="card-header bg-success text-white fw-bold">Busca de Acessos</div>
+						<div class="card-body">
 
-					<input type="hidden" th:field="${usuario.id}" />
+							<!--IMPORTA PARA ESSA PAGINAS O ARQUIVO QUE CONTEM AS MENSAGENS DE ERRO
+					E SUCESSO  -->
+							<div th:replace="fragmentos/mensagens"></div>
 
-					<div class="mb-3" style="text-align: left;">
-						<label for="exampleInputName1" class="form-label">Nome: </label>
-						<input type="text" th:field="${usuario.nome}" class="form-control" id="exampleInputName1">
+							<form class="pd-0" th:action="@{/usuarios/buscar}" method="GET" align="center">
 
+
+								<div class="mb-3" style="text-align: left;">
+									<label for="exampleInputEmail1" class="form-label">
+										Nome:
+									</label>
+
+									<input type="text" th:name="nome" class="form-control" id="exampleInputEmail1"
+										aria-describedby="emailHelp">
+								</div>
+
+								<div class="mb-3" style="text-align: left;">
+									<label for="exampleInputPassword1" class="form-label" style="text-align: left;">
+										Email
+									</label>
+
+									<input type="email" th:name="email" class="form-control" id="exampleInputPassword1">
+								</div>
+
+								<div class="my-3">
+									<input type="checkbox" th:name="mostrarTodosDados" th:value="true" />Mostrar todos
+									os dados
+								</div>
+
+
+								<input class="btn btn-primary" type="submit" value="Buscar" />
+
+
+								<div class="mt-3 md-0">
+									<p class="fw-bold my-0 py-0 text-muted"
+										style="font-size: 9pt; text-align: justify;">
+										<span style="color:red;">*</span> Para buscar todos os usuários clíque em buscar
+										sem
+										preencher nenhum dado </p>
+								</div>
+							</form>
+
+							<!--MOSTRA NA PÁGINAS OS EMPREENDIMENTOS EMCONTRADOS E SEUS DADOS
+					E MOSTRA AS OPÇÕES DE EDITAR E REMOVER  -->
+
+						</div>
 					</div>
-					<div class="mb-3" style="text-align: left;">
-						<label for="exampleInputEmail1" class="form-label" style="text-align: left;">Email</label>
-						<input input type="email" th:field="${usuario.email}" class="form-control"
-							id="exampleInputEmail1" aria-describedby="emailHelp">
-					</div>
-					<div class="mb-3" style="text-align: left;">
-						<label for="exampleInputPassword1" class="form-label">Senha: </label>
-						<input type="password" th:field="${usuario.senha}" class="form-control"
-							id="exampleInputPassword1">
 
-					</div>
-					<div class="mb-3" style="text-align: left;">
-						<label for="exampleInputName1" class="form-label">Situação: </label>
-						<select class="form-select" th:field="${usuario.situacao}">
-							<option value="" class="select" >Selecione...</option>
-							<option th:each="p : ${situacao}" th:text="${p}" th:value="${p}">Selecione...</option>
-						</select>
+					<div th:if="${usuariosEncontrados} != null">
+						<table class="table table-bordered table-striped table-hover">
+							<thead>
+								<tr class="text-center">
+									<th>Nome</th>
+									<th>Email</th>
+									<th th:if="${mostrarTodosDados} == true">Situação</th>
+									<th>Opções</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="u : ${usuariosEncontrados}">
+									<td th:text="${u.nome}"></td>
+									<td th:text="${u.email}"></td>
+									<td class="text-center" th:if="${mostrarTodosDados} == true"
+										th:text="${u.situacao}"></td>
 
+									<td class="text-center">
+										<a class="text-decoration-none"
+											th:href="'/usuarios/editar/' + ${u.id}">Editar</a>
+										|
+										<a class="text-decoration-none" th:href="'/usuarios/remover/' + ${u.id}"
+											onclick="if (!confirm('deseja realmente remover o usuario')) return false">Remover</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
-					<div class="mb-3" style="text-align: left;">
-						<input class="btn btn-success" type="submit" th:value="${usuario.id}  == 0 ? Cadastrar : Editar" />
-						<input class="btn btn-danger" type="submit" value="Voltar" formaction="/adm" formmethod="GET" />
-					</div>
-				</form>
-				<!--QUANDO O FOR PARA CADASTRAR O USUARIO APARECERA O BOTÃO "CADASTRO"E PARA EDITAR "EDITAR"  -->
-
+				</div>
 			</div>
+
 		</div>
+
 	</section>
 
 
