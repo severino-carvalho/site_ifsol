@@ -3,6 +3,7 @@ package br.edu.ifrn.siteifsol.controladores;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -38,20 +39,26 @@ public class CadastroUsuarioController {
 	@PostMapping("/salvar") // URL PARA ACESSAR A METODO SALVAR E EDITAR
 	public String salvar(Usuario usuario, Model model, RedirectAttributes attr, HttpSession sessao) {
 
+		// SE HAVER ALGUM DADO INVÁLIDO, ELE SERÁ COLOCADO DENTRO DA LISTA
 		List<String> msgValidacao = validarDados(usuario);
 
+		// SE A LISTA DE VALIDAÇÃO ESTIVER VAZIA, ENTÃO TUDO ESTÁ DE ACORDO
 		if (msgValidacao.isEmpty()) {
+
 			// CRIPTOGRAFANDO A SENHA
 			String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
 			usuario.setSenha(senhaCriptografada);
 
+			usuario.setPerfil("ADMIN");
+
 			// CADASTRA O USUARIO DO BANDO DE DADOS E EDITA
 			usuarioRepository.save(usuario);
 			// RETORNA A MENSAGEM PARA O A PÁGINA , PARA O USUSARIO VER
-			attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
+			attr.addFlashAttribute("msgCadSucesso", "O peração realizada com sucesso!");
 
-		} else {
-			attr.addFlashAttribute("msgErro", msgValidacao.get(0));
+		} else { // SE ELA ESTIVER COM ALGUM ERRO NÃO SERÁ POSSÍVEL CADASTRAR UM USUÁRIO
+
+			attr.addFlashAttribute("msgCadErro", msgValidacao.get(0));
 		}
 
 		return "redirect:/usuario/cadastro";
@@ -71,28 +78,38 @@ public class CadastroUsuarioController {
 
 	private List<String> validarDados(Usuario usuario) {
 
-		List<String> msgs = new ArrayList<>(); // LISTA DE MENSAGENS DE ERRO, POIS MUITOS CAMPOS PODE ESTAR INCORRETOS
+		List<String> msgs = new ArrayList<>(); // LISTA DE MENSAGENS DE ERRO, POIS MUITOS CAMPOS PODE ESTAR
 
-		if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
-			msgs.add("O campo nome é obrigatório");
-		}
-		if (usuario.getNome().length() <= 5) { // NOME TEM QUER TER MAIS DE 5 CARACTERES
-			msgs.add("Nome inválido");
-		}
-		if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
-			msgs.add("O campo Email é obrigatório");
-		}
-		if (usuario.getSituacao() == null || usuario.getSituacao().isEmpty()) {
-			msgs.add("O campo SITUAÇÃO é obrigatório");
-		}
-		if (usuario.getSenha() == null || usuario.getSenha().isEmpty()) {
-			msgs.add("O campo senha é obrigatório");
-		}
-		if (usuario.getSenha().length() <= 6) {
-			msgs.add("Sua senha precisar ter no minimo 6 caracteres"); // SENHA TEM QUE TER MAIS DE 6 CARACTERES
-		}
+		try {
 
+			// INCORRETOS
+
+			Optional<Usuario> u = usuarioRepository.findByEmail(usuario.getEmail());
+
+			System.out.println(u.get().getNome() + "  " + u.get().getEmail());
+
+			if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
+				msgs.add("O campo nome é obrigatório");
+			}
+			if (usuario.getNome().length() <= 5) { // NOME TEM QUER TER MAIS DE 5 CARACTERES
+				msgs.add("Nome inválido");
+			}
+			if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
+				msgs.add("O campo Email é obrigatório");
+			}
+			if (usuario.getSituacao() == null || usuario.getSituacao().isEmpty()) {
+				msgs.add("O campo SITUAÇÃO é obrigatório");
+			}
+			if (usuario.getSenha() == null || usuario.getSenha().isEmpty()) {
+				msgs.add("O campo senha é obrigatório");
+			}
+			if (usuario.getSenha().length() <= 6) {
+				msgs.add("Sua senha precisar ter no minimo 6 caracteres"); // SENHA TEM QUE TER MAIS DE 6 CARACTERES
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());;
+		}
 		return msgs;
 	}
-
 }
