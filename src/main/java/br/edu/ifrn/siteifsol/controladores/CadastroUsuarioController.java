@@ -50,7 +50,8 @@ public class CadastroUsuarioController {
 				// CRIPTOGRAFANDO A SENHA
 				String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
 				usuario.setSenha(senhaCriptografada);
-
+				
+				// DEFINE TODOS OS USUÁRIOS CADASTRADOS COMO ADMINISTRADORES
 				usuario.setPerfil("ADMIN");
 
 				// CADASTRA O USUARIO DO BANDO DE DADOS E EDITA

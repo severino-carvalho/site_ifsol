@@ -35,7 +35,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							de Usuários</div>
 						<div class="card-body text-success py-3">
 
-							<div class="py-2" th:replace="fragmentos/mensagens"></div>
+							<div class="py-2" th:replace="fragmentos/msgCad"></div>
 
 						</div>
 
@@ -94,7 +94,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 							<!--IMPORTA PARA ESSA PAGINAS O ARQUIVO QUE CONTEM AS MENSAGENS DE ERRO
 					E SUCESSO  -->
-							<div th:replace="fragmentos/mensagens"></div>
+							<div th:replace="fragmentos/msgBusc"></div>
 
 							<form class="pd-0" th:action="@{/usuarios/buscar}" method="GET" align="center">
 
