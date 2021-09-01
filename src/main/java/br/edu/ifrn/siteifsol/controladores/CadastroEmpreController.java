@@ -134,7 +134,7 @@ public class CadastroEmpreController {
 		if (empre.getCidade().toString() == null || empre.getCidade().toString().isEmpty()) {
 			msgs.add("O campo Cidade é obrigatório");
 		}
-		
+
 		if (empre.getDescricao() == null || empre.getDescricao().isEmpty()) {
 			msgs.add("O campo Descrição é obrigatório");
 		}

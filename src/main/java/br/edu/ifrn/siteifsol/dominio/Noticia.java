@@ -1,6 +1,5 @@
 package br.edu.ifrn.siteifsol.dominio;
 
-import java.util.Calendar;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -26,7 +25,7 @@ public class Noticia {
 	private String texto;
 
 	@Column(nullable = false)
-	private Calendar dataPublicacao;
+	private String dataPublicacao;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Arquivo foto;
@@ -43,7 +42,7 @@ public class Noticia {
 	 * CONSTRUTOR PARAMETRIZADO DA CLASSE
 	 */
 
-	public Noticia(String titulo, String texto, Calendar dataPublicacao, Arquivo foto) {
+	public Noticia(String titulo, String texto, String dataPublicacao, Arquivo foto) {
 		super();
 		this.titulo = titulo;
 		this.texto = texto;
@@ -79,11 +78,11 @@ public class Noticia {
 		this.texto = texto;
 	}
 
-	public Calendar getDataPublicacao() {
+	public String getDataPublicacao() {
 		return dataPublicacao;
 	}
 
-	public void setDataPublicacao(Calendar dataPublicacao) {
+	public void setDataPublicacao(String dataPublicacao) {
 		this.dataPublicacao = dataPublicacao;
 	}
 

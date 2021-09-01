@@ -47,11 +47,16 @@ public class BuscaUsuarioController {
 		List<Usuario> usuariosEncontrados = usuarioRepository.findByEmailAndNome(email, nome);
 
 		model.addAttribute("usuario", new Usuario());
-		model.addAttribute("usuariosEncontrados", usuariosEncontrados); // RETORNA OS USUARIOS ENCONTRADOS PARA A PÁGINA
-																		// WEB
-		if (mostrarTodosDados != null) {
-			model.addAttribute("mostrarTodosDados", true);
-		}
+
+		if (!usuariosEncontrados.isEmpty()) {
+			model.addAttribute("usuariosEncontrados", usuariosEncontrados); // RETORNA OS USUARIOS ENCONTRADOS PARA A PÁGINA			
+
+			if (mostrarTodosDados != null) {
+				model.addAttribute("mostrarTodosDados", true);
+			}
+		} else {
+			model.addAttribute("msgErro", "Nenhum resultado encontrado!");
+		}															// WEB
 
 		return "cadastro";
 	}
@@ -70,8 +75,8 @@ public class BuscaUsuarioController {
 		return "/cadastro";
 	}
 
-	@ModelAttribute("situacao")
-	public List<String> getSituacao() {
+	@ModelAttribute("funcao")
+	public List<String> getFuncao() {
 		return Arrays.asList("Docente", "Bolsista", "Voluntário");
 	}
 

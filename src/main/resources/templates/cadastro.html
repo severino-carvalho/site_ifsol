@@ -69,9 +69,9 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							<div class="mb-3" style="text-align: left;">
 
 								<label for="exampleInputName1" class="form-label">Função: </label>
-								<select class="form-select" th:field="${usuario.situacao}">
+								<select class="form-select" th:field="${usuario.funcao}">
 									<option value="" class="select">Selecione...</option>
-									<option th:each="p : ${situacao}" th:text="${p}" th:value="${p}">Selecione...
+									<option th:each="p : ${funcao}" th:text="${p}" th:value="${p}">Selecione...
 									</option>
 								</select>
 
@@ -79,7 +79,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							<div class="mb-3" style="text-align: left;">
 								<input class="btn btn-success" type="submit"
 									th:value="${usuario.id}  == 0 ? Cadastrar : Editar" />
-								<input class="btn btn-warning" type="reset" value="Refazer" />
+								<input class="btn btn-warning" type="reset" value="Limpar" />
 							</div>
 						</form>
 						<!--QUANDO O FOR PARA CADASTRAR O USUARIO APARECERA O BOTÃO "CADASTRO"E PARA EDITAR "EDITAR"  -->
@@ -150,7 +150,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							<tr class="text-center">
 								<th>Nome</th>
 								<th>Email</th>
-								<th th:if="${mostrarTodosDados} == true">Perfil</th>
+								<th th:if="${mostrarTodosDados} == true">Função</th>
 								<th>Opções</th>
 							</tr>
 						</thead>
@@ -158,14 +158,14 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							<tr th:each="u : ${usuariosEncontrados}">
 								<td th:text="${u.nome}"></td>
 								<td th:text="${u.email}"></td>
-								<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${u.situacao}">
+								<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${u.funcao}">
 								</td>
 
 								<td class="text-center">
 									<a class="text-decoration-none" th:href="'/usuarios/editar/' + ${u.id}">Editar</a>
 									|
 									<a class="text-decoration-none" th:href="'/usuarios/remover/' + ${u.id}"
-										onclick="if (!confirm('deseja realmente remover o usuario')) return false">Remover</a>
+										onclick="if (!confirm('Deseja realmente remover o usuario?')) return false">Remover</a>
 								</td>
 							</tr>
 						</tbody>

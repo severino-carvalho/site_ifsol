@@ -37,7 +37,7 @@ public class CadastroUsuarioController {
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
 	@PostMapping("/salvar") // URL PARA ACESSAR A METODO SALVAR E EDITAR
-	public String salvar(Usuario usuario, Model model, RedirectAttributes attr, HttpSession sessao) {
+	public String salvar(Usuario usuario, ModelMap model, RedirectAttributes attr, HttpSession sessao) {
 
 		// SE HAVER ALGUM DADO INVÁLIDO, ELE SERÁ COLOCADO DENTRO DA LISTA
 		List<String> msgValidacao = validarDados(usuario);
@@ -59,18 +59,20 @@ public class CadastroUsuarioController {
 				// RETORNA A MENSAGEM PARA O A PÁGINA , PARA O USUSARIO VER
 				attr.addFlashAttribute("msgCadSucesso", "O peração realizada com sucesso!");
 			} else {
+				// RETORNA A MENSAGEM DE ERRO CASO O EMAIL JÁ ESTEJA CADASTRADO
 				attr.addFlashAttribute("msgCadErro", "Email já cadastrado. por favor, informe um email válido!");
 			}
 		} else {
 			// SE ELA ESTIVER COM ALGUM ERRO NÃO SERÁ POSSÍVEL CADASTRAR UM USUÁRIO
-			attr.addFlashAttribute("msgCadErro", msgValidacao.get(0));
+			model.addAttribute("msgCadErro", msgValidacao.get(0));
+			return "cadastro";
 		}
 		return "redirect:/usuario/cadastro";
 	}
 
 	// LISTA CONTENDO AS OPÇÕES PARA O SELECT DO FORMULARIO
-	@ModelAttribute("situacao")
-	public List<String> getSituacao() {
+	@ModelAttribute("funcao")
+	public List<String> getFuncao() {
 		return Arrays.asList("Docente", "Bolsista", "Voluntário");
 	}
 
@@ -85,19 +87,19 @@ public class CadastroUsuarioController {
 		List<String> msgs = new ArrayList<>(); // LISTA DE MENSAGENS DE ERRO, POIS MUITOS CAMPOS PODE ESTAR
 
 		if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
-			msgs.add("O campo nome é obrigatório");
+			msgs.add("O campo 'Nome' é obrigatório");
 		}
 		if (usuario.getNome().length() <= 5) { // NOME TEM QUER TER MAIS DE 5 CARACTERES
 			msgs.add("Nome inválido");
 		}
 		if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
-			msgs.add("O campo Email é obrigatório");
+			msgs.add("O campo 'Email' é obrigatório");
 		}
-		if (usuario.getSituacao() == null || usuario.getSituacao().isEmpty()) {
-			msgs.add("O campo SITUAÇÃO é obrigatório");
+		if (usuario.getFuncao() == null || usuario.getFuncao().isEmpty()) {
+			msgs.add("O campo 'Função' é obrigatório");
 		}
 		if (usuario.getSenha() == null || usuario.getSenha().isEmpty()) {
-			msgs.add("O campo senha é obrigatório");
+			msgs.add("O campo 'Senha' é obrigatório");
 		}
 		if (usuario.getSenha().length() <= 6) {
 			msgs.add("Sua senha precisar ter no minimo 6 caracteres"); // SENHA TEM QUE TER MAIS DE 6 CARACTERES

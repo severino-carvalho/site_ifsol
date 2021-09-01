@@ -16,25 +16,28 @@
 						<div class="card-header bg-dark text-white fw-bold text-center">Nova notícia</div>
 						<div class="card-body text-success py-3">
 
-							<div class="py-2" th:replace="fragmentos/mensagens"></div>
+							<div class="py-2" th:replace="fragmentos/msgNot"></div>
 
 						</div>
 
 						<form class="px-4" th:action="@{/noticia/salvar}" th:object="${noticia}" method="POST"
-							align="center">
+							align="center" enctype="multipart/form-data">
 
 							<input type="hidden" th:field="${noticia.id}" />
 
 							<div class="mb-3" style="text-align: left;">
 								<label for="tituloNot" class="form-label">Título: </label>
-								<input type="text" th:field="${noticia.titulo}" class="form-control" id="tituloNot">
+								<input type="text" th:field="${noticia.titulo}" class="form-control" id="tituloNot"
+									placeholder="Digite o título">
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
-								<div class="form-floating">
-									<textarea class="form-control" placeholder="Escreva o texto da notícia aqui.."
-										id="textoNot" style="height: 100px"></textarea>
-									<label for="textoNot">Texto da notícia</label>
+								<div class="form">
+									<label for="textoNot" class="form-label mt-0">
+										Texto:
+									</label>
+									<textarea class="form-control" placeholder="Escreva o texto da notícia aqui..."
+										id="textoNot" style="height: 130px" th:field="${noticia.texto}"></textarea>
 								</div>
 							</div>
 
@@ -43,7 +46,7 @@
 									Foto:
 								</label>
 								<input class="form-control" type="file" th:name="file" />
-								<input type="hidden" th:field="${noticia.foto}" />
+								<input type="hidden" th:field="${noticia.foto.id}" />
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
@@ -53,6 +56,7 @@
 									formmethod="GET" />
 							</div>
 						</form>
+
 						<!--QUANDO O FOR PARA CADASTRAR O USUARIO APARECERA O BOTÃO "CADASTRO"E PARA EDITAR "EDITAR"  -->
 
 					</div>

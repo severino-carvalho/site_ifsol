@@ -31,7 +31,7 @@ public class Usuario {
 	private String senha;
 
 	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
-	private String situacao;
+	private String funcao;
 
 	@Column(nullable = false)
 	private String perfil = USUARIO_COMUM;
@@ -104,12 +104,12 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	public String getSituacao() {
-		return situacao;
+	public String getFuncao() {
+		return funcao;
 	}
 
-	public void setSituacao(String situacao) {
-		this.situacao = situacao;
+	public void setFuncao(String funcao) {
+		this.funcao = funcao;
 	}
 	
 	public String getPerfil() {
