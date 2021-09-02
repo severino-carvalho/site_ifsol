@@ -17,10 +17,27 @@
 		<div class="divgeral">
 
 			<div class="container" style="text-align: center">
-				<img src="/Imagens/sol.jfif" class="img-fluid" style="width: 100vw; margin: 0px; max-height: 500px">
+				<img src="../Imagens/sol.jfif" class="img-fluid" style="width: 100vw; margin: 0px; max-height: 500px">
 			</div>
 
-			<br /> <br />
+			<div class="container my-2">
+				<div class="row">
+					<div class="col-md-6" th:each="n : ${noticias}">
+						<div class="card" style="width: 18rem;">
+							<img th:if="${n.foto != null}" th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
+								class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title" th:text="${n.titulo}">Card title</h5>
+								<p class="card-text" th:text="${n.texto}">Some quick example text to build on the card
+									title and make up the
+									bulk of the card's content.</p>
+								<a th:href="'/noticia/' + ${n.id}" class="btn btn-primary">Leia Mais</a>
+							</div>
+							<div class="card-footer text-muted" th:text="${n.dataPublicacao}"></div>
+						</div>
+					</div>
+				</div>
+			</div>
 
 			<div class="container">
 

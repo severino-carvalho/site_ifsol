@@ -67,8 +67,10 @@
 
 					<tbody>
 						<tr th:each="u : ${empreendimentosEncontrados}">
-							<td><img th:if="${u.foto != null}" th:src="@{/download/} + ${u.foto.id} + '?salvar=false'"
-									style="max-height: 128px" /></td>
+							<td>
+								<img th:if="${u.foto != null}" th:src="@{/download/} + ${u.foto.id} + '?salvar=false'"
+									style="max-height: 128px" />
+							</td>
 							<td th:text="${u.nome}"></td>
 							<td th:text="${u.email}"></td>
 							<td class="text-center" th:text="${u.cidade.nome}"></td>
