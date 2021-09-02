@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,7 +24,7 @@ import br.edu.ifrn.siteifsol.repository.NoticiaRepository;
 
 @Controller
 @RequestMapping("/noticia")
-public class NoticiaController {
+public class CadastroNoticiaController {
 
 	@Autowired
 	private ArquivoRepository arquivoRepository;
@@ -38,7 +37,7 @@ public class NoticiaController {
 
 		modelo.addAttribute("noticia", new Noticia());
 
-		return "noticia/noticia";
+		return "noticia/cadastrarNoticia";
 	}
 
 	@PostMapping("/salvar")
@@ -53,7 +52,6 @@ public class NoticiaController {
 		 * EXCECAO
 		 * 
 		 */
-
 
 		try {
 			if (arquivo != null && !arquivo.isEmpty()) {
@@ -108,14 +106,10 @@ public class NoticiaController {
 	public static String getDataNoticia() {
 		Calendar c = Calendar.getInstance();
 
-		int ano = c.get(Calendar.YEAR);
-		int mes = c.get(Calendar.MONTH);
-		int dia = c.get(Calendar.DAY_OF_WEEK_IN_MONTH);
-
-		c.set(ano, mes, dia);
 		Date data = c.getTime();
-
 		DateFormat formataData = DateFormat.getDateInstance();
+
+		System.out.println(formataData.format(data));
 
 		return formataData.format(data);
 	}
