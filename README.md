@@ -5,13 +5,19 @@
 Esse projeto é referente ao **TCC** cujo a dupla é formada por Felipe Barros e Severino Carvalho. Faremos melhorias no sistema e após isso enviaremos para a avaliação.
 
 > #### Tecnologias usadas no projeto:
->
-> - Java.
-> - Thymeleaf
-> - Spring
-> - MySQL.
+> - Html 5
+> - CSS
+> - JavaScript
 > - Bootstrap v5
 > - JQuery
+> - Java
+> - MySQL
+> - Spring Framework
+> - Spring Boot
+> - Spring Security
+> - Thymeleaf
+> - JPA
+> - Hibernate
 
 
 **Professor orientador: Nickerson Ferreira**<br>
