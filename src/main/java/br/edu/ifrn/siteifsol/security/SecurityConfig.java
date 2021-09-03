@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers("/css/**", "/Imagens/**", "/js/**").permitAll().antMatchers("/publico/**")
+		http.authorizeRequests().antMatchers("/css/**", "/Imagens/**", "/js/**").permitAll().antMatchers("/publico/**", "/noticia/**")
 				.permitAll() // QUE PODEM SER ACESSADAS SEM LOGIN
 
 				.antMatchers("/usuario/cadastro", "/usuario/salvar", "usuario/editar/**", "/usuario/remover/**")

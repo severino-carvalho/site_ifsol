@@ -17,13 +17,20 @@
 		<div class="divgeral">
 
 			<div class="container" style="text-align: center">
-				<img src="../Imagens/sol.jfif" class="img-fluid" style="width: 100vw; margin: 0px; max-height: 500px">
+				<img src="../Imagens/sol.jfif" class="img-fluid" style="width: 70vw; margin: 0px; max-height: 500px">
 			</div>
 
-			<div class="container my-2">
+			<div class="container mb-4">
+			
+				<div th:if="${msgNotErro} != null">
+					<script>
+						alert("Solicitação de notícia não encontrada!");
+					</script>
+				</div>
+			
 				<div class="row">
-					<div class="col-md-6" th:each="n : ${noticias}">
-						<div class="card" style="width: 18rem;">
+					<div class="col-md-6 mt-4" th:each="n : ${noticias}">
+						<div class="card" style="min-width: 18rem;">
 							<img th:if="${n.foto != null}" th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
 								class="card-img-top" alt="...">
 							<div class="card-body">
@@ -31,7 +38,7 @@
 								<p class="card-text" th:text="${n.texto}">Some quick example text to build on the card
 									title and make up the
 									bulk of the card's content.</p>
-								<a th:href="'/noticia/' + ${n.id}" class="btn btn-primary">Leia Mais</a>
+								<a th:href="'noticia/' + ${n.id}" class="btn btn-primary">Leia Mais</a>
 							</div>
 							<div class="card-footer text-muted" th:text="${n.dataPublicacao}"></div>
 						</div>

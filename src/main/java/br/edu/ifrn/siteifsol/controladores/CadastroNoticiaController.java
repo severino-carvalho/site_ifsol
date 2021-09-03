@@ -41,10 +41,10 @@ public class CadastroNoticiaController {
 	}
 
 	@PostMapping("/salvar")
-	public String salvar(Noticia noticia, @RequestParam("file") MultipartFile arquivo, RedirectAttributes attr) {
+	public String salvar(Noticia noticia, @RequestParam("file") MultipartFile arquivo, RedirectAttributes attr,
+			ModelMap modelo) {
 
-		List<String> msgValidacao = validaDados(noticia, arquivo); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DO
-																	// CAMPOS
+		List<String> msgValidacao = validaDados(noticia, arquivo); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DOS CAMPOS
 
 		/*
 		 * O CODIGO A SEGUIR FOI FEITO PARA UPLOAD E DOWNLOAD DE UM ARQUIVO NO BANCO DE
@@ -53,31 +53,36 @@ public class CadastroNoticiaController {
 		 * 
 		 */
 
-		try {
-			if (arquivo != null && !arquivo.isEmpty()) {
-				// NORMALIZANDO NOME DO ARQUIVO
-				String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
-				Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
-				arquivoRepository.save(arquivoBD); // SalVA O ARQUIVO NO BANCO DE DADOS
+		if (msgValidacao.isEmpty()) {
+			try {
+				if (arquivo != null && !arquivo.isEmpty()) {
+					// NORMALIZANDO NOME DO ARQUIVO
+					String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
+					Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
+					arquivoRepository.save(arquivoBD); // SALVA O ARQUIVO NO BANCO DE DADOS
 
-				if (noticia.getFoto() != null && noticia.getFoto().getId() != null && noticia.getFoto().getId() > 0) {
-					arquivoRepository.delete(noticia.getFoto());
+					if (noticia.getFoto() != null && noticia.getFoto().getId() != null
+							&& noticia.getFoto().getId() > 0) {
+						arquivoRepository.delete(noticia.getFoto());
+					}
+					noticia.setFoto(arquivoBD);// SALVA O NOVO ARQUIVO DO NOTICIA
+				} else {
+					noticia.setFoto(null);
 				}
-				noticia.setFoto(arquivoBD);// SALVA O NOVO ARQUIVO DO NOTICIA
-			} else {
-				noticia.setFoto(null);
+
+				noticia.setDataPublicacao(getDataNoticia());
+
+				// CADASTRA E EDITA O NOTICIA NO BANCO DE DADOS
+				noticiaRepository.save(noticia);
+
+				// RETORNA A MENSAGEM PARA A PÁGINA
+				attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
+
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-
-			noticia.setDataPublicacao(getDataNoticia());
-
-			// CADASTRA E EDITA O NOTICIA NO BANCO DE DADOS
-			noticiaRepository.save(noticia);
-
-			// RETORNA A MENSAGEM PARA A PÁGINA
-			attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		} else {
+			modelo.addAttribute("msgErro", msgValidacao.get(0));
 		}
 
 		return "redirect:/noticia/nova";
