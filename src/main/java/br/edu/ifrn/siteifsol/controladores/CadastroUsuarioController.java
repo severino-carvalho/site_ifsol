@@ -37,7 +37,7 @@ public class CadastroUsuarioController {
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
 	@PostMapping("/salvar") // URL PARA ACESSAR A METODO SALVAR E EDITAR
-	public String salvar(Usuario usuario, ModelMap model, RedirectAttributes attr, HttpSession sessao) {
+	public String salvar(Usuario usuario, ModelMap model, RedirectAttributes attr) {
 
 		// SE HAVER ALGUM DADO INVÁLIDO, ELE SERÁ COLOCADO DENTRO DA LISTA
 		List<String> msgValidacao = validarDados(usuario);
@@ -48,7 +48,9 @@ public class CadastroUsuarioController {
 
 			if (!u.isPresent()) {
 				// CRIPTOGRAFANDO A SENHA
-				String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
+				String senhaCriptografada = new BCryptPasswordEncoder()
+						.encode(usuario.getSenha());
+				
 				usuario.setSenha(senhaCriptografada);
 				
 				// DEFINE TODOS OS USUÁRIOS CADASTRADOS COMO ADMINISTRADORES
@@ -60,7 +62,7 @@ public class CadastroUsuarioController {
 				attr.addFlashAttribute("msgCadSucesso", "O peração realizada com sucesso!");
 			} else {
 				// RETORNA A MENSAGEM DE ERRO CASO O EMAIL JÁ ESTEJA CADASTRADO
-				attr.addFlashAttribute("msgCadErro", "Email já cadastrado. por favor, informe um email válido!");
+				attr.addFlashAttribute("msgCadErro", "Email já cadastrado. Por favor, informe um email válido!");
 			}
 		} else {
 			// SE ELA ESTIVER COM ALGUM ERRO NÃO SERÁ POSSÍVEL CADASTRAR UM USUÁRIO
