@@ -72,7 +72,7 @@ public class CadastroNoticiaController {
 					return "noticia/cadastrarNoticia";
 				}
 
-				noticia.setDataPublicacao(getDataNoticia());
+				noticia.setDataPublicacao(getData());
 
 				// CADASTRA E EDITA O NOTICIA NO BANCO DE DADOS
 				noticiaRepository.save(noticia);
@@ -110,13 +110,11 @@ public class CadastroNoticiaController {
 		return msgs;
 	}
 
-	public static String getDataNoticia() {
+	public static String getData() {
 		Calendar c = Calendar.getInstance();
 
 		Date data = c.getTime();
 		DateFormat formataData = DateFormat.getDateInstance();
-
-		System.out.println(formataData.format(data));
 
 		return formataData.format(data);
 	}
