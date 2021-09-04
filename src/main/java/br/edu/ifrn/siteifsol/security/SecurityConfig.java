@@ -26,10 +26,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers("/css/**", "/Imagens/**", "/js/**").permitAll().antMatchers("/publico/**", "/noticia/**")
+		http.authorizeRequests().antMatchers("/css/**", "/Imagens/**", "/js/**").permitAll().antMatchers("/publico/**")
 				.permitAll() // QUE PODEM SER ACESSADAS SEM LOGIN
 
-				.antMatchers("/usuario/cadastro", "/usuario/salvar", "usuario/editar/**", "/usuario/remover/**")
+				.antMatchers("/usuario/cadastro", "/usuario/salvar", "usuario/editar/**", "/usuario/remover/**", "/noticia/**")
 				.hasAuthority(Usuario.ADMIN)
 
 				.anyRequest().authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/adm", true)
