@@ -1,15 +1,9 @@
 <!--	Mensagem de sucesso que aparecerá no cadastro	-->
-<div th:if="${msgCadSucesso} != null">
-	<b th:text="${msgCadSucesso}" style="color: blue;"></b>
+<div th:if="${msgSucesso} != null">
+	<b class="fs-5" th:text="${msgSucesso}" style="color: blue;"></b>
 </div>
 
 <!--	Mensagem de erro que aparecerá no cadastro	-->
-<div th:if="${msgCadErro} != null">
-	<b th:text="${msgCadErro}" style="color: red;"></b>
+<div th:if="${msgErro} != null">
+	<b class="fs-5" th:text="${msgErro}" style="color: red;"></b>
 </div>
-
-<!--	Mensagem de erro que aparecerá na busca	-->
-<div th:if="${msgBusErro} != null">
-	<b th:text="${msgBusErro}" style="color: red;"></b>
-</div>
-

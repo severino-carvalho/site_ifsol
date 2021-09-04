@@ -32,7 +32,7 @@ public class CadastroNoticiaController {
 	@Autowired
 	private NoticiaRepository noticiaRepository;
 
-	@GetMapping("/nova")
+	@GetMapping("/config")
 	public String entrar(ModelMap modelo) {
 
 		modelo.addAttribute("noticia", new Noticia());
@@ -68,6 +68,8 @@ public class CadastroNoticiaController {
 					noticia.setFoto(arquivoBD);// SALVA O NOVO ARQUIVO DO NOTICIA
 				} else {
 					noticia.setFoto(null);
+					modelo.addAttribute("msgErro", "Não foi selecionada nenhuma imagem!");
+					return "noticia/cadastrarNoticia";
 				}
 
 				noticia.setDataPublicacao(getDataNoticia());
@@ -82,10 +84,10 @@ public class CadastroNoticiaController {
 				e.printStackTrace();
 			}
 		} else {
-			modelo.addAttribute("msgErro", msgValidacao.get(0));
+			attr.addFlashAttribute("msgErro", msgValidacao.get(0));
 		}
 
-		return "redirect:/noticia/nova";
+		return "redirect:/noticia/config";
 	}
 
 	private List<String> validaDados(Noticia noticia, MultipartFile arquivo) {

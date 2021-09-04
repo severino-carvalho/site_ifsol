@@ -3,63 +3,146 @@
 
 <head>
 
-</head>
-
 <body>
 
 	<section layout:fragment="corpo2">
-		<div class="container mt-2">
 
-			<div class="row ">
-				<div class="col-md-6 d-flex justify-content-center">
+		<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+			aria-label="breadcrumb" class="w-100">
+			<div class="container">
+				<ol class="breadcrumb mt-2">
+					<li class="breadcrumb-item"><a class="text-decoration-none " href="/adm">Início</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Configurações de notícias</li>
+				</ol>
+			</div>
+		</nav>
+
+
+
+		<div class="container" align="center">
+
+			<!--IMPORTA PARA ESSA PAGINAS O ARQUIVO QUE CONTEM AS MENSAGENS DE ERRO
+					E SUCESSO  -->
+			<div th:replace="fragmentos/mensagens"></div>
+
+			<div class="row mt-4">
+				<div class="col-md-6">
 					<div class="card border-dark mb-3" style="min-width: 36rem;">
 						<div class="card-header bg-dark text-white fw-bold text-center">Nova notícia</div>
-						<div class="card-body text-success py-3">
+						<div class="card-body text-success pt-4 pb-2">
 
-							<div class="py-2" th:replace="fragmentos/msgNot"></div>
+							<form class="px-4" th:action="@{/noticia/salvar}" th:object="${noticia}" method="POST"
+								align="center" enctype="multipart/form-data">
 
-						</div>
+								<input type="hidden" th:field="${noticia.id}" />
 
-						<form class="px-4" th:action="@{/noticia/salvar}" th:object="${noticia}" method="POST"
-							align="center" enctype="multipart/form-data">
-
-							<input type="hidden" th:field="${noticia.id}" />
-
-							<div class="mb-3" style="text-align: left;">
-								<label for="tituloNot" class="form-label">Título: </label>
-								<input type="text" th:field="${noticia.titulo}" class="form-control" id="tituloNot"
-									placeholder="Digite o título">
-							</div>
-
-							<div class="mb-3" style="text-align: left;">
-								<div class="form">
-									<label for="textoNot" class="form-label mt-0">
-										Texto:
-									</label>
-									<textarea class="form-control" placeholder="Escreva o texto da notícia aqui..."
-										id="textoNot" style="height: 130px" th:field="${noticia.texto}"></textarea>
+								<div class="mb-3" style="text-align: left;">
+									<label for="tituloNot" class="form-label">Título: </label>
+									<input type="text" th:field="${noticia.titulo}" class="form-control" id="tituloNot"
+										placeholder="Digite o título">
 								</div>
-							</div>
 
-							<div class="mb-3 text-start">
-								<label for="imgNot" class="form-label mt-0">
-									Foto:
-								</label>
-								<input class="form-control" type="file" th:name="file" />
-								<input type="hidden" th:field="${noticia.foto.id}" />
-							</div>
+								<div class="mb-3" style="text-align: left;">
+									<div class="form">
+										<label for="textoNot" class="form-label mt-0">
+											Texto:
+										</label>
+										<textarea class="form-control" placeholder="Escreva o texto da notícia aqui..."
+											id="textoNot" style="height: 130px" th:field="${noticia.texto}"></textarea>
+									</div>
+								</div>
 
-							<div class="mb-3" style="text-align: left;">
-								<input class="btn btn-success " type="submit"
-									th:value="${noticia.id}  == 0 ? Adicionar : Editar" />
-								<input class="btn btn-danger" type="submit" value="Voltar" formaction="/adm"
-									formmethod="GET" />
-							</div>
-						</form>
+								<div class="mb-3 text-start">
+									<label for="imgNot" class="form-label mt-0">
+										Foto:
+									</label>
+									<input class="form-control" type="file" th:name="file" />
+									<input type="hidden" th:field="${noticia.foto.id}" />
+								</div>
+
+								<div class="mb-3" style="text-align: left;">
+									<input class="btn btn-success " type="submit"
+										th:value="${noticia.id}  == 0 ? Adicionar : Editar" />
+									<input class="btn btn-warning" type="reset" value="Limpar" />
+								</div>
+							</form>
+						</div>
 
 						<!--QUANDO O FOR PARA CADASTRAR O USUARIO APARECERA O BOTÃO "CADASTRO"E PARA EDITAR "EDITAR"  -->
 
 					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="card border-dark md-3" style="width: 26rem;">
+						<div class="card-header bg-dark fw-bold text-white">Busca de empreendimentos</div>
+						<div class="card-body text-dark">
+
+							<form th:action="@{/noticias/buscarnoticia}" method="GET" align="center">
+
+								<div class="mb-3" style="text-align: left;">
+									<label for="tituloBusca" class="form-label">
+										Título:
+									</label>
+									<input type="text" th:name="titulo" class="form-control" id="tituloBusca" />
+								</div>
+
+								<div class="mb-4" style="text-align: left;">
+									<label for="buscaTexto" class="form-label" style="text-align: left;">
+										Texto:
+									</label>
+									<input type="text" th:name="texto" class="form-control" id="buscaTexto" />
+								</div>
+
+								<input class="btn btn-success" type="submit" value="Buscar" />
+								<input class="btn btn-warning" type="reset" value="Limpar" />
+							</form>
+
+							<div class="mt-3 md-0">
+								<p class="fw-bold my-0 py-0 text-muted" style="font-size: 9pt; text-align: justify;">
+									<span style="color:red;">*</span> Para buscar todas as notícias clíque em buscar sem
+									preencher nenhum dado </p>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="mt-5" th:if="${noticias} != null">
+					<table class="table table-bordered table-striped table-hover">
+						<thead class="text-center">
+							<tr class="align-middle">
+								<th>Foto</th>
+								<th>Título</th>
+								<th>Texto</th>
+								<th>Data de publicação</th>
+								<th>Operações</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr class="align-middle" th:each="n : ${noticias}">
+								<td>
+									<img th:if="${n.foto} != null"
+										th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
+										style="max-height: 128px" />
+								</td>
+								<td th:text="${n.titulo}"></td>
+								<td th:text="${n.texto}"></td>
+								<td class="text-center" th:text="${n.dataPublicacao}"></td>
+								</td>
+
+								<td class="text-center">
+									<a class="text-decoration-none" th:href="'/noticias/edita/' + ${n.id}">Editar</a>
+									|
+									<a class="text-decoration-none" th:href="'/noticias/remove/' + ${n.id}"
+										onclick="if (!confirm('Deseja realmente remover a noticia')) return false">Remover</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 
