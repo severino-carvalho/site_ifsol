@@ -1,7 +1,10 @@
 package br.edu.ifrn.siteifsol.controladores;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,7 +39,7 @@ public class CadastroUsuarioController {
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
 	@PostMapping("/salvar") // URL PARA ACESSAR A METODO SALVAR E EDITAR
-	public String salvar(Usuario usuario, ModelMap model, RedirectAttributes attr) {
+	public String salvar(Usuario usuario, ModelMap modelo, RedirectAttributes attr, HttpSession sessao) {
 
 		// SE HAVER ALGUM DADO INVÁLIDO, ELE SERÁ COLOCADO DENTRO DA LISTA
 		List<String> msgValidacao = validarDados(usuario);
@@ -47,35 +49,30 @@ public class CadastroUsuarioController {
 			Optional<Usuario> u = usuarioRepository.findByEmail(usuario.getEmail());
 
 			if (!u.isPresent()) {
-				// CRIPTOGRAFANDO A SENHA
-				String senhaCriptografada = new BCryptPasswordEncoder()
-						.encode(usuario.getSenha());
-				
-				usuario.setSenha(senhaCriptografada);
-				
-				// DEFINE TODOS OS USUÁRIOS CADASTRADOS COMO ADMINISTRADORES
-				usuario.setPerfil("ADMIN");
 
-				// CADASTRA O USUARIO DO BANDO DE DADOS E EDITA
+				// CRIPTOGRAFANDO A SENHA
+				String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
+
+				// DEPOIS DE ENCRIPTADA A SENHA É SALVADA NO OBJETO USUÁRIO ANTES DE SER
+				// GUARDADO NO BANCO DE DADOS
+				usuario.setSenha(senhaCriptografada);
+
+				// SALVA O OBJETO USUÁRIO NO BANCO DE DADOS
 				usuarioRepository.save(usuario);
+
 				// RETORNA A MENSAGEM PARA O A PÁGINA , PARA O USUSARIO VER
 				attr.addFlashAttribute("msgCadSucesso", "O peração realizada com sucesso!");
+
 			} else {
 				// RETORNA A MENSAGEM DE ERRO CASO O EMAIL JÁ ESTEJA CADASTRADO
 				attr.addFlashAttribute("msgCadErro", "Email já cadastrado. Por favor, informe um email válido!");
 			}
 		} else {
 			// SE ELA ESTIVER COM ALGUM ERRO NÃO SERÁ POSSÍVEL CADASTRAR UM USUÁRIO
-			model.addAttribute("msgCadErro", msgValidacao.get(0));
+			modelo.addAttribute("msgCadErro", msgValidacao.get(0));
 			return "cadastro";
 		}
 		return "redirect:/usuario/cadastro";
-	}
-
-	// LISTA CONTENDO AS OPÇÕES PARA O SELECT DO FORMULARIO
-	@ModelAttribute("funcao")
-	public List<String> getFuncao() {
-		return Arrays.asList("Docente", "Bolsista", "Voluntário");
 	}
 
 	/*
@@ -108,5 +105,20 @@ public class CadastroUsuarioController {
 		}
 
 		return msgs;
+	}
+
+	// LISTA CONTENDO AS OPÇÕES PARA O SELECT DO FORMULARIO
+	@ModelAttribute("funcao")
+	public List<String> getFuncao() {
+		return Arrays.asList("Docente", "Bolsista", "Voluntário");
+	}
+
+	public static String getData() {
+		Calendar c = Calendar.getInstance();
+
+		Date data = c.getTime();
+		DateFormat formataData = DateFormat.getDateInstance();
+
+		return formataData.format(data);
 	}
 }
