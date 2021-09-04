@@ -1,7 +1,10 @@
 package br.edu.ifrn.siteifsol.controladores;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -143,5 +146,15 @@ public class CadastroEmpreController {
 		}
 
 		return msgs;
+	}
+	
+	// FUNÇÃO PARA PEGAR A DATA ATUAL
+	public static String getData() {
+		Calendar c = Calendar.getInstance();
+
+		Date data = c.getTime();
+		DateFormat formataData = DateFormat.getDateInstance();
+
+		return formataData.format(data);
 	}
 }

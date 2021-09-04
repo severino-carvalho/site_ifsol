@@ -22,22 +22,26 @@ public class empreendimento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
 
-	@Column(nullable = false)
+	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
 	private String nome;
 
-	@Column(nullable = false)
+	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
 	private String email;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
 	private Cidade cidade;
 
-	@Column(nullable = false)
+	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
 	private String descricao;
+
+	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
+	private String criadoPor;
+
+	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
+	private String dataCriacao;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Arquivo foto;
-	
-	
 
 	/*
 	 * CONSTRUTORES PARA SITEMA POSSA DIFERENCIAR UM ID DO OUTRO NÃO ADICIONANDO
@@ -108,6 +112,22 @@ public class empreendimento {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public String getCriadoPor() {
+		return criadoPor;
+	}
+
+	public void setCriadoPor(String criadoPor) {
+		this.criadoPor = criadoPor;
+	}
+
+	public String getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(String dataCriacao) {
+		this.dataCriacao = dataCriacao;
 	}
 
 	public int getId() {

@@ -113,6 +113,7 @@ public class CadastroUsuarioController {
 		return Arrays.asList("Docente", "Bolsista", "Voluntário");
 	}
 
+	// FUNÇÃO PARA PEGAR A DATA ATUAL
 	public static String getData() {
 		Calendar c = Calendar.getInstance();
 
