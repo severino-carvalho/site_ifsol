@@ -32,9 +32,15 @@ public class Usuario {
 
 	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
 	private String funcao;
+	
+	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
+	private String criadoPor;
 
-	@Column(nullable = false)
-	private String perfil = USUARIO_COMUM;
+	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
+	private String dataCriacao;
+	
+	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
+	private String perfil = ADMIN;
 	
 
 	
@@ -118,6 +124,22 @@ public class Usuario {
 
 	public void setPerfil(String perfil) {
 		this.perfil = perfil;
+	}
+
+	public String getCriadoPor() {
+		return criadoPor;
+	}
+
+	public void setCriadoPor(String criadoPor) {
+		this.criadoPor = criadoPor;
+	}
+
+	public String getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(String dataCriacao) {
+		this.dataCriacao = dataCriacao;
 	}
 
 	public static String getAdmin() {
