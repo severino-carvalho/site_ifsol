@@ -15,42 +15,48 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifrn.siteifsol.dominio.empreendimento;
+import br.edu.ifrn.siteifsol.repository.ArquivoRepository;
 import br.edu.ifrn.siteifsol.repository.empreendimentorepository;
 
 @Controller
 @RequestMapping("/usuarios") // URL PARA ACESSAR A PAGINA
 public class BuscarEmpreendimentosController {
 
-	@GetMapping("/buscaem") // URL PARA ACESSAR A PAGINA
-	public String entrarBusca() {
-		return "buscaem";
-	}
-
 	@Autowired
 	private empreendimentorepository empreendimentosrepository;
 
-	@Transactional(readOnly = true) // INFORMA QUE NÃO FAZ ALTERAÇÕES NO BANCO DE DADOS
+	@Autowired
+	private ArquivoRepository arquivoRepository;
+
+	@GetMapping("/buscaem") // URL PARA ACESSAR A PAGINA
+	public String entrarBusca() {
+		return "cadastroEmpre";
+	}
 
 	/*
 	 * METODO A SEGUIR FAZ AS BUSCAS PELOS EMPREENDIMENTOS CADASTRADOS NO BANCO DE
 	 * DADOS E RETONA ESSA LISTA DE USUARIOS CADASTRADOS PARA A PÁGINA WEB
 	 */
 
+	@Transactional(readOnly = true) // INFORMA QUE NÃO FAZ ALTERAÇÕES NO BANCO DE DADOS
 	@GetMapping("/buscaempre")
 	public String buscaempre(@RequestParam(name = "nome", required = false) String nome,
 			@RequestParam(name = "email", required = false) String email,
 			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, HttpSession sessao,
 			ModelMap model) {
 
+		// LISTA DE EMPREENDIMENTOS
 		List<empreendimento> empreendimentosEncontrados = empreendimentosrepository.findByEmailAndNome(email, nome);
 
-		model.addAttribute("empreendimentosEncontrados", empreendimentosEncontrados); // RETORNA OS USUARIOS ENCONTRADOS
-																						// PARA A PÁGINA WEB
+		// RETORNA PARA A PÁGINA UM NOVO EMPREENDIMENTO
+		model.addAttribute("empre", new empreendimento());
+		model.addAttribute("empreendimentosEncontrados", empreendimentosEncontrados); // RETORNA OS EMPREENDIMENTOS ENCONTRADOS PARA A PÁGINA WEB
 
 		if (mostrarTodosDados != null) {
 			model.addAttribute("mostrarTodosDados", true);
 		}
-		return "/buscaem";
+		
+		return "/cadastroEmpre";
 	}
 
 	/*
@@ -60,9 +66,21 @@ public class BuscarEmpreendimentosController {
 	@GetMapping("/edita/{id}")
 	public String iniciarEdição(@PathVariable("id") Integer idempre, ModelMap model, HttpSession sessao) {
 
-		empreendimento u = empreendimentosrepository.findById(idempre).get();
+		try {
+			// LISTA DE EMPREENDIMENTOS ENCONTRADOS
+			List<empreendimento> empEnc = empreendimentosrepository.findAll();
 
-		model.addAttribute("empre", u);
+			// BUSCA O EMPREENDIMENTO ESPECÍFICO DA EDIÇÃO
+			empreendimento u = empreendimentosrepository.findById(idempre).get();
+
+			// RETORNA O EMPREENDIMENTO DE EDIÇÃO PARA A PÁGINA
+			model.addAttribute("empre", u);
+
+			// RETORNA A LISTA DE EMPREENDIMENTO PARA A PÁGINA
+			model.addAttribute("empreendimentosEncontrados", empEnc);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return "cadastroEmpre";
 	}
@@ -75,9 +93,29 @@ public class BuscarEmpreendimentosController {
 	@GetMapping("/remove/{id}")
 	public String remover(@PathVariable("id") Integer idempree, HttpSession sessao, RedirectAttributes attr) {
 
-		empreendimentosrepository.deleteById(idempree);// DELETA O EMPREENDIMENTO PELO ID
-		attr.addAttribute("msgSucesso", "Usuario removido com sucesso!");
+		try {
+			// FAZ A BUSCA DO EMPREENDIMENTO SOLICITADO DA REMOÇÃO
+			empreendimento em = empreendimentosrepository.findById(idempree).get();
 
-		return "redirect:/usuarios/buscaem";
+			// DELETA A FOTO DO EMPREENDIMENTO PELO ID
+			arquivoRepository.deleteById(em.getFoto().getId());
+			
+			// DELETA O EMPREENDIMENTO PELO ID
+			empreendimentosrepository.deleteById(idempree);
+
+			
+			// APÓS A REMOÇÃO, LISTA OS EMPREENDIMENTOS
+			List<empreendimento> empEnc = empreendimentosrepository.findAll();
+			
+			// RETORNA A LISTA DE EMPREENDIMENTO PARA A PÁGINA
+			attr.addFlashAttribute("empreendimentosEncontrados", empEnc);
+	
+			// RETORNA A MENSAGEM DE SUCESSO PARA A PÁGINA
+			attr.addFlashAttribute("msgSucesso", "Usuario removido com sucesso!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/usuario/cadastroem";
 	}
 }

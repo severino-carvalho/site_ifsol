@@ -83,8 +83,20 @@ public class CadastroEmpreController {
 				empre.setFoto(null);
 			}
 
+			// MODIFICA A DATA DE CRIAÇÃO
+			empre.setDataCriacao(getData());
+
+			// MODIFICA O USUÁRIO QUE CRIOU O EMPREENDIMENTO
+			empre.setCriadoPor("Netin");
+
 			// CADASTRA E EDITA O EMPREENDIMENTO NO BANCO DE DADOS
 			empreendimentosrepository.save(empre);
+
+			// LISTA DE EMPREENDIMENTOS ENCONTRADOS
+			List<empreendimento> empEnc = empreendimentosrepository.findAll();
+
+			// RETORNA A LISTA PARA A PÁGINA
+			attr.addFlashAttribute("empreendimentosEncontrados", empEnc);
 
 			// RETORNA A MENSAGEM PARA A PÁGINA
 			attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
@@ -147,7 +159,7 @@ public class CadastroEmpreController {
 
 		return msgs;
 	}
-	
+
 	// FUNÇÃO PARA PEGAR A DATA ATUAL
 	public static String getData() {
 		Calendar c = Calendar.getInstance();
