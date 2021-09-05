@@ -33,7 +33,7 @@
 						</div>
 						<div class="card-body">
 							<p class="card-text fw-bold">
-								Total de usuáros:
+								Total de usuáros: <span class="badge rounded-pill bg-success" th:text="${totUsuarios}"></span>
 							</p>
 
 							<div>
@@ -53,7 +53,7 @@
 						</div>
 						<div class="card-body">
 							<p class="card-text fw-bold">
-								Total de empreendimentos:
+								Total de empreendimentos: <span class="badge rounded-pill bg-primary" th:text="${totEmpre}"></span>
 							</p>
 							<div>
 								<a href="/usuario/cadastroem" class="btn btn-primary">Abrir</a>
@@ -71,7 +71,7 @@
 						</div>
 						<div class="card-body">
 							<p class="card-text fw-bold">
-								Total de usuáros:
+								Total de notícias: <span class="badge rounded-pill bg-dark" th:text="${totNoticias}"></span>
 							</p>
 							<div>
 								<a href="/noticia/config" sec:authorize="hasAuthority('ADMIN')"
