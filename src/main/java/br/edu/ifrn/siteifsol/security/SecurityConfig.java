@@ -26,17 +26,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers("/css/**", "/Imagens/**", "/js/**").permitAll().antMatchers("/publico/**")
-				.permitAll() // QUE PODEM SER ACESSADAS SEM LOGIN
+		http.authorizeRequests()
+				// QUE PODEM SER ACESSADAS SEM LOGIN
+				.antMatchers("/css/**", "/Imagens/**", "/js/**").permitAll().antMatchers("/publico/**").permitAll()
 
-				.antMatchers("/usuario/cadastro", "/usuario/salvar", "usuario/editar/**", "/usuario/remover/**", "/noticia/**")
+				.antMatchers("/usuario/cadastro", "/usuario/salvar", "usuario/editar/**", "/usuario/remover/**",
+						"/noticia/**")
 				.hasAuthority(Usuario.ADMIN)
 
 				.anyRequest().authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/adm", true)
 				.failureUrl("/login-erro").permitAll()
 
-				.and().logout().logoutSuccessUrl("/adm").and().rememberMe(); // DESFACER O LOGIN, SAIR
-
+				.and().logout().logoutSuccessUrl("/adm").and().rememberMe(); // DESFAzER O LOGIN, SAIR
 	}
 
 	@Override
