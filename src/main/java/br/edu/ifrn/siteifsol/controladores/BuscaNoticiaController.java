@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifrn.siteifsol.dominio.Noticia;
+import br.edu.ifrn.siteifsol.repository.ArquivoRepository;
 import br.edu.ifrn.siteifsol.repository.NoticiaRepository;
 
 @Controller
@@ -22,7 +23,10 @@ import br.edu.ifrn.siteifsol.repository.NoticiaRepository;
 public class BuscaNoticiaController {
 
 	@Autowired
-	NoticiaRepository noticiaRepository;
+	private NoticiaRepository noticiaRepository;
+	
+	@Autowired
+	private ArquivoRepository arquivoRepository;
 
 	@GetMapping("/buscarnoticia")
 	public String buscarNoticia(@RequestParam(name = "titulo", required = false) String titulo,
@@ -64,8 +68,23 @@ public class BuscaNoticiaController {
 	public String remover(@PathVariable("id") Integer idNoticia, HttpSession sessao, RedirectAttributes attr) {
 
 		try {
-			noticiaRepository.deleteById(idNoticia);// DELETA O EMPREENDIMENTO PELO ID
+			// GUAR A NOTICIA QUE O ADM QUER REMOVER NA VARIÁVEL
+			Noticia noticia = noticiaRepository.findById(idNoticia).get();
+			
+			// ANTES DE REMOVER A NOTÍCIA, FAZ A REMORÇÃO DA IMAGEM
+			arquivoRepository.deleteById(noticia.getFoto().getId());
+			
+			// DELETA A NOTÍCIA PELO ID
+			noticiaRepository.deleteById(idNoticia);
+			
+			// LISTA TODAS AS NOTÍCIAS QUE ESTÃO NO BANCO
+			List<Noticia> noticias = noticiaRepository.findAll();
+			
+			// ENVIA UMA MENSAGEM DE SUCESSO PARA A PÁGINA
 			attr.addAttribute("msgSucesso", "Noticia removida com sucesso!");
+			
+			// ENVIA TODAS AS NOTÍCIAS QUE ESTÃO NO BANCO PARA A PÁGINA
+			attr.addFlashAttribute("noticias", noticias);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
