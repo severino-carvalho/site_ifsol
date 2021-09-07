@@ -28,7 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 				// QUE PODEM SER ACESSADAS SEM LOGIN
-				.antMatchers("/css/**", "/Imagens/**", "/js/**").permitAll().antMatchers("/publico/**").permitAll()
+				.antMatchers("/css/**", "/Imagens/**", "/js/**").permitAll().antMatchers("/publico/**", 
+						"/download/**").permitAll()
 
 				.antMatchers("/usuario/cadastro", "/usuario/salvar", "usuario/editar/**", "/usuario/remover/**",
 						"/noticia/**")

@@ -27,6 +27,8 @@ public class DownloadArquivoController {
 	@GetMapping("/download/{​​idArquivo}​​")
 	public ResponseEntity<?> downloadFile(@PathVariable Long idArquivo, @PathParam("salvar") String salvar) {
 
+		System.out.println("Pelo menos entrou...");
+
 		// Load file from database
 		Arquivo arquivoBD = arquivoRepository.findById(idArquivo).get();
 
@@ -36,7 +38,6 @@ public class DownloadArquivoController {
 
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(arquivoBD.getTipoArquivo()))
 				.header(HttpHeaders.CONTENT_DISPOSITION, texto).body(new ByteArrayResource(arquivoBD.getDados()));
-
 	}
 
 }
