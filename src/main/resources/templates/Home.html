@@ -31,7 +31,11 @@
 				<div class="row">
 					<div class="col-md-6 mt-4" th:each="n : ${noticias}">
 						<div class="card" style="min-width: 18rem;">
+							
+							<!-- Texto para teste -->
+							
 							<input type="hidden" th:text="${n.foto.id}" />
+							
 							<!--
 								@{/download/} + ${n.foto.id} + '?salvar=false'
 							-->
