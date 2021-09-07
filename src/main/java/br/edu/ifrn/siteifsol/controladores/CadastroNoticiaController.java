@@ -81,7 +81,8 @@ public class CadastroNoticiaController {
 				attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				attr.addFlashAttribute("msgErro", "ERRO INTERNO DO SERVIDOR");
+				return "redirect:/noticia/config";
 			}
 		} else {
 			attr.addFlashAttribute("msgErro", msgValidacao.get(0));

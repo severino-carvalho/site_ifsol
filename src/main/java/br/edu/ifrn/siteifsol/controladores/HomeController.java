@@ -17,7 +17,7 @@ import br.edu.ifrn.siteifsol.repository.NoticiaRepository;
 public class HomeController {
 
 	@Autowired
-	NoticiaRepository noticiaRepository;
+	private NoticiaRepository noticiaRepository;
 
 	@GetMapping("/publico/home")
 	public String home(ModelMap modelo) {
@@ -41,10 +41,10 @@ public class HomeController {
 				return "redirect:/publico/home";
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
-
-		return "noticia/buscaNoticia";
+		
+		return "noticia/buscarNoticia";
 	}
 
 }

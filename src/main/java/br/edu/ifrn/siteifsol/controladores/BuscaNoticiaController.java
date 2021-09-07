@@ -42,7 +42,7 @@ public class BuscaNoticiaController {
 				modelo.addAttribute("noticias", noticiasEncontradas);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
 
 		return "noticia/cadastrarNoticia";
