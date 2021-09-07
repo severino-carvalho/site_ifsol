@@ -56,7 +56,6 @@ public class CadastroEmpreController {
 		return "cadastroEmpre";
 	}
 
-	@SuppressWarnings("unused")
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
 
 	// URL PARA ACESSAR A METODO SALVAR E EDITAR OS EMPREENDIMENTOS
@@ -66,66 +65,77 @@ public class CadastroEmpreController {
 
 		List<String> msgValidacao = validaDados(empre); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DO CAMPOS
 
-		/*
-		 * O CODIGO A SEGUIR FOI FEITO PARA UPLOAD E DOWNLOAD DE UM ARQUIVO NO BANCO DE
-		 * DADOS E O TRY FOI NECESSARIO PARA CASO OCORRA UM ERRO SEJA LANÇADO UMA
-		 * EXCECAO
-		 * 
-		 */
+		// SE HOUVER ALGUM ERRO, VAI SER RETORNADO O PROMEIRO ERRO PARA A PÁGINA
+		if (!msgValidacao.isEmpty()) {
 
-		try {
+			attr.addFlashAttribute("msgErro", msgValidacao.get(0));
+			return "redirect:/usuario/cadastroem";
 
-			// FAZ A BUSCA NO BD E RETORNA O NOME DO USUÁRIO LOGADO NO SISTEMA
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String currentPrincipalName = authentication.getName();
-			String nomeUsuarioADM = usuariorepository.findByEmail(currentPrincipalName).get().getNome();
+		} else { // SE NÃO, VIA SEGUIR O FLUXO NORMAL
 
-			if (arquivo != null && !arquivo.isEmpty()) {
+			try {
 
-				// NORMALIZANDO NOME DO ARQUIVO
-				String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
-				Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
+				// FAZ A BUSCA NO BD E RETORNA O NOME DO USUÁRIO LOGADO NO SISTEMA
+				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+				String currentPrincipalName = authentication.getName();
+				String nomeUsuarioADM = usuariorepository.findByEmail(currentPrincipalName).get().getNome();
 
-				// SalVA O ARQUIVO NO BANCO DE DADOS
-				arquivoRepository.save(arquivoBD);
+				/*
+				 * O CODIGO A SEGUIR FOI FEITO PARA UPLOAD E DOWNLOAD DE UM ARQUIVO NO BANCO DE
+				 * DADOS E O TRY FOI NECESSARIO PARA CASO OCORRA UM ERRO SEJA LANÇADO UMA
+				 * EXCECAO
+				 * 
+				 */
 
-				if (empre.getFoto() != null && empre.getFoto().getId() != null && empre.getFoto().getId() > 0)
-					arquivoRepository.delete(empre.getFoto());
+				if (arquivo != null && !arquivo.isEmpty()) {
 
-				// SALVA O NOVO ARQUIVO DO EMPREENDIMENTO
-				empre.setFoto(arquivoBD);
-			} else {
-				empre.setFoto(null);
+					// NORMALIZANDO NOME DO ARQUIVO
+					String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
+					Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
+
+					if (empre.getFoto() != null && empre.getFoto().getId() != null && empre.getFoto().getId() > 0) {
+						arquivoRepository.delete(empre.getFoto());
+					}
+
+					// SALVA O NOVO ARQUIVO DO EMPREENDIMENTO
+					empre.setFoto(arquivoBD);
+
+					// SAlVA O ARQUIVO NO BANCO DE DADOS
+					arquivoRepository.save(arquivoBD);
+
+				} else {
+					empre.setFoto(null);
+				}
+
+				// MODIFICA A DATA DE CRIAÇÃO
+				empre.setDataCriacao(getData());
+
+				/*
+				 * SE ESTIVER VAZIO, SIGNIFICA QUE O EMPREENDIMENTO ESTÁ SENDO CADASTRADO ENTÃO
+				 * É COLOCADO O NOME DO USUÁRIO ADM QUE REALIZA O CADASTRO
+				 * 
+				 * SE JÁ CONTER ALGUM VALOR, SIGNIFICA QUE É UMA EDIÇÃO, ENTÃO NÃO PRECISA
+				 */
+				if (empre.getCriadoPor() == null || empre.getCriadoPor().isEmpty()) {
+					// MODIFICA O USUÁRIO QUE CRIOU O EMPREENDIMENTO
+					empre.setCriadoPor(nomeUsuarioADM);
+				}
+
+				// CADASTRA E EDITA O EMPREENDIMENTO NO BANCO DE DADOS
+				empreendimentosrepository.save(empre);
+
+				// LISTA DE EMPREENDIMENTOS ENCONTRADOS
+				List<empreendimento> empEnc = empreendimentosrepository.findAll();
+
+				// RETORNA A LISTA PARA A PÁGINA
+				attr.addFlashAttribute("empreendimentosEncontrados", empEnc);
+
+				// RETORNA A MENSAGEM PARA A PÁGINA
+				attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
+
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-
-			// MODIFICA A DATA DE CRIAÇÃO
-			empre.setDataCriacao(getData());
-
-			/*
-			 * SE ESTIVER VAZIO, SIGNIFICA QUE O EMPREENDIMENTO ESTÁ SENDO CADASTRADO ENTÃO
-			 * É COLOCADO O NOME DO USUÁRIO ADM QUE REALIZA O CADASTRO
-			 * 
-			 * SE JÁ CONTER ALGUM VALOR, SIGNIFICA QUE É UMA EDIÇÃO, ENTÃO NÃO PRECISA
-			 */
-			if (empre.getCriadoPor() == null) {
-				// MODIFICA O USUÁRIO QUE CRIOU O EMPREENDIMENTO
-				empre.setCriadoPor(nomeUsuarioADM);
-			}
-
-			// CADASTRA E EDITA O EMPREENDIMENTO NO BANCO DE DADOS
-			empreendimentosrepository.save(empre);
-
-			// LISTA DE EMPREENDIMENTOS ENCONTRADOS
-			List<empreendimento> empEnc = empreendimentosrepository.findAll();
-
-			// RETORNA A LISTA PARA A PÁGINA
-			attr.addFlashAttribute("empreendimentosEncontrados", empEnc);
-
-			// RETORNA A MENSAGEM PARA A PÁGINA
-			attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
-
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 
 		return "redirect:/usuario/cadastroem";
