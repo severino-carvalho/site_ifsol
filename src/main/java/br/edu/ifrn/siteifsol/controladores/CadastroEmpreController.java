@@ -10,6 +10,8 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -29,17 +31,15 @@ import br.edu.ifrn.siteifsol.dominio.Cidade;
 import br.edu.ifrn.siteifsol.dominio.empreendimento;
 import br.edu.ifrn.siteifsol.repository.ArquivoRepository;
 import br.edu.ifrn.siteifsol.repository.Cidaderepository;
+import br.edu.ifrn.siteifsol.repository.Usuariorepository;
 import br.edu.ifrn.siteifsol.repository.empreendimentorepository;
 
 @Controller
 @RequestMapping("/usuario") // URL PARA ACESSAR A PAGINA
 public class CadastroEmpreController {
 
-	@GetMapping("/cadastroem") // URL PARA ACESSAR A PAGINA
-	public String entrarCadastro(ModelMap model) {
-		model.addAttribute("empre", new empreendimento());
-		return "cadastroEmpre";
-	}
+	@Autowired
+	private Usuariorepository usuariorepository;
 
 	@Autowired
 	private empreendimentorepository empreendimentosrepository;
@@ -49,6 +49,12 @@ public class CadastroEmpreController {
 
 	@Autowired
 	private ArquivoRepository arquivoRepository;
+
+	@GetMapping("/cadastroem") // URL PARA ACESSAR A PAGINA
+	public String entrarCadastro(ModelMap model) {
+		model.addAttribute("empre", new empreendimento());
+		return "cadastroEmpre";
+	}
 
 	@SuppressWarnings("unused")
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
@@ -69,16 +75,25 @@ public class CadastroEmpreController {
 
 		try {
 
+			// FAZ A BUSCA NO BD E RETORNA O NOME DO USUÁRIO LOGADO NO SISTEMA
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String currentPrincipalName = authentication.getName();
+			String nomeUsuarioADM = usuariorepository.findByEmail(currentPrincipalName).get().getNome();
+
 			if (arquivo != null && !arquivo.isEmpty()) {
+
 				// NORMALIZANDO NOME DO ARQUIVO
 				String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
 				Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
-				arquivoRepository.save(arquivoBD); // SalVA O ARQUIVO NO BANCO DE DADOS
+
+				// SalVA O ARQUIVO NO BANCO DE DADOS
+				arquivoRepository.save(arquivoBD);
 
 				if (empre.getFoto() != null && empre.getFoto().getId() != null && empre.getFoto().getId() > 0)
 					arquivoRepository.delete(empre.getFoto());
 
-				empre.setFoto(arquivoBD);// SALVA O NOVO ARQUIVO DO EMPREENDIMENTO
+				// SALVA O NOVO ARQUIVO DO EMPREENDIMENTO
+				empre.setFoto(arquivoBD);
 			} else {
 				empre.setFoto(null);
 			}
@@ -86,8 +101,16 @@ public class CadastroEmpreController {
 			// MODIFICA A DATA DE CRIAÇÃO
 			empre.setDataCriacao(getData());
 
-			// MODIFICA O USUÁRIO QUE CRIOU O EMPREENDIMENTO
-			empre.setCriadoPor("Netin");
+			/*
+			 * SE ESTIVER VAZIO, SIGNIFICA QUE O EMPREENDIMENTO ESTÁ SENDO CADASTRADO ENTÃO
+			 * É COLOCADO O NOME DO USUÁRIO ADM QUE REALIZA O CADASTRO
+			 * 
+			 * SE JÁ CONTER ALGUM VALOR, SIGNIFICA QUE É UMA EDIÇÃO, ENTÃO NÃO PRECISA
+			 */
+			if (empre.getCriadoPor() == null) {
+				// MODIFICA O USUÁRIO QUE CRIOU O EMPREENDIMENTO
+				empre.setCriadoPor(nomeUsuarioADM);
+			}
 
 			// CADASTRA E EDITA O EMPREENDIMENTO NO BANCO DE DADOS
 			empreendimentosrepository.save(empre);

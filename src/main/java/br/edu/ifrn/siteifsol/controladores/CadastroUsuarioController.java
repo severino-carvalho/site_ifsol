@@ -11,6 +11,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,14 +30,14 @@ import br.edu.ifrn.siteifsol.repository.Usuariorepository;
 @RequestMapping("/usuario") // URL PARA ACESSAR A PAGINA
 public class CadastroUsuarioController {
 
+	@Autowired
+	private Usuariorepository usuarioRepository;
+
 	@GetMapping("/cadastro") // URL PARA ACESSAR A PAGINA
 	public String entrarCadastro(ModelMap model) {
 		model.addAttribute("usuario", new Usuario());
 		return "cadastro";
 	}
-
-	@Autowired
-	private Usuariorepository usuarioRepository;
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
 	@PostMapping("/salvar") // URL PARA ACESSAR A METODO SALVAR E EDITAR
@@ -50,12 +52,28 @@ public class CadastroUsuarioController {
 
 			if (!u.isPresent()) {
 
+				// FAZ A BUSCA NO BD E RETORNA O NOME DO USUÁRIO LOGADO NO SISTEMA
+				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+				String currentPrincipalName = authentication.getName();
+				String nomeUsuarioADM = usuarioRepository.findByEmail(currentPrincipalName).get().getNome();
+
 				// CRIPTOGRAFANDO A SENHA
 				String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
 
 				// DEPOIS DE ENCRIPTADA A SENHA É SALVADA NO OBJETO USUÁRIO ANTES DE SER
 				// GUARDADO NO BANCO DE DADOS
 				usuario.setSenha(senhaCriptografada);
+				
+				/*
+				 * SE ESTIVER VAZIO, SIGNIFICA QUE O USUÁRIO ESTÁ SENDO CADASTRADO ENTÃO
+				 * É COLOCADO O NOME DO USUÁRIO ADM QUE REALIZA O CADASTRO
+				 * 
+				 * SE JÁ CONTER ALGUM VALOR, SIGNIFICA QUE É UMA EDIÇÃO, ENTÃO NÃO PRECISA
+				 */
+				if (usuario.getCriadoPor() == null) {
+					// MODIFICA O USUÁRIO QUE CRIOU O EMPREENDIMENTO
+					usuario.setCriadoPor(nomeUsuarioADM);
+				}
 
 				// SALVA O OBJETO USUÁRIO NO BANCO DE DADOS
 				usuarioRepository.save(usuario);
