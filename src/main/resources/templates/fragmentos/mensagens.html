@@ -1,9 +1,9 @@
 <!--	Mensagem de sucesso que aparecerá no cadastro	-->
-<div th:if="${msgSucesso} != null">
+<div class="fs-5 mb-4" th:if="${msgSucesso} != null">
 	<b class="fs-5" th:text="${msgSucesso}" style="color: blue;"></b>
 </div>
 
 <!--	Mensagem de erro que aparecerá no cadastro	-->
-<div th:if="${msgErro} != null">
+<div class="mb-4" th:if="${msgErro} != null">
 	<b class="fs-5" th:text="${msgErro}" style="color: red;"></b>
 </div>
