@@ -71,17 +71,16 @@ public class BuscarEmpreendimentosController {
 			List<empreendimento> empEnc = empreendimentosrepository.findAll();
 
 			// BUSCA O EMPREENDIMENTO ESPECÍFICO DA EDIÇÃO
-			empreendimento u = empreendimentosrepository.findById(idempre).get();
+			empreendimento e = empreendimentosrepository.findById(idempre).get();
 
 			// RETORNA O EMPREENDIMENTO DE EDIÇÃO PARA A PÁGINA
-			model.addAttribute("empre", u);
+			model.addAttribute("empre", e);
 
 			// RETORNA A LISTA DE EMPREENDIMENTO PARA A PÁGINA
 			model.addAttribute("empreendimentosEncontrados", empEnc);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return "cadastroEmpre";
 	}
 

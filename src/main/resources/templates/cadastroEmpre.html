@@ -54,7 +54,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 		<div class="container">
 
 			<div class="card-body text-success text-center">
-			<!--IMPORTA PARA ESSA PAGINAS O ARQUIVO QUE CONTEM AS MENSAGENS DE ERRO
+				<!--IMPORTA PARA ESSA PAGINAS O ARQUIVO QUE CONTEM AS MENSAGENS DE ERRO
 					E SUCESSO  -->
 				<div th:replace="fragmentos/mensagens" style="color:black;"></div>
 			</div>
@@ -98,8 +98,8 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 									Descrição:
 								</label>
 								<textarea class="form-control" placeholder="Escreva a descrição do empreendimento"
-											id="textoNot" style="height: 130px" th:field="${empre.descricao}">
-											</textarea>
+									id="textoNot" style="height: 130px" th:field="${empre.descricao}">
+								</textarea>
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
@@ -108,6 +108,25 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 								</label>
 								<input class="form-control" type="file" th:name="file" />
 								<input type="hidden" th:field="${empre.foto.id}" />
+							</div>
+
+							<div class="mb-3" style="text-align: left;" th:if="${empre.criadoPor} != null">
+								<div class="row">
+									<div class="col-sm-6">
+										<label for="exampleInputName1" class="form-label mt-0">
+											Criado por:
+										</label>
+										<input class="form-control" type="text" th:if="${empre.criadoPor} != null"
+											th:field="${empre.criadoPor}" readonly />
+									</div>
+									<div class="col-sm-6">
+										<label for="exampleInputName1" class="form-label mt-0">
+											Data de criação:
+										</label>
+										<input class="form-control" type="text" th:if="${empre.criadoPor} != null"
+											th:field="${empre.dataCriacao}" readonly />
+									</div>
+								</div>
 							</div>
 
 							<div class="mb-3 py-2" style="text-align: left;">
@@ -122,12 +141,12 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 					</div>
 				</div>
 
-				<div class="col-md-6">
+				<div class="col-md-6 ">
 					<div class="card border-primary md-3" style="width: 30rem;">
 						<div class="card-header bg-primary fw-bold text-white">Busca de empreendimentos</div>
 						<div class="card-body text-dark">
 
-							
+
 							<form th:action="@{/usuarios/buscaempre}" method="GET" align="center">
 								<div class="mb-3" style="text-align: left;">
 									<label for="exampleInputEmail1" class="form-label">Nome:
@@ -151,7 +170,8 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 							<div class="mt-3 md-0">
 								<p class="fw-bold my-0 py-0 text-muted" style="font-size: 9pt; text-align: justify;">
-									<span style="color:red;">*</span> Para buscar todos os empreendimentos clíque em buscar
+									<span style="color:red;">*</span> Para buscar todos os empreendimentos clíque em
+									buscar
 									sem
 									preencher nenhum dado </p>
 							</div>
@@ -160,9 +180,10 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 					</div>
 				</div>
 			</div>
-			
-			<div class="row">
-				<div class="mt-5" th:if="${empreendimentosEncontrados} != null">
+		</div>
+
+		<div class="row px-3">
+			<div class="mt-5" th:if="${empreendimentosEncontrados} != null">
 				<table class="table table-bordered table-striped table-hover">
 					<thead class="text-center">
 						<tr class="align-middle">
@@ -178,31 +199,41 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 					</thead>
 
 					<tbody>
-						<tr class="align-middle" th:each="u : ${empreendimentosEncontrados}">
-							<td>
-								<img th:if="${u.foto != null}" th:src="@{/download/} + ${u.foto.id} + '?salvar=false'"
+						<tr class="align-middle" th:each="e : ${empreendimentosEncontrados}">
+							<td class="text-center" style="width: 14rem;">
+								<img th:if="${e.foto != null}" th:src="@{/download/} + ${e.foto.id} + '?salvar=false'"
 									style="max-height: 128px" />
 							</td>
-							<td th:text="${u.nome}"></td>
-							<td th:text="${u.email}"></td>
-							<td class="text-center" th:text="${u.cidade.nome}"></td>
-							<td class="text-start" th:if="${mostrarTodosDados} == true" th:text="${u.descricao}"></td>
-							<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${u.criadoPor}"></td>
-							<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${u.dataCriacao}"></td>
+							<td th:text="${e.nome}"></td>
+							<td th:text="${e.email}"></td>
+							<td class="text-center" th:text="${e.cidade.nome}"></td>
+							<td class="text-start" th:if="${mostrarTodosDados} == true" th:text="${e.descricao}">
+							</td>
+							<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${e.criadoPor}">
+							</td>
+							<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${e.dataCriacao}">
+							</td>
 
 							<td class="text-center">
-								
-								<a class="text-decoration-none link-operacao" th:href="'/usuarios/edita/' + ${u.id}" title="Editar">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-  										<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
- 										<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+
+								<a class="text-decoration-none link-operacao" th:href="'/usuarios/edita/' + ${e.id}"
+									title="Editar">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-pencil-square" viewBox="0 0 16 16">
+										<path
+											d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+										<path fill-rule="evenodd"
+											d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
 									</svg>
 								</a>
 								|
-								<a class="text-decoration-none link-operacao" th:href="'/usuarios/remove/' + ${u.id}"
-									onclick="if (!confirm('Deseja realmente remover o empreendimento?')) return false" title="Remover">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-  										<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+								<a class="text-decoration-none link-operacao" th:href="'/usuarios/remove/' + ${e.id}"
+									onclick="if (!confirm('Deseja realmente remover o empreendimento?')) return false"
+									title="Remover">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-trash-fill" viewBox="0 0 16 16">
+										<path
+											d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
 									</svg>
 								</a>
 							</td>
@@ -210,8 +241,8 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 					</tbody>
 				</table>
 			</div>
-			</div>
 		</div>
+
 	</section>
 </body>
 

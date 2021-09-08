@@ -44,6 +44,7 @@ public class BuscaUsuarioController {
 		// BUSCA OS USUARIOS NO BANCO DE DADOS ATRAVES DO NOME E EMAIL
 		List<Usuario> usuariosEncontrados = usuarioRepository.findByEmailAndNome(email, nome);
 
+		// INSTANCIA UM NOVO USUÁRIO PARA A PÁGINA DE CADASTRO SE NÃO VAI OCORRER ERRO
 		model.addAttribute("usuario", new Usuario());
 
 		if (!usuariosEncontrados.isEmpty()) {
@@ -54,6 +55,7 @@ public class BuscaUsuarioController {
 				model.addAttribute("mostrarTodosDados", true);
 			}
 		}
+
 		return "cadastro";
 	}
 
@@ -65,8 +67,18 @@ public class BuscaUsuarioController {
 	public String iniciarEdição(@PathVariable("id") Integer idUsuario, ModelMap model) {
 
 		try {
+			// LISTA TODOS OS USUÁRIOS PARA SEREM MOSTRADO NA PÁGINA DE DRUD APÓS O FIM DO
+			// MÉTODO
+			List<Usuario> usuarios = usuarioRepository.findAll();
+
+			// BUSCA O USUÁRIO SOLICITADO
 			Usuario u = usuarioRepository.findById(idUsuario).get();
+			
+			// ENVIA O MESMO PARA A PÁGINA PARA EDIÇÃO
 			model.addAttribute("usuario", u);
+			
+			// ENVIA TODOS OS USUÁRIOS PARA A PÁGINA PARA SEREM MOSTRADO NA BUSCA
+			model.addAttribute("usuariosEncontrados", usuarios);
 		} catch (Exception e) {
 			model.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 			model.addAttribute("usuario", new Usuario());

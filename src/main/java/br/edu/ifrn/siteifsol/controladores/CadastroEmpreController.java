@@ -67,9 +67,14 @@ public class CadastroEmpreController {
 
 		// SE HOUVER ALGUM ERRO, VAI SER RETORNADO O PROMEIRO ERRO PARA A PÁGINA
 		if (!msgValidacao.isEmpty()) {
+			model.addAttribute("msgErro", msgValidacao.get(0));
 
-			attr.addFlashAttribute("msgErro", msgValidacao.get(0));
-			return "redirect:/usuario/cadastroem";
+			/*
+			 * É ENVIADO O O OBJETO EMPRE QUE O USUÁRIO PREENCHEU ERRONIAMENTE PARA QUE ELE
+			 * POSSA EDITAR SEM PREENCHER TUDO NOVAMENTE
+			 */
+			model.addAttribute("empre", empre);
+			return "cadastroEmpre";
 
 		} else { // SE NÃO, VIA SEGUIR O FLUXO NORMAL
 
@@ -94,7 +99,7 @@ public class CadastroEmpreController {
 					Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
 
 					if (empre.getFoto() != null && empre.getFoto().getId() != null && empre.getFoto().getId() > 0) {
-						arquivoRepository.delete(empre.getFoto());
+						arquivoRepository.deleteById(empre.getFoto().getId());
 					}
 
 					// SALVA O NOVO ARQUIVO DO EMPREENDIMENTO
@@ -107,8 +112,6 @@ public class CadastroEmpreController {
 					empre.setFoto(null);
 				}
 
-				// MODIFICA A DATA DE CRIAÇÃO
-				empre.setDataCriacao(getData());
 
 				/*
 				 * SE ESTIVER VAZIO, SIGNIFICA QUE O EMPREENDIMENTO ESTÁ SENDO CADASTRADO ENTÃO
@@ -116,9 +119,18 @@ public class CadastroEmpreController {
 				 * 
 				 * SE JÁ CONTER ALGUM VALOR, SIGNIFICA QUE É UMA EDIÇÃO, ENTÃO NÃO PRECISA
 				 */
-				if (empre.getCriadoPor() == null || empre.getCriadoPor().isEmpty()) {
+				if (empre.getCriadoPor() == null || empre.getCriadoPor().isEmpty()) {					
+					System.out.println("\nCriado por:"+empre.getCriadoPor());
+					
 					// MODIFICA O USUÁRIO QUE CRIOU O EMPREENDIMENTO
 					empre.setCriadoPor(nomeUsuarioADM);
+				}
+				
+				if(empre.getDataCriacao() == null || empre.getDataCriacao().isEmpty()) {
+					System.out.println("\nData criação:"+empre.getDataCriacao()+"\n");
+					
+					// MODIFICA A DATA DE CRIAÇÃO
+					empre.setDataCriacao(getData());
 				}
 
 				// CADASTRA E EDITA O EMPREENDIMENTO NO BANCO DE DADOS
@@ -134,7 +146,7 @@ public class CadastroEmpreController {
 				attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
 
 			} catch (IOException e) {
-				e.printStackTrace();
+				attr.addFlashAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 			}
 		}
 

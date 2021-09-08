@@ -24,13 +24,16 @@ public class BuscaNoticiaController {
 
 	@Autowired
 	private NoticiaRepository noticiaRepository;
-	
+
 	@Autowired
 	private ArquivoRepository arquivoRepository;
 
 	@GetMapping("/buscarnoticia")
-	public String buscarNoticia(@RequestParam(name = "titulo", required = false) String titulo,
-			@RequestParam(name = "texto", required = false) String texto, ModelMap modelo) {
+	public String buscarNoticia(
+			@RequestParam(name = "titulo", required = false) String titulo,
+			@RequestParam(name = "texto", required = false) String texto, 
+			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados,
+			ModelMap modelo) {
 
 		try {
 			List<Noticia> noticiasEncontradas = noticiaRepository.findByTituloAndTexto(titulo, texto);
@@ -38,9 +41,15 @@ public class BuscaNoticiaController {
 			if (noticiasEncontradas.isEmpty()) {
 				modelo.addAttribute("msgErro", "Nenhuma notícia encontrada");
 			} else {
-				modelo.addAttribute("noticia", new Noticia());
 				modelo.addAttribute("noticias", noticiasEncontradas);
 			}
+	
+			if (mostrarTodosDados != null) {
+				modelo.addAttribute("mostrarTodosDados", true);
+			}
+			
+			modelo.addAttribute("noticia", new Noticia());
+			
 		} catch (Exception e) {
 			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
@@ -68,25 +77,27 @@ public class BuscaNoticiaController {
 	public String remover(@PathVariable("id") Integer idNoticia, HttpSession sessao, RedirectAttributes attr) {
 
 		try {
-			// GUAR A NOTICIA QUE O ADM QUER REMOVER NA VARIÁVEL
+			// GUARDA A NOTICIA QUE O ADM QUER REMOVER NA VARIÁVEL
 			Noticia noticia = noticiaRepository.findById(idNoticia).get();
-			
+
 			// ANTES DE REMOVER A NOTÍCIA, FAZ A REMORÇÃO DA IMAGEM
 			arquivoRepository.deleteById(noticia.getFoto().getId());
-			
+
 			// DELETA A NOTÍCIA PELO ID
 			noticiaRepository.deleteById(idNoticia);
-			
+
 			// LISTA TODAS AS NOTÍCIAS QUE ESTÃO NO BANCO
 			List<Noticia> noticias = noticiaRepository.findAll();
-			
+
 			// ENVIA UMA MENSAGEM DE SUCESSO PARA A PÁGINA
-			attr.addAttribute("msgSucesso", "Noticia removida com sucesso!");
-			
-			// ENVIA TODAS AS NOTÍCIAS QUE ESTÃO NO BANCO PARA A PÁGINA
-			attr.addFlashAttribute("noticias", noticias);
+			attr.addFlashAttribute("msgSucesso", "Noticia removida com sucesso!");
+
+			if (!noticias.isEmpty()) {
+				// ENVIA TODAS AS NOTÍCIAS QUE ESTÃO NO BANCO PARA A PÁGINA
+				attr.addFlashAttribute("noticias", noticias);
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			attr.addFlashAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
 
 		return "redirect:/noticia/config";
