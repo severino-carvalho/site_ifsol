@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -41,53 +41,65 @@ public class CadastroUsuarioController {
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
 	@PostMapping("/salvar") // URL PARA ACESSAR A METODO SALVAR E EDITAR
-	public String salvar(Usuario usuario, ModelMap modelo, RedirectAttributes attr, HttpSession sessao) {
+	public String salvar(Usuario usuario, @PathParam("editar") Boolean editar, ModelMap modelo, RedirectAttributes attr,
+			HttpSession sessao) {
 
 		// SE HAVER ALGUM DADO INVÁLIDO, ELE SERÁ COLOCADO DENTRO DA LISTA
 		List<String> msgValidacao = validarDados(usuario);
 
 		// SE A LISTA DE VALIDAÇÃO ESTIVER VAZIA, ENTÃO TUDO ESTÁ DE ACORDO
 		if (msgValidacao.isEmpty()) {
-			Optional<Usuario> u = usuarioRepository.findByEmail(usuario.getEmail());
+			// Optional<Usuario> u = usuarioRepository.findByEmail(usuario.getEmail());
 
-			if (!u.isPresent()) {
+			/*
+			 * SE O 'U' NÃO ESTIVER PRESENTE É PORQUE ESTÁ FAZENDO O CADASTRO SE ESTIVER
+			 * PRECESENTE MAS SE O EDITAR FOR VERDADEIRO É PORQUE SÓ IRÁ REALIZAR A EDIÇÃO
+			 * ENTÃO O PROCESSO PODE SER REALIZADO
+			 */
 
-				// FAZ A BUSCA NO BD E RETORNA O NOME DO USUÁRIO LOGADO NO SISTEMA
-				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-				String currentPrincipalName = authentication.getName();
-				String nomeUsuarioADM = usuarioRepository.findByEmail(currentPrincipalName).get().getNome();
+			// if (!u.isPresent()) {
 
-				// CRIPTOGRAFANDO A SENHA
-				String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
+			// FAZ A BUSCA NO BD E RETORNA O NOME DO USUÁRIO LOGADO NO SISTEMA
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String currentPrincipalName = authentication.getName();
+			String nomeUsuarioADM = usuarioRepository.findByEmail(currentPrincipalName).get().getNome();
 
-				// DEPOIS DE ENCRIPTADA A SENHA É SALVADA NO OBJETO USUÁRIO ANTES DE SER
-				// GUARDADO NO BANCO DE DADOS
-				usuario.setSenha(senhaCriptografada);
-				
-				/*
-				 * SE ESTIVER VAZIO, SIGNIFICA QUE O USUÁRIO ESTÁ SENDO CADASTRADO ENTÃO
-				 * É COLOCADO O NOME DO USUÁRIO ADM QUE REALIZA O CADASTRO
-				 * 
-				 * SE JÁ CONTER ALGUM VALOR, SIGNIFICA QUE É UMA EDIÇÃO, ENTÃO NÃO PRECISA
-				 */
-				if (usuario.getCriadoPor() == null) {
-					// MODIFICA O USUÁRIO QUE CRIOU O EMPREENDIMENTO
-					usuario.setCriadoPor(nomeUsuarioADM);
-				}
+			// CRIPTOGRAFANDO A SENHA
+			String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
 
-				// SALVA O OBJETO USUÁRIO NO BANCO DE DADOS
-				usuarioRepository.save(usuario);
+			// DEPOIS DE ENCRIPTADA A SENHA É SALVADA NO OBJETO USUÁRIO ANTES DE SER
+			// GUARDADO NO BANCO DE DADOS
+			usuario.setSenha(senhaCriptografada);
 
-				// RETORNA A MENSAGEM PARA O A PÁGINA , PARA O USUSARIO VER
-				attr.addFlashAttribute("msgCadSucesso", "O peração realizada com sucesso!");
-
-			} else {
-				// RETORNA A MENSAGEM DE ERRO CASO O EMAIL JÁ ESTEJA CADASTRADO
-				attr.addFlashAttribute("msgCadErro", "Email já cadastrado. Por favor, informe um email válido!");
+			/*
+			 * SE ESTIVER VAZIO, SIGNIFICA QUE O USUÁRIO ESTÁ SENDO CADASTRADO ENTÃO É
+			 * COLOCADO O NOME DO USUÁRIO ADM QUE REALIZA O CADASTRO
+			 * 
+			 * SE JÁ CONTER ALGUM VALOR, SIGNIFICA QUE É UMA EDIÇÃO, ENTÃO NÃO PRECISA
+			 */
+			if (usuario.getCriadoPor() == null || usuario.getCriadoPor().isEmpty()) {
+				// MODIFICA O USUÁRIO QUE CRIOU O EMPREENDIMENTO
+				usuario.setCriadoPor(nomeUsuarioADM);
 			}
+
+			if(usuario.getDataCriacao() == null || usuario.getDataCriacao().isEmpty()) {
+				// MODIFICA A DATA DE CRIAÇÃO
+				usuario.setDataCriacao(getData());			
+			}
+
+			// SALVA O OBJETO USUÁRIO NO BANCO DE DADOS
+			usuarioRepository.save(usuario);
+
+			// RETORNA A MENSAGEM PARA O A PÁGINA , PARA O USUSARIO VER
+			attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
+
+//		} else {
+//			// RETORNA A MENSAGEM DE ERRO CASO O EMAIL JÁ ESTEJA CADASTRADO
+//			attr.addFlashAttribute("msgErro", "Email já cadastrado. Por favor, informe um email válido!");
+//		}
 		} else {
 			// SE ELA ESTIVER COM ALGUM ERRO NÃO SERÁ POSSÍVEL CADASTRAR UM USUÁRIO
-			modelo.addAttribute("msgCadErro", msgValidacao.get(0));
+			modelo.addAttribute("msgErro", msgValidacao.get(0));
 			return "cadastro";
 		}
 		return "redirect:/usuario/cadastro";
@@ -106,7 +118,7 @@ public class CadastroUsuarioController {
 		if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
 			msgs.add("O campo 'Nome' é obrigatório");
 		}
-		if (usuario.getNome().length() <= 5) { // NOME TEM QUER TER MAIS DE 5 CARACTERES
+		if (usuario.getNome().length() < 3) { // NOME TEM QUER TER MAIS DE 3 CARACTERES
 			msgs.add("Nome inválido");
 		}
 		if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {

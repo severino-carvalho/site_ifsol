@@ -20,26 +20,24 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 		<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
 			aria-label="breadcrumb" class="w-100">
 			<div class="container">
-				<ol class="breadcrumb py-3">
+				<ol class="breadcrumb pt-3">
 					<li class="breadcrumb-item"><a class="text-decoration-none " href="/adm">Início</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Configurações de usuários</li>
 				</ol>
 			</div>
 		</nav>
 
+
 		<div class="container" align="center">
+			<!--IMPORTA PARA ESSA PAGINAS O ARQUIVO QUE CONTEM AS MENSAGENS DE ERRO E SUCESSO  -->
+			<div th:replace="fragmentos/mensagens"></div>
 			<div class="row mt-2">
 				<div class="col-md-6">
 					<div class="card mb-3" style="max-width: 36rem;">
 						<div class="card-header bg-success text-white fw-bold">Cadastro
 							de Usuários</div>
-						<div class="card-body text-success py-3">
 
-							<div class="py-2" th:replace="fragmentos/msgCad"></div>
-
-						</div>
-
-						<form class="px-4" th:action="@{/usuario/salvar}" th:object="${usuario}" method="POST"
+						<form class="px-4 pt-3" th:action="@{/usuario/salvar}" th:object="${usuario}" method="POST"
 							align="center">
 
 							<input type="hidden" th:field="${usuario.id}" />
@@ -78,7 +76,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							</div>
 							<div class="mb-3" style="text-align: left;">
 								<input class="btn btn-success" type="submit"
-									th:value="${usuario.id}  == 0 ? Cadastrar : Editar" />
+									th:value="${usuario.id}  == 0 ? Cadastrar : Editar"/>
 								<input class="btn btn-warning" type="reset" value="Limpar" />
 							</div>
 						</form>
@@ -91,10 +89,6 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 					<div class="card mb-3" ; style="max-width: 26rem">
 						<div class="card-header bg-success text-white fw-bold">Busca de Acessos</div>
 						<div class="card-body">
-
-							<!--IMPORTA PARA ESSA PAGINAS O ARQUIVO QUE CONTEM AS MENSAGENS DE ERRO
-					E SUCESSO  -->
-							<div th:replace="fragmentos/msgBusc"></div>
 
 							<form class="pd-0" th:action="@{/usuarios/buscar}" method="GET" align="center">
 
@@ -151,6 +145,8 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 								<th>Nome</th>
 								<th>Email</th>
 								<th th:if="${mostrarTodosDados} == true">Função</th>
+								<th th:if="${mostrarTodosDados} == true">Cadastrado por</th>
+								<th th:if="${mostrarTodosDados} == true">Data de cadastro</th>
 								<th>Opções</th>
 							</tr>
 						</thead>
@@ -160,19 +156,30 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 								<td th:text="${u.email}"></td>
 								<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${u.funcao}">
 								</td>
+								<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${u.criadoPor}">
+								</td>
+								<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${u.dataCriacao}">
+								</td>
 
 								<td class="text-center">
-									<a class="text-decoration-none" th:href="'/usuarios/editar/' + ${u.id}" title="Editar">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-	  										<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-	 										<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+									<a class="text-decoration-none" th:href="'/usuarios/editar/' + ${u.id}"
+										title="Editar">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+											<path
+												d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+											<path fill-rule="evenodd"
+												d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
 										</svg>
 									</a>
 									|
 									<a class="text-decoration-none" th:href="'/usuarios/remover/' + ${u.id}"
-										onclick="if (!confirm('Deseja realmente remover o usuario?')) return false" title="Remover">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-  											<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+										onclick="if (!confirm('Deseja realmente remover o usuario?')) return false"
+										title="Remover">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+											<path
+												d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
 										</svg>
 									</a>
 								</td>

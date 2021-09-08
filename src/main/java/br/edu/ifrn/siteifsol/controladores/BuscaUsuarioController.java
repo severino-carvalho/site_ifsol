@@ -37,11 +37,9 @@ public class BuscaUsuarioController {
 	@Transactional(readOnly = true) // INFORMA QUE NÃO FAZ ALTERAÇÕES NO BANCO DE DADOS
 	@GetMapping("/buscar") // URL PARA ACESSAR A METODO BUSCA DE EMPREENDIMENTOS
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public String buscar(
-			@RequestParam(name = "nome", required = false) String nome,
+	public String buscar(@RequestParam(name = "nome", required = false) String nome,
 			@RequestParam(name = "email", required = false) String email,
-			@RequestParam(name = "mostrarTodosDados", required = false) 
-			Boolean mostrarTodosDados, ModelMap model) {
+			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, ModelMap model) {
 
 		// BUSCA OS USUARIOS NO BANCO DE DADOS ATRAVES DO NOME E EMAIL
 		List<Usuario> usuariosEncontrados = usuarioRepository.findByEmailAndNome(email, nome);
@@ -49,15 +47,13 @@ public class BuscaUsuarioController {
 		model.addAttribute("usuario", new Usuario());
 
 		if (!usuariosEncontrados.isEmpty()) {
-			model.addAttribute("usuariosEncontrados", usuariosEncontrados); // RETORNA OS USUARIOS ENCONTRADOS PARA A PÁGINA			
+			model.addAttribute("usuariosEncontrados", usuariosEncontrados); // RETORNA OS USUARIOS ENCONTRADOS PARA A
+																			// PÁGINA WEB
 
 			if (mostrarTodosDados != null) {
 				model.addAttribute("mostrarTodosDados", true);
 			}
-		} else {
-			model.addAttribute("msgErro", "Nenhum resultado encontrado!");
-		}															// WEB
-
+		}
 		return "cadastro";
 	}
 
@@ -68,9 +64,13 @@ public class BuscaUsuarioController {
 	@GetMapping("/editar/{id}") // URL PARA ACESSAR O METODO
 	public String iniciarEdição(@PathVariable("id") Integer idUsuario, ModelMap model) {
 
-		Usuario u = usuarioRepository.findById(idUsuario).get();
-
-		model.addAttribute("usuario", u);
+		try {
+			Usuario u = usuarioRepository.findById(idUsuario).get();
+			model.addAttribute("usuario", u);
+		} catch (Exception e) {
+			model.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
+			model.addAttribute("usuario", new Usuario());
+		}
 
 		return "/cadastro";
 	}
@@ -88,10 +88,20 @@ public class BuscaUsuarioController {
 	@GetMapping("/remover/{id}")
 	public String remover(@PathVariable("id") Integer idUsuario, ModelMap model, RedirectAttributes attr) {
 
-		
-		usuarioRepository.deleteById(idUsuario);
-		attr.addAttribute("msgSucesso", "Usuario removido com sucesso!");
-		
+		try {
+			// REMOVE O USUÁRIO PELO ID
+			usuarioRepository.deleteById(idUsuario);
+			// ENVIA A MENSAGEM DE REMOÇÃO PARA A TELA
+			attr.addFlashAttribute("msgSucesso", "Usuario removido com sucesso!");
+
+			List<Usuario> usuarios = usuarioRepository.findAll();
+
+			attr.addFlashAttribute("usuariosEncontrados", usuarios);
+
+		} catch (Exception e) {
+			attr.addFlashAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
+		}
+
 		return "redirect:/usuarios/buscar";
 	}
 
