@@ -10,38 +10,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.edu.ifrn.siteifsol.dominio.Arquivo;
 import br.edu.ifrn.siteifsol.repository.ArquivoRepository;
 
 @Controller
-@RequestMapping("/publico")
 public class DownloadArquivoController {
 
 	@Autowired
 	private ArquivoRepository arquivoRepository;
 
-	/*
-	 * METODO FAZ O DOWNLOAD DE ARQUIVOS
-	 */
-
-	@GetMapping("/download/{​​idArquivo}​​")
+	@GetMapping("/download/{idArquivo}")
 	public ResponseEntity<?> downloadFile(@PathVariable Long idArquivo, @PathParam("salvar") String salvar) {
 
-		System.out.println("Pelo menos entrou...");
-
-		// Load file from database
+		// Carregando arquivo do banco de dados
 		Arquivo arquivoBD = arquivoRepository.findById(idArquivo).get();
 
 		String texto = (salvar == null || salvar.equals("true"))
 				? "attachment; filename=\"" + arquivoBD.getNomeArquivo() + "\""
 				: "inline; filename=\"" + arquivoBD.getNomeArquivo() + "\"";
 
-		return ResponseEntity.ok()
-				.contentType(MediaType.parseMediaType(arquivoBD.getTipoArquivo()))
-				.header(HttpHeaders.CONTENT_DISPOSITION, texto)
-				.body(new ByteArrayResource(arquivoBD.getDados()));
+		return ResponseEntity.ok().contentType(MediaType.parseMediaType(arquivoBD.getTipoArquivo()))
+				.header(HttpHeaders.CONTENT_DISPOSITION, texto).body(new ByteArrayResource(arquivoBD.getDados()));
 	}
 
 }
