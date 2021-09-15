@@ -66,8 +66,8 @@
 											<label for="exampleInputName1" class="form-label mt-0">
 												Data de publicação:
 											</label>
-											<input class="form-control text-center" type="text" th:field="${noticia.dataPublicacao}"
-												readonly />
+											<input class="form-control text-center" type="text"
+												th:field="${noticia.dataPublicacao}" readonly />
 										</div>
 									</div>
 								</div>
@@ -118,7 +118,8 @@
 							<div class="mt-3 md-0">
 								<p class="fw-bold my-0 py-0 text-muted" style="font-size: 9pt; text-align: justify;">
 									<span style="color:red;">*</span> Para buscar todas as notícias clíque em buscar sem
-									preencher nenhum dado </p>
+									preencher nenhum dado
+								</p>
 							</div>
 
 						</div>
@@ -148,7 +149,8 @@
 								</td>
 								<td th:text="${n.titulo}"></td>
 								<td th:text="${n.texto}"></td>
-								<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${n.dataPublicacao}"></td>
+								<td class="text-center" th:if="${mostrarTodosDados} == true"
+									th:text="${n.dataPublicacao}"></td>
 								</td>
 
 								<td class="text-center">

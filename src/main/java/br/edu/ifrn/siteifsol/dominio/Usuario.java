@@ -32,18 +32,16 @@ public class Usuario {
 
 	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
 	private String funcao;
-	
+
 	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
 	private String criadoPor;
 
 	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
 	private String dataCriacao;
-	
+
 	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
 	private String perfil = ADMIN;
-	
 
-	
 	/*
 	 * CONSTRUTORES PARA SITEMA POSSA DIFERENCIAR UM ID DO OUTRO NÃO ADICIONANDO
 	 * ASSIM IDS IGUAIS PARA USUARIOS DIFERENTES
@@ -70,9 +68,9 @@ public class Usuario {
 		return true;
 
 	}
-	
-	//ifsoljc@ifrn.edu.br
-	//senha123
+
+	// ifsoljc@ifrn.edu.br
+	// senha123
 
 	/*
 	 * METODOS GET`S E SET`S ONDE OS ATRIBUTO SÃO DA ENTIDADE PARA QUE OS ATRIBUTOS
@@ -117,7 +115,7 @@ public class Usuario {
 	public void setFuncao(String funcao) {
 		this.funcao = funcao;
 	}
-	
+
 	public String getPerfil() {
 		return perfil;
 	}

@@ -28,6 +28,7 @@ public class BuscaNoticiaController {
 	@Autowired
 	private ArquivoRepository arquivoRepository;
 
+	@Transactional(readOnly = true)
 	@GetMapping("/buscarnoticia")
 	public String buscarNoticia(@RequestParam(name = "titulo", required = false) String titulo,
 			@RequestParam(name = "texto", required = false) String texto,

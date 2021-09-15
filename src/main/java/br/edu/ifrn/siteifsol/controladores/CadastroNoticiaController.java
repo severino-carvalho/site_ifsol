@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,11 +41,12 @@ public class CadastroNoticiaController {
 		return "noticia/cadastrarNoticia";
 	}
 
+	@Transactional(readOnly = false)
 	@PostMapping("/salvar")
 	public String salvar(Noticia noticia, @RequestParam("file") MultipartFile arquivo, RedirectAttributes attr,
 			ModelMap modelo) {
 
-		List<String> msgValidacao = validaDados(noticia, arquivo); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DOS
+		List<String> msgValidacao = validaDados(noticia); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DOS
 																	// CAMPOS
 
 		/*
@@ -100,7 +102,7 @@ public class CadastroNoticiaController {
 		return "redirect:/noticia/config";
 	}
 
-	private List<String> validaDados(Noticia noticia, MultipartFile arquivo) {
+	private List<String> validaDados(Noticia noticia) {
 
 		List<String> msgs = new ArrayList<>(); // LISTA DE MENSAGENS DE ERRO, POIS MUITOS CAMPOS PODE ESTAR INCORRETOS
 
