@@ -29,11 +29,9 @@ public class BuscaNoticiaController {
 	private ArquivoRepository arquivoRepository;
 
 	@GetMapping("/buscarnoticia")
-	public String buscarNoticia(
-			@RequestParam(name = "titulo", required = false) String titulo,
-			@RequestParam(name = "texto", required = false) String texto, 
-			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados,
-			ModelMap modelo) {
+	public String buscarNoticia(@RequestParam(name = "titulo", required = false) String titulo,
+			@RequestParam(name = "texto", required = false) String texto,
+			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, ModelMap modelo) {
 
 		try {
 			List<Noticia> noticiasEncontradas = noticiaRepository.findByTituloAndTexto(titulo, texto);
@@ -43,13 +41,13 @@ public class BuscaNoticiaController {
 			} else {
 				modelo.addAttribute("noticias", noticiasEncontradas);
 			}
-	
+
 			if (mostrarTodosDados != null) {
 				modelo.addAttribute("mostrarTodosDados", true);
 			}
-			
+
 			modelo.addAttribute("noticia", new Noticia());
-			
+
 		} catch (Exception e) {
 			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
@@ -66,7 +64,7 @@ public class BuscaNoticiaController {
 
 			modelo.addAttribute("noticia", n);
 		} catch (Exception e) {
-			e.printStackTrace();
+			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
 
 		return "noticia/cadastrarNoticia";
