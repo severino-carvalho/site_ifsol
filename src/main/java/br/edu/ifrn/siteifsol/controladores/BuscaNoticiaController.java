@@ -56,7 +56,7 @@ public class BuscaNoticiaController {
 		return "noticia/cadastrarNoticia";
 	}
 
-	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERARÇÕES NO BANCO DE DADOS
+	@Transactional(readOnly = true) // INFORMA QUE NÃO FAZ ALTERARÇÕES NO BANCO DE DADOS
 	@GetMapping("/edita/{id}")
 	public String iniciarEdicao(@PathVariable("id") Integer idNoticia, ModelMap modelo, HttpSession sessao) {
 
@@ -73,7 +73,7 @@ public class BuscaNoticiaController {
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERARÇÕES NO BANCO DE DADOS
 	@GetMapping("/remove/{id}")
-	public String remover(@PathVariable("id") Integer idNoticia, HttpSession sessao, RedirectAttributes attr) {
+	public String remover(@PathVariable("id") Integer idNoticia, RedirectAttributes attr) {
 
 		try {
 			// GUARDA A NOTICIA QUE O ADM QUER REMOVER NA VARIÁVEL
