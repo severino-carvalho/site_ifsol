@@ -138,7 +138,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 			</div>
 
 			<div class="row">
-				<div th:if="${usuariosEncontrados} != null">
+				<div th:if="${not #lists.isEmpty(usuariosEncontrados)}">
 					<table class="table table-bordered table-striped table-hover">
 						<thead>
 							<tr class="text-center">
