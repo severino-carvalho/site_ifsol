@@ -2,8 +2,6 @@ package br.edu.ifrn.siteifsol.controladores;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +28,7 @@ public class BuscarEmpreendimentosController {
 
 	@GetMapping("/buscaem") // URL PARA ACESSAR A PAGINA
 	public String entrarBusca() {
-		return "cadastroEmpre";
+		return "/empreendimento/cadastroEmpre";
 	}
 
 	/*
@@ -42,7 +40,7 @@ public class BuscarEmpreendimentosController {
 	@GetMapping("/buscaempre")
 	public String buscaempre(@RequestParam(name = "nome", required = false) String nome,
 			@RequestParam(name = "email", required = false) String email,
-			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, HttpSession sessao,
+			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados,
 			ModelMap model) {
 
 		// LISTA DE EMPREENDIMENTOS
@@ -50,21 +48,22 @@ public class BuscarEmpreendimentosController {
 
 		// RETORNA PARA A PÁGINA UM NOVO EMPREENDIMENTO
 		model.addAttribute("empre", new empreendimento());
-		model.addAttribute("empreendimentosEncontrados", empreendimentosEncontrados); // RETORNA OS EMPREENDIMENTOS ENCONTRADOS PARA A PÁGINA WEB
+		model.addAttribute("empreendimentosEncontrados", empreendimentosEncontrados); // RETORNA OS EMPREENDIMENTOS
+																						// ENCONTRADOS PARA A PÁGINA WEB
 
 		if (mostrarTodosDados != null) {
 			model.addAttribute("mostrarTodosDados", true);
 		}
-		
-		return "/cadastroEmpre";
+
+		return "/empreendimento/cadastroEmpre";
 	}
 
 	/*
 	 * METODO PARA FAZER A EDIÇÃO DE USUARIOS CADASTRADOS
 	 */
-	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERARÇÕES NO BANCO DE DADOS
+	@Transactional(readOnly = true) // INFORMA QUE NÃO FAZ ALTERARÇÕES NO BANCO DE DADOS
 	@GetMapping("/edita/{id}")
-	public String iniciarEdição(@PathVariable("id") Integer idempre, ModelMap model, HttpSession sessao) {
+	public String iniciarEdição(@PathVariable("id") Integer idempre, ModelMap model) {
 
 		try {
 			// LISTA DE EMPREENDIMENTOS ENCONTRADOS
@@ -81,7 +80,7 @@ public class BuscarEmpreendimentosController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "cadastroEmpre";
+		return "/empreendimento/cadastroEmpre";
 	}
 
 	/*
@@ -90,7 +89,7 @@ public class BuscarEmpreendimentosController {
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERARÇÕES NO BANCO DE DADOS
 	@GetMapping("/remove/{id}")
-	public String remover(@PathVariable("id") Integer idempree, HttpSession sessao, RedirectAttributes attr) {
+	public String remover(@PathVariable("id") Integer idempree, RedirectAttributes attr) {
 
 		try {
 			// FAZ A BUSCA DO EMPREENDIMENTO SOLICITADO DA REMOÇÃO
@@ -98,17 +97,16 @@ public class BuscarEmpreendimentosController {
 
 			// DELETA A FOTO DO EMPREENDIMENTO PELO ID
 			arquivoRepository.deleteById(em.getFoto().getId());
-			
+
 			// DELETA O EMPREENDIMENTO PELO ID
 			empreendimentosrepository.deleteById(idempree);
 
-			
 			// APÓS A REMOÇÃO, LISTA OS EMPREENDIMENTOS
 			List<empreendimento> empEnc = empreendimentosrepository.findAll();
-			
+
 			// RETORNA A LISTA DE EMPREENDIMENTO PARA A PÁGINA
 			attr.addFlashAttribute("empreendimentosEncontrados", empEnc);
-	
+
 			// RETORNA A MENSAGEM DE SUCESSO PARA A PÁGINA
 			attr.addFlashAttribute("msgSucesso", "Usuario removido com sucesso!");
 		} catch (Exception e) {

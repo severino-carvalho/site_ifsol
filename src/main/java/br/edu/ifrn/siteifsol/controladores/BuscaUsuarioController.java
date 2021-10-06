@@ -56,13 +56,13 @@ public class BuscaUsuarioController {
 			}
 		}
 
-		return "cadastro";
+		return "/usuario/cadastro";
 	}
 
 	/*
 	 * METODO PARA FAZER A EDIÇÃO DE USUARIOS CADASTRADOS
 	 */
-	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERARÇÕES NO BANCO DE DADOS
+	@Transactional(readOnly = true) // INFORMA QUE NÃO FAZ ALTERARÇÕES NO BANCO DE DADOS
 	@GetMapping("/editar/{id}") // URL PARA ACESSAR O METODO
 	public String iniciarEdição(@PathVariable("id") Integer idUsuario, ModelMap model) {
 
@@ -73,10 +73,10 @@ public class BuscaUsuarioController {
 
 			// BUSCA O USUÁRIO SOLICITADO
 			Usuario u = usuarioRepository.findById(idUsuario).get();
-			
+
 			// ENVIA O MESMO PARA A PÁGINA PARA EDIÇÃO
 			model.addAttribute("usuario", u);
-			
+
 			// ENVIA TODOS OS USUÁRIOS PARA A PÁGINA PARA SEREM MOSTRADO NA BUSCA
 			model.addAttribute("usuariosEncontrados", usuarios);
 		} catch (Exception e) {
@@ -84,7 +84,7 @@ public class BuscaUsuarioController {
 			model.addAttribute("usuario", new Usuario());
 		}
 
-		return "/cadastro";
+		return "/usuario/cadastro";
 	}
 
 	@ModelAttribute("funcao")
