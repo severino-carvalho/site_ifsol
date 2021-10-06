@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifrn.siteifsol.dominio.Usuario;
-import br.edu.ifrn.siteifsol.repository.Usuariorepository;
+import br.edu.ifrn.siteifsol.repositories.Usuariorepository;
 
 @Service
 public class UsuarioService implements UserDetailsService {
