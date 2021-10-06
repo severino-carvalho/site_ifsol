@@ -53,7 +53,7 @@ public class BuscaNoticiaController {
 			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
 
-		return "noticia/cadastrarNoticia";
+		return "/admin/noticia/cadastrarNoticia";
 	}
 
 	@Transactional(readOnly = true) // INFORMA QUE NÃO FAZ ALTERARÇÕES NO BANCO DE DADOS
@@ -68,7 +68,7 @@ public class BuscaNoticiaController {
 			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
 
-		return "noticia/cadastrarNoticia";
+		return "/admin/noticia/cadastrarNoticia";
 	}
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERARÇÕES NO BANCO DE DADOS

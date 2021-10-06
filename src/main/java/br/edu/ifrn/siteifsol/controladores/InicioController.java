@@ -15,12 +15,12 @@ public class InicioController {
 
 	@GetMapping("/login")
 	public String login() {
-		return "Login";
+		return "/admin/Login";
 	}
 
 	@GetMapping("/login-erro")
 	public String loginErro(ModelMap model) {
 		model.addAttribute("msgErro", "Login ou senha incorreta");
-		return "Login";
+		return "/admin/Login";
 	}
 }

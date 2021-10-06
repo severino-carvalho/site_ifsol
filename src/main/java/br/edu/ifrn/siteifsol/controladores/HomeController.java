@@ -25,7 +25,7 @@ public class HomeController {
 
 		modelo.addAttribute("noticias", noticias);
 
-		return "Home";
+		return "/visitantes/Home";
 	}
 
 	@GetMapping("/publico/noticia/{id}")
@@ -44,7 +44,7 @@ public class HomeController {
 			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
 		
-		return "noticia/buscarNoticia";
+		return "/admin/noticia/buscarNoticia";
 	}
 
 }

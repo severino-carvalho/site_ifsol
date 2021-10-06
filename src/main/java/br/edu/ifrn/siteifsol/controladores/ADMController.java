@@ -32,7 +32,7 @@ public class ADMController {
 			e.printStackTrace();
 		}
 
-		return "ADM";
+		return "/admin/ADM";
 	}
 
 }

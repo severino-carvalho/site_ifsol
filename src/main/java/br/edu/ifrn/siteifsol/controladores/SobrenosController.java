@@ -8,7 +8,7 @@ public class SobrenosController {
 
 	@GetMapping("/publico/sobrenos")
 	public String sobrenos() {
-		return "Sobrenos";
+		return "/visitantes/Sobrenos";
 	}
 
 }

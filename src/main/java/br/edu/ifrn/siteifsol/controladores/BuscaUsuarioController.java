@@ -24,7 +24,7 @@ public class BuscaUsuarioController {
 
 	@GetMapping("/busca") // URL PARA ACESSAR A PAGINA
 	public String entrarBusca() {
-		return "/busca";
+		return "/admin/busca";
 	}
 
 	@Autowired
@@ -56,7 +56,7 @@ public class BuscaUsuarioController {
 			}
 		}
 
-		return "/usuario/cadastro";
+		return "/admin/usuario/cadastro";
 	}
 
 	/*
@@ -84,7 +84,7 @@ public class BuscaUsuarioController {
 			model.addAttribute("usuario", new Usuario());
 		}
 
-		return "/usuario/cadastro";
+		return "/admin/usuario/cadastro";
 	}
 
 	@ModelAttribute("funcao")

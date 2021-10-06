@@ -38,7 +38,7 @@ public class CadastroNoticiaController {
 
 		modelo.addAttribute("noticia", new Noticia());
 
-		return "noticia/cadastrarNoticia";
+		return "/admin/noticia/cadastrarNoticia";
 	}
 
 	@Transactional(readOnly = false)
@@ -95,7 +95,7 @@ public class CadastroNoticiaController {
 			}
 		} else {
 			modelo.addAttribute("msgErro", msgValidacao.get(0));
-			return "noticia/cadastrarNoticia";
+			return "/admin/noticia/cadastrarNoticia";
 		}
 
 		return "redirect:/noticia/config";

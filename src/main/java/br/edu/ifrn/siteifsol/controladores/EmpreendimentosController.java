@@ -8,7 +8,7 @@ public class EmpreendimentosController {
 	
 	@GetMapping("/publico/empreendimentos")
 	public String empreendimentos() {
-		return "Empreendimentos";
+		return "/visitantes/Empreendimentos";
 	}
 
 }

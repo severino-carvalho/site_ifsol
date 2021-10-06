@@ -37,7 +37,7 @@ public class CadastroUsuarioController {
 	@GetMapping("/cadastro") // URL PARA ACESSAR A PAGINA
 	public String entrarCadastro(ModelMap model) {
 		model.addAttribute("usuario", new Usuario());
-		return "/usuario/cadastro";
+		return "/admin/usuario/cadastro";
 	}
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
@@ -99,7 +99,7 @@ public class CadastroUsuarioController {
 		} else {
 			// SE ELA ESTIVER COM ALGUM ERRO NÃO SERÁ POSSÍVEL CADASTRAR UM USUÁRIO
 			modelo.addAttribute("msgErro", msgValidacao.get(0));
-			return "/usuario/cadastro";
+			return "/admin/usuario/cadastro";
 		}
 		return "redirect:/usuario/cadastro";
 	}

@@ -28,7 +28,7 @@ public class BuscarEmpreendimentosController {
 
 	@GetMapping("/buscaem") // URL PARA ACESSAR A PAGINA
 	public String entrarBusca() {
-		return "/empreendimento/cadastroEmpre";
+		return "/admin/empreendimento/cadastroEmpre";
 	}
 
 	/*
@@ -55,7 +55,7 @@ public class BuscarEmpreendimentosController {
 			model.addAttribute("mostrarTodosDados", true);
 		}
 
-		return "/empreendimento/cadastroEmpre";
+		return "/admin/empreendimento/cadastroEmpre";
 	}
 
 	/*
@@ -80,7 +80,7 @@ public class BuscarEmpreendimentosController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "/empreendimento/cadastroEmpre";
+		return "/admin/empreendimento/cadastroEmpre";
 	}
 
 	/*

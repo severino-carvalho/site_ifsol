@@ -51,7 +51,7 @@ public class CadastroEmpreController {
 	@GetMapping("/cadastroem") // URL PARA ACESSAR A PAGINA
 	public String entrarCadastro(ModelMap model) {
 		model.addAttribute("empre", new empreendimento());
-		return "/empreendimento/cadastroEmpre";
+		return "/admin/empreendimento/cadastroEmpre";
 	}
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
@@ -70,7 +70,7 @@ public class CadastroEmpreController {
 			 * POSSA EDITAR SEM PREENCHER TUDO NOVAMENTE
 			 */
 			model.addAttribute("empre", empre);
-			return "/empreendimento/cadastroEmpre";
+			return "/admin/empreendimento/cadastroEmpre";
 
 		} else { // SE NÃO, VIA SEGUIR O FLUXO NORMAL
 
