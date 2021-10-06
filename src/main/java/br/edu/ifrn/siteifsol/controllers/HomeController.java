@@ -1,4 +1,4 @@
-package br.edu.ifrn.siteifsol.controladores;
+package br.edu.ifrn.siteifsol.controllers;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifrn.siteifsol.dominio.Noticia;
-import br.edu.ifrn.siteifsol.repository.NoticiaRepository;
+import br.edu.ifrn.siteifsol.repositories.NoticiaRepository;
 
 @Controller
 public class HomeController {

@@ -1,4 +1,4 @@
-package br.edu.ifrn.siteifsol.controladores;
+package br.edu.ifrn.siteifsol.controllers;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -20,8 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifrn.siteifsol.dominio.Arquivo;
 import br.edu.ifrn.siteifsol.dominio.Noticia;
-import br.edu.ifrn.siteifsol.repository.ArquivoRepository;
-import br.edu.ifrn.siteifsol.repository.NoticiaRepository;
+import br.edu.ifrn.siteifsol.repositories.ArquivoRepository;
+import br.edu.ifrn.siteifsol.repositories.NoticiaRepository;
 
 @Controller
 @RequestMapping("/noticia")

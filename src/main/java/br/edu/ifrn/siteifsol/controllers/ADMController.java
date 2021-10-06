@@ -1,13 +1,13 @@
-package br.edu.ifrn.siteifsol.controladores;
+package br.edu.ifrn.siteifsol.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import br.edu.ifrn.siteifsol.repository.NoticiaRepository;
-import br.edu.ifrn.siteifsol.repository.Usuariorepository;
-import br.edu.ifrn.siteifsol.repository.empreendimentorepository;
+import br.edu.ifrn.siteifsol.repositories.NoticiaRepository;
+import br.edu.ifrn.siteifsol.repositories.Usuariorepository;
+import br.edu.ifrn.siteifsol.repositories.empreendimentorepository;
 
 @Controller
 public class ADMController {

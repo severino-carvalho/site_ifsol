@@ -1,4 +1,4 @@
-package br.edu.ifrn.siteifsol.controladores;
+package br.edu.ifrn.siteifsol.controllers;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifrn.siteifsol.dominio.Usuario;
-import br.edu.ifrn.siteifsol.repository.Usuariorepository;
+import br.edu.ifrn.siteifsol.repositories.Usuariorepository;
 
 @Controller
 @RequestMapping("/usuario") // URL PARA ACESSAR A PAGINA

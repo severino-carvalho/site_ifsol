@@ -1,4 +1,4 @@
-package br.edu.ifrn.siteifsol.controladores;
+package br.edu.ifrn.siteifsol.controllers;
 
 import javax.websocket.server.PathParam;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import br.edu.ifrn.siteifsol.dominio.Arquivo;
-import br.edu.ifrn.siteifsol.repository.ArquivoRepository;
+import br.edu.ifrn.siteifsol.repositories.ArquivoRepository;
 
 @Controller
 public class DownloadArquivoController {

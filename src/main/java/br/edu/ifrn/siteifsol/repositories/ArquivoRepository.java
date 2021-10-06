@@ -1,4 +1,4 @@
-package br.edu.ifrn.siteifsol.repository;
+package br.edu.ifrn.siteifsol.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

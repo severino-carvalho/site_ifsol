@@ -1,4 +1,4 @@
-package br.edu.ifrn.siteifsol.controladores;
+package br.edu.ifrn.siteifsol.controllers;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -24,13 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifrn.siteifsol.dto.*;
+import br.edu.ifrn.siteifsol.repositories.ArquivoRepository;
+import br.edu.ifrn.siteifsol.repositories.Cidaderepository;
+import br.edu.ifrn.siteifsol.repositories.Usuariorepository;
+import br.edu.ifrn.siteifsol.repositories.empreendimentorepository;
 import br.edu.ifrn.siteifsol.dominio.Arquivo;
 import br.edu.ifrn.siteifsol.dominio.Cidade;
 import br.edu.ifrn.siteifsol.dominio.empreendimento;
-import br.edu.ifrn.siteifsol.repository.ArquivoRepository;
-import br.edu.ifrn.siteifsol.repository.Cidaderepository;
-import br.edu.ifrn.siteifsol.repository.Usuariorepository;
-import br.edu.ifrn.siteifsol.repository.empreendimentorepository;
 
 @Controller
 @RequestMapping("/usuario") // URL PARA ACESSAR A PAGINA
