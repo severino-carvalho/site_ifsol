@@ -16,7 +16,7 @@ public class ADMController {
 	Usuariorepository usuariorepository;
 
 	@Autowired
-	empreendimentorepository empreendimentorepository;
+	empreendimentorepository empreendimentoRepository;
 
 	@Autowired
 	NoticiaRepository noticiaRepository;
@@ -24,13 +24,9 @@ public class ADMController {
 	@GetMapping("/adm")
 	public String home(ModelMap modelo) {
 		try {
-			int totUsuarios = usuariorepository.findAll().size();
-			int totEmpre = empreendimentorepository.findAll().size();
-			int totNoticias = noticiaRepository.findAll().size();
-
-			modelo.addAttribute("totUsuarios", totUsuarios);
-			modelo.addAttribute("totEmpre", totEmpre);
-			modelo.addAttribute("totNoticias", totNoticias);
+			modelo.addAttribute("totUsuarios", usuariorepository.findAll().size());
+			modelo.addAttribute("totEmpre", empreendimentoRepository.findAll().size());
+			modelo.addAttribute("totNoticias", noticiaRepository.findAll().size());
 
 		} catch (Exception e) {
 			e.printStackTrace();
