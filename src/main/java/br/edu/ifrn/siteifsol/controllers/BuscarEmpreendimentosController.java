@@ -40,8 +40,7 @@ public class BuscarEmpreendimentosController {
 	@GetMapping("/buscaempre")
 	public String buscaempre(@RequestParam(name = "nome", required = false) String nome,
 			@RequestParam(name = "email", required = false) String email,
-			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados,
-			ModelMap model) {
+			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, ModelMap model) {
 
 		// LISTA DE EMPREENDIMENTOS
 		List<empreendimento> empreendimentosEncontrados = empreendimentosrepository.findByEmailAndNome(email, nome);
@@ -95,8 +94,10 @@ public class BuscarEmpreendimentosController {
 			// FAZ A BUSCA DO EMPREENDIMENTO SOLICITADO DA REMOÇÃO
 			empreendimento em = empreendimentosrepository.findById(idempree).get();
 
-			// DELETA A FOTO DO EMPREENDIMENTO PELO ID
-			arquivoRepository.deleteById(em.getFoto().getId());
+			if (em.getFoto().getId() != null) {
+				// DELETA A FOTO DO EMPREENDIMENTO PELO ID
+				arquivoRepository.deleteById(em.getFoto().getId());
+			}
 
 			// DELETA O EMPREENDIMENTO PELO ID
 			empreendimentosrepository.deleteById(idempree);

@@ -79,8 +79,11 @@ public class BuscaNoticiaController {
 			// GUARDA A NOTICIA QUE O ADM QUER REMOVER NA VARIÁVEL
 			Noticia noticia = noticiaRepository.findById(idNoticia).get();
 
-			// ANTES DE REMOVER A NOTÍCIA, FAZ A REMORÇÃO DA IMAGEM
-			arquivoRepository.deleteById(noticia.getFoto().getId());
+			if (noticia.getFoto().getId() != null) {
+				// ANTES DE REMOVER A NOTÍCIA, FAZ A REMORÇÃO DA IMAGEM
+				arquivoRepository.deleteById(noticia.getFoto().getId());
+
+			}
 
 			// DELETA A NOTÍCIA PELO ID
 			noticiaRepository.deleteById(idNoticia);
@@ -95,11 +98,11 @@ public class BuscaNoticiaController {
 				// ENVIA TODAS AS NOTÍCIAS QUE ESTÃO NO BANCO PARA A PÁGINA
 				attr.addFlashAttribute("noticias", noticias);
 			}
+
 		} catch (Exception e) {
 			attr.addFlashAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
 
 		return "redirect:/noticia/config";
 	}
-
 }
