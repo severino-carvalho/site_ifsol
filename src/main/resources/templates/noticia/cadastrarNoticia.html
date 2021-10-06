@@ -87,7 +87,7 @@
 
 				<div class="col-md-6">
 					<div class="card border-dark md-3" style="width: 26rem;">
-						<div class="card-header bg-dark fw-bold text-white">Busca de empreendimentos</div>
+						<div class="card-header bg-dark fw-bold text-white">Busca de notícias</div>
 						<div class="card-body text-dark">
 
 							<form th:action="@{/noticias/buscarnoticia}" method="GET" align="center">
@@ -128,7 +128,7 @@
 			</div>
 
 			<div class="row">
-				<div class="mt-5" th:if="${noticias} != null">
+				<div class="mt-5" th:if="${not #lists.isEmpty(noticias)}">
 					<table class="table table-bordered table-striped table-hover">
 						<thead class="text-center">
 							<tr class="align-middle">
