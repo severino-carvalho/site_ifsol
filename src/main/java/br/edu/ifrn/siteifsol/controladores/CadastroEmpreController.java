@@ -7,8 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,15 +51,13 @@ public class CadastroEmpreController {
 	@GetMapping("/cadastroem") // URL PARA ACESSAR A PAGINA
 	public String entrarCadastro(ModelMap model) {
 		model.addAttribute("empre", new empreendimento());
-		return "cadastroEmpre";
+		return "/empreendimento/cadastroEmpre";
 	}
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
-
-	// URL PARA ACESSAR A METODO SALVAR E EDITAR OS EMPREENDIMENTOS
-	@PostMapping("/salva")
+	@PostMapping("/salva") // URL PARA ACESSAR A METODO SALVAR E EDITAR OS EMPREENDIMENTOS
 	public String salvar(empreendimento empre, @RequestParam("file") MultipartFile arquivo, Model model,
-			RedirectAttributes attr, HttpSession sessao) {
+			RedirectAttributes attr) {
 
 		List<String> msgValidacao = validaDados(empre); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DO CAMPOS
 
@@ -74,7 +70,7 @@ public class CadastroEmpreController {
 			 * POSSA EDITAR SEM PREENCHER TUDO NOVAMENTE
 			 */
 			model.addAttribute("empre", empre);
-			return "cadastroEmpre";
+			return "/empreendimento/cadastroEmpre";
 
 		} else { // SE NÃO, VIA SEGUIR O FLUXO NORMAL
 
@@ -112,23 +108,18 @@ public class CadastroEmpreController {
 					empre.setFoto(null);
 				}
 
-
 				/*
 				 * SE ESTIVER VAZIO, SIGNIFICA QUE O EMPREENDIMENTO ESTÁ SENDO CADASTRADO ENTÃO
 				 * É COLOCADO O NOME DO USUÁRIO ADM QUE REALIZA O CADASTRO
 				 * 
 				 * SE JÁ CONTER ALGUM VALOR, SIGNIFICA QUE É UMA EDIÇÃO, ENTÃO NÃO PRECISA
 				 */
-				if (empre.getCriadoPor() == null || empre.getCriadoPor().isEmpty()) {					
-					System.out.println("\nCriado por:"+empre.getCriadoPor());
-					
+				if (empre.getCriadoPor() == null || empre.getCriadoPor().isEmpty()) {
 					// MODIFICA O USUÁRIO QUE CRIOU O EMPREENDIMENTO
 					empre.setCriadoPor(nomeUsuarioADM);
 				}
-				
-				if(empre.getDataCriacao() == null || empre.getDataCriacao().isEmpty()) {
-					System.out.println("\nData criação:"+empre.getDataCriacao()+"\n");
-					
+
+				if (empre.getDataCriacao() == null || empre.getDataCriacao().isEmpty()) {
 					// MODIFICA A DATA DE CRIAÇÃO
 					empre.setDataCriacao(getData());
 				}
@@ -178,6 +169,7 @@ public class CadastroEmpreController {
 	 * CADASTRO, ELE VER SE OS CAMPOS ESTÃO PREENCHIDOS DE ACORDO COM E O EXIGIDO E
 	 * RETORNA UMA MENSAGEM DE ERRO CASO NÃO
 	 */
+	
 	private List<String> validaDados(empreendimento empre) {
 
 		List<String> msgs = new ArrayList<>(); // LISTA DE MENSAGENS DE ERRO, POIS MUITOS CAMPOS PODE ESTAR INCORRETOS

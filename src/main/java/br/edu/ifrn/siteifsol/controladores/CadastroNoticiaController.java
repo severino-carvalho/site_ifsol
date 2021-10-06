@@ -46,8 +46,7 @@ public class CadastroNoticiaController {
 	public String salvar(Noticia noticia, @RequestParam("file") MultipartFile arquivo, RedirectAttributes attr,
 			ModelMap modelo) {
 
-		List<String> msgValidacao = validaDados(noticia); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DOS
-																	// CAMPOS
+		List<String> msgValidacao = validaDados(noticia); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DOS CAMPOS
 
 		/*
 		 * O CODIGO A SEGUIR FOI FEITO PARA UPLOAD E DOWNLOAD DE UM ARQUIVO NO BANCO DE
@@ -115,10 +114,6 @@ public class CadastroNoticiaController {
 		if (noticia.getTexto().length() <= 15) { // TEXTO TEM QUER TER MAIS DE 30 CARACTERES
 			msgs.add("O campo 'Texto' deve conter mais de 15 caracteres!");
 		}
-		/*
-		 * if (arquivo == null || arquivo.isEmpty()) {
-		 * msgs.add("O campo 'Foto' é origatório!"); }
-		 */
 		return msgs;
 	}
 

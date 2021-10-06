@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
@@ -36,7 +37,7 @@ public class CadastroUsuarioController {
 	@GetMapping("/cadastro") // URL PARA ACESSAR A PAGINA
 	public String entrarCadastro(ModelMap model) {
 		model.addAttribute("usuario", new Usuario());
-		return "cadastro";
+		return "/usuario/cadastro";
 	}
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
@@ -49,58 +50,56 @@ public class CadastroUsuarioController {
 
 		// SE A LISTA DE VALIDAÇÃO ESTIVER VAZIA, ENTÃO TUDO ESTÁ DE ACORDO
 		if (msgValidacao.isEmpty()) {
-			// Optional<Usuario> u = usuarioRepository.findByEmail(usuario.getEmail());
+	
+			// FAZ A BUSCA DE UM USUÁRIO PELO ID INFORMADO
+			Optional<Usuario> u = usuarioRepository.findByEmail(usuario.getEmail());
 
-			/*
-			 * SE O 'U' NÃO ESTIVER PRESENTE É PORQUE ESTÁ FAZENDO O CADASTRO SE ESTIVER
-			 * PRECESENTE MAS SE O EDITAR FOR VERDADEIRO É PORQUE SÓ IRÁ REALIZAR A EDIÇÃO
-			 * ENTÃO O PROCESSO PODE SER REALIZADO
-			 */
+			// SE ELE ESTIVER PRESENTE, ENTÃO NÃO VAI SER POSSÍVEL REALIZAR O CADASTRO
+			// SOMENTE UM ENDEREÇO DE EMAIL POR USUÁRIO
+			if (!u.isPresent()) {
 
-			// if (!u.isPresent()) {
+				// FAZ A BUSCA NO BD E RETORNA O NOME DO USUÁRIO LOGADO NO SISTEMA
+				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+				String currentPrincipalName = authentication.getName();
+				String nomeUsuarioADM = usuarioRepository.findByEmail(currentPrincipalName).get().getNome();
 
-			// FAZ A BUSCA NO BD E RETORNA O NOME DO USUÁRIO LOGADO NO SISTEMA
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String currentPrincipalName = authentication.getName();
-			String nomeUsuarioADM = usuarioRepository.findByEmail(currentPrincipalName).get().getNome();
+				// CRIPTOGRAFANDO A SENHA
+				String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
 
-			// CRIPTOGRAFANDO A SENHA
-			String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
+				// DEPOIS DE ENCRIPTADA A SENHA É SALVADA NO OBJETO USUÁRIO ANTES DE SER
+				// GUARDADO NO BANCO DE DADOS
+				usuario.setSenha(senhaCriptografada);
 
-			// DEPOIS DE ENCRIPTADA A SENHA É SALVADA NO OBJETO USUÁRIO ANTES DE SER
-			// GUARDADO NO BANCO DE DADOS
-			usuario.setSenha(senhaCriptografada);
+				/*
+				 * SE ESTIVER VAZIO, SIGNIFICA QUE O USUÁRIO ESTÁ SENDO CADASTRADO ENTÃO É
+				 * COLOCADO O NOME DO USUÁRIO ADM QUE REALIZA O CADASTRO
+				 * 
+				 * SE JÁ CONTER ALGUM VALOR, SIGNIFICA QUE É UMA EDIÇÃO, ENTÃO NÃO PRECISA
+				 */
+				if (usuario.getCriadoPor() == null || usuario.getCriadoPor().isEmpty()) {
+					// MODIFICA O USUÁRIO QUE CRIOU O EMPREENDIMENTO
+					usuario.setCriadoPor(nomeUsuarioADM);
+				}
 
-			/*
-			 * SE ESTIVER VAZIO, SIGNIFICA QUE O USUÁRIO ESTÁ SENDO CADASTRADO ENTÃO É
-			 * COLOCADO O NOME DO USUÁRIO ADM QUE REALIZA O CADASTRO
-			 * 
-			 * SE JÁ CONTER ALGUM VALOR, SIGNIFICA QUE É UMA EDIÇÃO, ENTÃO NÃO PRECISA
-			 */
-			if (usuario.getCriadoPor() == null || usuario.getCriadoPor().isEmpty()) {
-				// MODIFICA O USUÁRIO QUE CRIOU O EMPREENDIMENTO
-				usuario.setCriadoPor(nomeUsuarioADM);
+				if (usuario.getDataCriacao() == null || usuario.getDataCriacao().isEmpty()) {
+					// MODIFICA A DATA DE CRIAÇÃO
+					usuario.setDataCriacao(getData());
+				}
+
+				// SALVA O OBJETO USUÁRIO NO BANCO DE DADOS
+				usuarioRepository.save(usuario);
+
+				// RETORNA A MENSAGEM PARA O A PÁGINA , PARA O USUSARIO VER
+				attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
+
+			} else {
+				// RETORNA A MENSAGEM DE ERRO CASO O EMAIL JÁ ESTEJA CADASTRADO
+				attr.addFlashAttribute("msgErro", "Email já cadastrado. Por favor, informe um email válido!");
 			}
-
-			if(usuario.getDataCriacao() == null || usuario.getDataCriacao().isEmpty()) {
-				// MODIFICA A DATA DE CRIAÇÃO
-				usuario.setDataCriacao(getData());			
-			}
-
-			// SALVA O OBJETO USUÁRIO NO BANCO DE DADOS
-			usuarioRepository.save(usuario);
-
-			// RETORNA A MENSAGEM PARA O A PÁGINA , PARA O USUSARIO VER
-			attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
-
-//		} else {
-//			// RETORNA A MENSAGEM DE ERRO CASO O EMAIL JÁ ESTEJA CADASTRADO
-//			attr.addFlashAttribute("msgErro", "Email já cadastrado. Por favor, informe um email válido!");
-//		}
 		} else {
 			// SE ELA ESTIVER COM ALGUM ERRO NÃO SERÁ POSSÍVEL CADASTRAR UM USUÁRIO
 			modelo.addAttribute("msgErro", msgValidacao.get(0));
-			return "cadastro";
+			return "/usuario/cadastro";
 		}
 		return "redirect:/usuario/cadastro";
 	}
