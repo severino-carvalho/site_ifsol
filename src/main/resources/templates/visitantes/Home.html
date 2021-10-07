@@ -34,12 +34,7 @@
 
 							<!-- Texto para teste -->
 
-							<input type="hidden" th:text="${n.foto.id}" />
-
-							<!--
-								@{/download/} + ${n.foto.id} + '?salvar=false'
-							-->
-							<img th:if="${n.foto != null}" th:src="@{/download​​/} + ${n.foto.id} + '?salvar=false'"
+							<img th:if="${n.foto != null}" th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
 								class="card-img-top" alt="...">
 							<div class="card-body">
 								<h5 class="card-title" th:text="${n.titulo}">Card title</h5>
