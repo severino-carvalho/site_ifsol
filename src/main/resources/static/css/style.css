@@ -5,3 +5,10 @@
 .link-operacao:hover {
 	color: #0d6efd !important;
 }
+.img-outra-noticia{
+	opacity: 1.0;
+}
+
+.img-outra-noticia:hover {
+	opacity: 0.2;
+}

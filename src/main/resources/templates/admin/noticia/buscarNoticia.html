@@ -2,7 +2,18 @@
 <html lang="pt" layout:decorate="~{layouts/layout}">
 
 <head>
+	<link rel="stylesheet" href="../../../static/css/style.css">
 
+	<style>
+		.img-outra-noticia {
+			opacity: 1.0;
+		}
+
+		.img-outra-noticia:hover {
+			opacity: 0.2;
+			cursor: pointer;
+		}
+	</style>
 </head>
 
 <body>
@@ -36,13 +47,29 @@
 
 				<div class="col-lg-3">
 					<div class="card mb-2" th:each="n : ${noticias}" th:if="${n.id != noticia.id}">
-						<img th:if="${n.foto.id != null}" th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
-							class="card-img-top" alt="...">
+						<a th:href="${n.id}">
+							<img th:if="${n.foto.id != null}" th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
+								class="card-img-top img-outra-noticia" alt="..."></a>
 						<div class="card-body">
-							<h5 class="card-title" th:text="${n.titulo}"></h5>
-							<p class="card-text" style="text-align: justify;" th:text="${n.texto}"></p>
+							<a class="text-decoration-none" th:href="${n.id}">
+								<h5 class="card-title" th:text="${n.titulo}"></h5>
+							</a>
+							<p class="card-text" style="text-align: justify;" th:text="${n.texto}" name="texto_noticia">
+							</p>
 						</div>
 					</div>
+
+					<script>
+						function limitarCaracteres() {
+							let textos = document.getElementsByName("texto_noticia");
+
+							Array.prototype.map.call(textos, (texto) => {
+								texto.innerText = texto.innerText.slice(0, 80).trim() + "...";
+							});
+						}
+
+						limitarCaracteres();
+					</script>
 				</div>
 			</div>
 		</div>
