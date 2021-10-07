@@ -2,8 +2,6 @@
 <html lange="pt" layout:decorate="~{layouts/layout}">
 
 <head>
-	<link rel="stylesheet" href="paginainicial.css" />
-
 
 	<title>Página Inicial</title>
 </head>
@@ -14,29 +12,30 @@
 
 	<section layout:fragment="corpo">
 
-		<div class="divgeral">
+		<div class="divgeral w-100">
+			<div class="container">
+				<!--	
+				<div class="container img-back" style="text-align: center">
+					<img src="../Imagens/sol.jfif" class="img-fluid" style="width: 70vw; margin: 0px; max-height: 500px">
+				</div>
+			-->
 
-			<div class="container" style="text-align: center">
-				<img src="../Imagens/sol.jfif" class="img-fluid" style="width: 70vw; margin: 0px; max-height: 500px">
-			</div>
-
-			<div class="container mb-4">
-
-				<div th:if="${msgNotErro} != null">
+				<div th:if="${msgErro} != null">
 					<script>
 						alert("Solicitação de notícia não encontrada!");
 					</script>
 				</div>
 
 				<div class="row">
-					<div class="col-md-6 mt-4" th:each="n : ${noticias}">
+					<div class="col-md-6 col-lg-4 mt-4" th:each="n : ${noticias}">
 						<div class="card" style="min-width: 18rem;">
 							<img th:if="${n.foto != null}" th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
 								class="card-img-top" alt="...">
 							<div class="card-body">
 								<h5 class="card-title" th:text="${n.titulo}"></h5>
 								<p class="card-text" style="text-align: justify;" th:text="${n.texto}"
-									name="texto_noticia"></p>
+									name="texto_noticia">
+								</p>
 								<a th:href="'noticia/' + ${n.id}" class="btn btn-primary">Leia Mais</a>
 							</div>
 							<div class="card-footer text-muted" th:text="${n.dataPublicacao}"></div>
@@ -55,57 +54,56 @@
 
 					limitarCaracteres();
 				</script>
-
 			</div>
 
-			<div class="container">
+		</div>
 
-				<div class="row ">
-					<div class="col-md-4 d-flex justify-content-center">
-						<div class="card border-success mb-4  " style="max-width: 18rem;">
-							<div class="card-header bg border-success text-dark fw-bold"
-								style="text-align: center; background-color:white;">Missão</div>
-							<div class="card-body text-success">
-								<p class="card-text" style="text-align: justify;">Fortalecer a Economia solidaria a
-									partir dos saberes
-									do IFRN através da incubação a empreendimentos
-									econominos solidarios, visando a sustentabilidade o desenvolvimento territorial
-									e a atuação em rede.</p>
-							</div>
-						</div>
-					</div>
+		<div class="container mt-5">
 
-					<div class="col-md-4 d-flex justify-content-center">
-						<div class="card border-success mb-4" style="width: 18rem;">
-							<div class="card-header bg border-success text-dark fw-bold"
-								style="text-align: center; background-color:white;">Nossos valores
-							</div>
-							<div class="card-body text-success">
-								<p class="card-text" style="text-align: justify;">Autonomia</p>
-								<p class="card-text" style="text-align: justify;">Autogestão </p>
-								<p class="card-text" style="text-align: justify;">Solidariedade</p>
-								<p class="card-text" style="text-align: justify;">Sustentabilidade</p>
-								<p class="card-text" style="text-align: justify;">Profissionalismo</p>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-4 d-flex justify-content-center">
-						<div class="card border-success mb-4" style="max-width: 18rem;">
-							<div class="card-header bg border-success text-dark fw-bold"
-								style="text-align: center; background-color:white;">Como fazer parte da IFsol João
-								Câmara?</div>
-							<div class="card-body text-success">
-								<p class="card-text" style="text-align: justify;">Entrar em contato com a equipe
-									IFSOL_JC
-									atraves dos contados no menu inferior e superior
-
-									detalhando sobre o que se trata e o porque quer fazer parte da ifsol.</p>
-							</div>
+			<div class="row">
+				<div class="col-md-4 d-flex justify-content-center">
+					<div class="card border-success mb-4  " style="max-width: 18rem;">
+						<div class="card-header bg border-success text-dark fw-bold"
+							style="text-align: center; background-color:white;">Missão</div>
+						<div class="card-body text-success">
+							<p class="card-text" style="text-align: justify;">Fortalecer a Economia solidaria a
+								partir dos saberes
+								do IFRN através da incubação a empreendimentos
+								econominos solidarios, visando a sustentabilidade o desenvolvimento territorial
+								e a atuação em rede.</p>
 						</div>
 					</div>
 				</div>
 
+				<div class="col-md-4 d-flex justify-content-center">
+					<div class="card border-success mb-4" style="width: 18rem;">
+						<div class="card-header bg border-success text-dark fw-bold"
+							style="text-align: center; background-color:white;">Nossos valores
+						</div>
+						<div class="card-body text-success">
+							<p class="card-text" style="text-align: justify;">Autonomia</p>
+							<p class="card-text" style="text-align: justify;">Autogestão </p>
+							<p class="card-text" style="text-align: justify;">Solidariedade</p>
+							<p class="card-text" style="text-align: justify;">Sustentabilidade</p>
+							<p class="card-text" style="text-align: justify;">Profissionalismo</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4 d-flex justify-content-center">
+					<div class="card border-success mb-4" style="max-width: 18rem;">
+						<div class="card-header bg border-success text-dark fw-bold"
+							style="text-align: center; background-color:white;">Como fazer parte da IFsol João
+							Câmara?</div>
+						<div class="card-body text-success">
+							<p class="card-text" style="text-align: justify;">Entrar em contato com a equipe
+								IFSOL_JC
+								atraves dos contados no menu inferior e superior
+
+								detalhando sobre o que se trata e o porque quer fazer parte da ifsol.</p>
+						</div>
+					</div>
+				</div>
 			</div>
 			<!-- final do container -->
 		</div>
