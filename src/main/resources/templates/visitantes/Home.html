@@ -31,22 +31,31 @@
 				<div class="row">
 					<div class="col-md-6 mt-4" th:each="n : ${noticias}">
 						<div class="card" style="min-width: 18rem;">
-
-							<!-- Texto para teste -->
-
 							<img th:if="${n.foto != null}" th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
 								class="card-img-top" alt="...">
 							<div class="card-body">
-								<h5 class="card-title" th:text="${n.titulo}">Card title</h5>
-								<p class="card-text" th:text="${n.texto}">Some quick example text to build on the card
-									title and make up the
-									bulk of the card's content.</p>
+								<h5 class="card-title" th:text="${n.titulo}"></h5>
+								<p class="card-text" style="text-align: justify;" th:text="${n.texto}"
+									name="texto_noticia"></p>
 								<a th:href="'noticia/' + ${n.id}" class="btn btn-primary">Leia Mais</a>
 							</div>
 							<div class="card-footer text-muted" th:text="${n.dataPublicacao}"></div>
 						</div>
 					</div>
 				</div>
+
+				<script>
+					function limitarCaracteres() {
+						let textos = document.getElementsByName("texto_noticia");
+
+						Array.prototype.map.call(textos, (texto) => {
+							texto.innerText = texto.innerText.slice(0, 300).trim() + "...";
+						});
+					}
+
+					limitarCaracteres();
+				</script>
+
 			</div>
 
 			<div class="container">
@@ -91,7 +100,7 @@
 									IFSOL_JC
 									atraves dos contados no menu inferior e superior
 
-									detalhando sobre o que se trata e o porque quer fazer parte da ifsol</p>
+									detalhando sobre o que se trata e o porque quer fazer parte da ifsol.</p>
 							</div>
 						</div>
 					</div>
