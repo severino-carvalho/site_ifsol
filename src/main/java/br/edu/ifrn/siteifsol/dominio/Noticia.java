@@ -21,7 +21,7 @@ public class Noticia {
 	@Column(nullable = false)
 	private String titulo;
 
-	@Column(nullable = false, length = 1000)
+	@Column(nullable = false, length = 5000)
 	private String texto;
 
 	@Column(nullable = false)
