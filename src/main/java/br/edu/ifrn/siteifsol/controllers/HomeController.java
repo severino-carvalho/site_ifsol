@@ -1,5 +1,6 @@
 package br.edu.ifrn.siteifsol.controllers;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,8 @@ public class HomeController {
 	public String home(ModelMap modelo) {
 		List<Noticia> noticias = noticiaRepository.findAll();
 
+		Collections.reverse(noticias);
+
 		modelo.addAttribute("noticias", noticias);
 
 		return "/visitantes/Home";
@@ -43,9 +46,10 @@ public class HomeController {
 				modelo.addAttribute("noticia", noticiaEncontrada.get());
 
 				// RETORNA AS DEMAIS NOTICIA PARA A PÁGINA
+				Collections.reverse(noticias);
 				modelo.addAttribute("noticias", noticias);
 			} else {
-				attr.addFlashAttribute("msgNotErro", "");
+				attr.addFlashAttribute("msgErro", "");
 				return "redirect:/publico/home";
 			}
 		} catch (Exception e) {
