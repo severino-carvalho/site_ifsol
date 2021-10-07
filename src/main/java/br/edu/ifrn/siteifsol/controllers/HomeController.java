@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ public class HomeController {
 	private NoticiaRepository noticiaRepository;
 
 	@GetMapping("/publico/home")
+	@Transactional(readOnly = true)
 	public String home(ModelMap modelo) {
 		List<Noticia> noticias = noticiaRepository.findAll();
 
@@ -29,13 +31,19 @@ public class HomeController {
 	}
 
 	@GetMapping("/publico/noticia/{id}")
+	@Transactional(readOnly = true)
 	public String buscarNoticia(@PathVariable("id") Integer idNoticia, ModelMap modelo, RedirectAttributes attr) {
 
 		try {
+			List<Noticia> noticias = noticiaRepository.findAll();
 			Optional<Noticia> noticiaEncontrada = noticiaRepository.findById(idNoticia);
 
 			if (noticiaEncontrada.isPresent()) {
-				modelo.addAttribute("noticia", noticiaEncontrada.get()); // RETORNA A NOTICIA ENCONTRADA PARA A PÁGINA
+				// RETORNA A NOTICIA ENCONTRADA PARA A PÁGINA
+				modelo.addAttribute("noticia", noticiaEncontrada.get());
+
+				// RETORNA AS DEMAIS NOTICIA PARA A PÁGINA
+				modelo.addAttribute("noticias", noticias);
 			} else {
 				attr.addFlashAttribute("msgNotErro", "");
 				return "redirect:/publico/home";
@@ -43,7 +51,7 @@ public class HomeController {
 		} catch (Exception e) {
 			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
-		
+
 		return "/admin/noticia/buscarNoticia";
 	}
 
