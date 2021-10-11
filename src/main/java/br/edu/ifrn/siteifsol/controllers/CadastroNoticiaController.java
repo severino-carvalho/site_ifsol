@@ -71,7 +71,7 @@ public class CadastroNoticiaController {
 				} else {
 					noticia.setFoto(null);
 					modelo.addAttribute("msgErro", "Não foi selecionada nenhuma imagem!");
-					return "noticia/cadastrarNoticia";
+					return "/admin/noticia/cadastrarNoticia";
 				}
 
 				// SE ESTIVER VAZIA ENTÃO É CADASTRO
