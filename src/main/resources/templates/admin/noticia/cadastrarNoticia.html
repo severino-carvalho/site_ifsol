@@ -73,9 +73,12 @@
 								</div>
 
 								<div class="mb-3" style="text-align: left;">
-									<input class="btn btn-success " type="submit"
+									<input class="btn btn-success" type="submit"
 										th:value="${noticia.id}  == 0 ? Adicionar : Editar" />
+									<input class="btn btn-danger" type="submit" th:if="${noticia.id} != 0"
+										value="Cancelar" formaction="/noticias/config/" formmethod="GET" />
 									<input class="btn btn-warning" type="reset" value="Limpar" />
+
 								</div>
 							</form>
 						</div>
