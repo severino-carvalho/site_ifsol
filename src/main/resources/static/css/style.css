@@ -5,6 +5,11 @@
 .link-operacao:hover {
 	color: #0d6efd !important;
 }
+.ver-noticia {
+	width: 100%;
+	height: 100%;
+}
+
 .link-ver-noticia:hover {
 	background: -moz-linear-gradient(top, rgb(0, 0, 0), rgba(0, 0, 0, 0.795) 40%);
 	background: -webkit-linear-gradient(top, rgb(0, 0, 0), rgba(0, 0, 0, 0.795) 40%);
@@ -38,7 +43,7 @@
 	font-weight: bold;
 	position: absolute;
 	left: 50%;
-	top: 26%;
+	top: 25%;
 	margin: -21px auto auto -90px;
 	transition: all 0.4s ease-in-out;
 }
