@@ -2,6 +2,8 @@
 <html lang="pt" layout:decorate="~{layouts/layoutL}">
 
 <head>
+	<script type="text/javascript" th:src="@{/javascript/limitarCaracteres.js}"></script>
+</head>
 
 <body>
 
@@ -26,8 +28,8 @@
 			<div th:replace="fragmentos/mensagens"></div>
 
 			<div class="row mt-4">
-				<div class="col-md-6">
-					<div class="card border-dark mb-3" style="min-width: 36rem;">
+				<div class="col-lg-6">
+					<div class="card border-dark mb-3" style="max-width: 36rem;">
 						<div class="card-header bg-dark text-white fw-bold text-center">Nova notícia</div>
 						<div class="card-body text-success pt-4 pb-2">
 
@@ -76,9 +78,8 @@
 									<input class="btn btn-success" type="submit"
 										th:value="${noticia.id}  == 0 ? Adicionar : Editar" />
 									<input class="btn btn-danger" type="submit" th:if="${noticia.id} != 0"
-										value="Cancelar" formaction="/noticias/config/" formmethod="GET" />
+										value="Cancelar" formaction="/noticia/config/" formmethod="GET" />
 									<input class="btn btn-warning" type="reset" value="Limpar" />
-
 								</div>
 							</form>
 						</div>
@@ -88,8 +89,8 @@
 					</div>
 				</div>
 
-				<div class="col-md-6">
-					<div class="card border-dark md-3" style="width: 26rem;">
+				<div class="col-lg-6">
+					<div class="card border-dark md-3" style="max-width: 26rem;">
 						<div class="card-header bg-dark fw-bold text-white">Busca de notícias</div>
 						<div class="card-body text-dark">
 
@@ -137,23 +138,24 @@
 							<tr class="align-middle">
 								<th>Foto</th>
 								<th>Título</th>
-								<th>Texto</th>
-								<th th:if="${mostrarTodosDados} == true">Data de publicação</th>
+								<th th:if="${mostrarTodosDados} == true">Texto</th>
+								<th>Data de publicação</th>
 								<th>Operações</th>
 							</tr>
 						</thead>
 
 						<tbody>
 							<tr class="align-middle" th:each="n : ${noticias}">
-								<td>
+								<td class="text-center">
 									<img th:if="${n.foto} != null"
 										th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
 										style="max-height: 128px" />
 								</td>
 								<td th:text="${n.titulo}"></td>
-								<td th:text="${n.texto}"></td>
-								<td class="text-center" th:if="${mostrarTodosDados} == true"
-									th:text="${n.dataPublicacao}"></td>
+								<td th:if="${mostrarTodosDados} == true" style="text-align: justify;"
+									name="texto_noticia" th:text="${n.texto}"></td>
+
+								<td class="text-center" th:text="${n.dataPublicacao}"></td>
 								</td>
 
 								<td class="text-center">
