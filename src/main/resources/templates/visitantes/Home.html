@@ -2,6 +2,9 @@
 <html lange="pt" layout:decorate="~{layouts/layout}">
 
 <head>
+	
+	<!--	Arquivo JS para limitar os caracteres	-->
+	<script th:src="@{/js/limitarCaracteres.js}"></script>
 
 	<title>Página Inicial</title>
 </head>
@@ -36,6 +39,11 @@
 								<p class="card-text" style="text-align: justify;" th:text="${n.texto}"
 									name="texto_noticia">
 								</p>
+
+								<script>
+									limitarCaracteres(300);
+								</script>
+
 								<a th:href="'/publico/noticia/' + ${n.id}" class="btn btn-primary">Leia Mais</a>
 							</div>
 							<div class="card-footer text-muted" th:text="${n.dataPublicacao}"></div>
@@ -43,17 +51,6 @@
 					</div>
 				</div>
 
-				<script>
-					function limitarCaracteres() {
-						let textos = document.getElementsByName("texto_noticia");
-
-						Array.prototype.map.call(textos, (texto) => {
-							texto.innerText = texto.innerText.slice(0, 300).trim() + "...";
-						});
-					}
-
-					limitarCaracteres();
-				</script>
 			</div>
 
 		</div>
