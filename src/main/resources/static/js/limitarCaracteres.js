@@ -1,18 +1,12 @@
 
-function limitarCaracteres() {
-    let url = window.location.pathname;
+function limitarCaracteres(limit) {
     let textos = document.getElementsByName("texto_noticia");
-    let qtdLimite = 0;
 
-    if (url != "/publico/noticia/23") {
-        qtdLimite = 300;
-    } else {
-        qtdLimite = 150;
+    if (!limit) {
+        limit = 300;
     }
     
     Array.prototype.map.call(textos, (texto) => {
-        texto.innerText = texto.innerText.slice(0, qtdLimite).trim() + "...";
+        texto.innerText = texto.innerText.slice(0, limit).trim() + "...";
     });
 }
-
-window.addEventListener("load", limitarCaracteres);
