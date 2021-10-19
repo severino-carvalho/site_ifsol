@@ -27,7 +27,7 @@
 
 		<div class="container mt-2">
 			<div class="row" th:if="${noticia} != null">
-				<div class="col-lg-9 d-flex justify-content-center">
+				<div class="col-lg-9 d-flex justify-content-center mb-4">
 					<div class="card">
 						<img th:if="${noticia.foto != null}"
 							th:src="@{/download/} + ${noticia.foto.id} + '?salvar=false'" class="card-img-top"
@@ -56,7 +56,6 @@
 										<div class="box-hover">
 											<span class="txt-hover">VER NOTÍCIA</span>
 										</div>
-
 									</a>
 								</div>
 								<div class="card-body">
@@ -76,9 +75,9 @@
 				</div>
 			</div>
 
-			<div class="row mt-4 text-">
-				<div class="col-12">
-					<a href="/publico/home/" class="btn btn-warning" type="button">
+			<div class="row mt-2 mb-4 text-">
+				<div class="col-12 text-center">
+					<a href="/publico/home/" class="btn btn-primary rounded-pill" type="button">
 						<span class="fs-6">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 								class="bi bi-arrow-left mb-1" viewBox="0 0 16 16">
