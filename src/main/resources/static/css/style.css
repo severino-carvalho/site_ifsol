@@ -7,7 +7,7 @@
 }
 
 .box-noticia {
-	max-width: 400px;
+    max-width: 400px;
     margin: 0 auto;
     width: 100%;
     display: block;
@@ -16,42 +16,45 @@
 }
 
 .box-noticia .box-img {
-	width: 100%;
+    width: 100%;
     position: relative;
     z-index: 1;
 }
 
-.box-noticia .box-img img { 
-	width: 100%;
-	height: auto;
+.box-noticia .box-img img {
+    width: 100%;
     vertical-align: top;
     transition: all 0.5s ease 0s;
 }
 
-.box-hover:hover{
-	width: 100%;
+.box-hover {
+    width: 100%;
     height: 100%;
     position: absolute;
     left: 0px;
     top: 0px;
     z-index: 9;
-    background: rgb(255 199 29 / 90%);
+    background: rgba(255, 175, 29, 0.9);
     opacity: 0;
     transition: opacity 0.8s ease 0s;
 }
 
+.box-hover:hover {
+    opacity: 1;
+}
+
 .txt-hover {
-	display: none;
+    display: none;
 }
 
 .box-hover:hover span {
     line-height: 38px;
-    border-top: 2px solid rgb(255 255 255);
-    border-bottom: 2px solid rgb(255 255 255);
+    border-top: 2px solid #fff;
+    border-bottom: 2px solid #fff;
     display: block;
     width: 180px;
     text-align: center;
-    color: rgb(255 255 255);
+    color: #fff;
     font-size: 18px;
     font-weight: bold;
     position: absolute;
