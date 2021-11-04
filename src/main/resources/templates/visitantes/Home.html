@@ -27,12 +27,12 @@
 						alert("Solicitação de notícia não encontrada!");
 					</script>
 				</div>
-				
+
 				<div class="row mx-0">
 					<div class="col-md-6 col-lg-4 mt-4" th:each="n : ${noticias}">
 						<div class="card" style="min-width: 18rem;">
 							<img th:if="${n.foto != null}" th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
-								class="card-img-top" alt="...">
+								class="card-img-top " alt="...">
 							<div class="card-body">
 								<h5 class="card-title" th:text="${n.titulo}"></h5>
 								<p class="card-text" style="text-align: justify;" th:text="${n.texto}"
@@ -43,7 +43,8 @@
 									limitarCaracteres(300);
 								</script>
 
-								<a th:href="'/publico/noticia/' + ${n.id}" class="btn btn-primary">Leia Mais</a>
+								<a th:href="'/publico/noticia/' + ${n.id}" class="btn btn-primary rounded-pill">Leia
+									Mais</a>
 							</div>
 							<div class="card-footer text-muted" th:text="${n.dataPublicacao}"></div>
 						</div>
@@ -92,7 +93,8 @@
 							<div class="card-body">
 								<p class="card-text" style="text-align: justify;">Entrar em contato com a equipe
 									<a class="text-decoration-none"
-										href="https://instagram.com/ifsol.jc?igshid=16owolwsu842l" target="_black">IFSOL_JC</a>
+										href="https://instagram.com/ifsol.jc?igshid=16owolwsu842l"
+										target="_black">IFSOL_JC</a>
 									atraves dos contados no menu inferior e superior
 
 									detalhando sobre o que se trata e o porque quer fazer parte da ifsol.
