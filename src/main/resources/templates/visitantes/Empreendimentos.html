@@ -3,6 +3,7 @@
 
 <head>
 
+	<link rel="stylesheet" th:href="@{/css/utils.css}">
 
 	<title>Empreendimentos</title>
 </head>
@@ -13,94 +14,87 @@
 
 	<section layout:fragment="corpo">
 
-		<div class="container">
-
-
-
-			<br>
-
-			<div class="card mb-3">
-				<div class="card-body">
-					<h5 class="card-title text-success" style="text-align:center">Emprendimentos atendidos</h5>
-					<p class="card-text text-success" style="text-align: justify;">A IFSol Jo�o C�mara atende a
-						empreendimentos (grupos, informais, associa��es, cooperativas) que
+		<div class="container py-4">
+			<div class="card " style="border-radius: 15px;">
+				<div class="card-body bg-light" style="border-radius: 15px;">
+					<h5 class="card-title text-center"><b>Emprendimentos atendidos</b></h5>
+					<p class="card-text" style="text-align: justify;">A IFSol João Câmara atende a
+						empreendimentos (grupos, informais, associações, cooperativas) que
 						trabalham ou queiram trabalhar sob a filosofia da economia
-						solid�ria que estejam sediados na regi�o do Mato Grande Potiguar.
-						Realizamos assessoria na �rea de comercializa��o e projetos em
-						parceria com outras institui��es e n�cleos.</p>
+						solidária que estejam sediados na região do Mato Grande Potiguar.
+						Realizamos assessoria na área de comercialização e projetos em
+						parceria com outras instituições e núcleos.</p>
 				</div>
 			</div>
-
-			<br><br>
-
-
-			<div class="row">
-				<div class="col">
-					<div class="card border-success mb-4" style="max-width: 18rem;">
-						<img src="/Imagens/mel.jpg" class="img-fluid">
-						<div class="card-body text-success">
-							<h5 class="card-title">Arizona - mel</h5>
-							<p class="card-text" style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur
-								adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-								exerc�cio ullamco laboris nisi ut aliquip ex ea commodo
-								consequat.</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col">
-					<div class="card border-success mb-4" style="max-width: 18rem;">
-						<img src="/Imagens/artesanato.jpg" class="img-fluid">
-						<div class="card-body text-success">
-							<h5 class="card-title">Tabua - grupo de artesanato</h5>
-							<p class="card-text" style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur
-								adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-								exerc�cio .</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col">
-					<div class="card border-success mb-4" style="max-width: 18rem;">
-						<img src="/Imagens/farinha.jpg" class="img-fluid">
-						<div class="card-body text-success">
-							<h5 class="card-title">Acau� - casa da farinha</h5>
-							<p class="card-text" style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur
-								adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-								exerc�cio ullamco laboris nisi
-								consequat.</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col">
-					<div class="card border-success mb-4" style="max-width: 18rem;">
-						<img src="/Imagens/amarelao.jpg" class="img-fluid">
-						<div class="card-body text-success">
-							<h5 class="card-title">Amarel�o</h5>
-							<p class="card-text" style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur
-								adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-								dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-								exerc�cio ullamco laboris nisi ut
-								consequat.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-
-
 		</div>
 
-		<br>
+		<div class="bg-light">
+			<div class="container  bg-light">
+				<div class="row py-5 justify-content-center">
+					<div class="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-center">
+						<div class="card mb-4 br-15 " style="max-width: 18rem;">
+							<img src="/Imagens/mel.jpg" class="img-fluid brt-15">
+							<div class="card-body ">
+								<h5 class="card-title text-center">Arizona - mel</h5>
+								<p class="card-text" style="text-align: justify;">Lorem ipsum dolor sit amet,
+									consectetur
+									adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+									dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+									exercício ullamco laboris nisi ut aliquip ex ea commodo
+									consequat.</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-md-4  col-sm-6 d-flex justify-content-center">
+						<div class="card mb-4 br-15" style="max-width: 18rem;">
+							<img src="/Imagens/artesanato.jpg" class="img-fluid brt-15">
+							<div class="card-body ">
+								<h5 class="card-title text-center">Tabua - grupo de artesanato</h5>
+								<p class="card-text" style="text-align: justify;">Lorem ipsum dolor sit amet,
+									consectetur
+									adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+									dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+									exercício .</p>
+							</div>
+						</div>
+					</div>
+
+					<div class=" col-lg-3 col-md-4   col-sm-6 d-flex justify-content-center">
+						<div class="card mb-4 br-15" style="max-width: 18rem;">
+							<img src="/Imagens/farinha.jpg" class="img-fluid brt-15">
+							<div class="card-body ">
+								<h5 class="card-title text-center">Acauã - casa da farinha</h5>
+								<p class="card-text" style="text-align: justify;">Lorem ipsum dolor sit amet,
+									consectetur
+									adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+									dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+									exercício ullamco laboris nisi
+									consequat.</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-md-4  col-sm-6  d-flex justify-content-center">
+						<div class="card br-15" style="max-width: 18rem;">
+							<img src="/Imagens/amarelao.jpg" class="img-fluid brt-15">
+							<div class="card-body">
+								<h5 class="card-title text-center">Amarelão</h5>
+								<p class="card-text" style="text-align: justify;">Lorem ipsum dolor sit amet,
+									consectetur
+									adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+									dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+									exercício ullamco laboris nisi ut
+									consequat.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 	</section>
-
-
 
 </body>
 
