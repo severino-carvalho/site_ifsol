@@ -1,0 +1,10 @@
+
+/*  border-radius   */
+.br-15 {
+    border-radius: 15px;
+}
+
+.brt-15 {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
