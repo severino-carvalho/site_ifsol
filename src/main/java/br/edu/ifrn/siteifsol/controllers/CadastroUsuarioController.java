@@ -113,7 +113,7 @@ public class CadastroUsuarioController {
 
 		} else {
 			// SE ELA ESTIVER COM ALGUM ERRO NÃO SERÁ POSSÍVEL CADASTRAR UM USUÁRIO
-			modelo.addAttribute("msgErro", msgValidacao.get(0));
+			modelo.addAttribute("msgErro", msgValidacao);
 			return "/admin/usuario/cadastro";
 		}
 		return "redirect:/usuario/cadastro";
