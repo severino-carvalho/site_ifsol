@@ -63,7 +63,7 @@ public class CadastroEmpreController {
 
 		// SE HOUVER ALGUM ERRO, VAI SER RETORNADO O PROMEIRO ERRO PARA A PÁGINA
 		if (!msgValidacao.isEmpty()) {
-			model.addAttribute("msgErro", msgValidacao.get(0));
+			model.addAttribute("msgErro", msgValidacao);
 
 			/*
 			 * É ENVIADO O O OBJETO EMPRE QUE O USUÁRIO PREENCHEU ERRONIAMENTE PARA QUE ELE
