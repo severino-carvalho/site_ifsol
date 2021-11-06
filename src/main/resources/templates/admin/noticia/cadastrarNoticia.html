@@ -76,11 +76,11 @@
 								</div>
 
 								<div class="mb-3" style="text-align: left;">
-									<input class="btn btn-success" type="submit"
+									<input class="btn btn-success rounded-pill" type="submit"
 										th:value="${noticia.id}  == 0 ? Adicionar : Editar" />
-									<input class="btn btn-danger" type="submit" th:if="${noticia.id} != 0"
+									<input class="btn btn-danger rounded-pill" type="submit" th:if="${noticia.id} != 0"
 										value="Cancelar" formaction="/noticia/config/" formmethod="GET" />
-									<input class="btn btn-warning" type="reset" value="Limpar" />
+									<input class="btn btn-warning rounded-pill" type="reset" value="Limpar" />
 								</div>
 							</form>
 						</div>
