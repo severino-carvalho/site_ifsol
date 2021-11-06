@@ -94,7 +94,7 @@ public class CadastroNoticiaController {
 				return "redirect:/noticia/config";
 			}
 		} else {
-			modelo.addAttribute("msgErro", msgValidacao.get(0));
+			modelo.addAttribute("msgErro", msgValidacao);
 			return "/admin/noticia/cadastrarNoticia";
 		}
 
