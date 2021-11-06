@@ -12,9 +12,6 @@ th:object DIZ O OBJETO PARA QUAL O FORMULARIO PREENCHERA OS ATRIBUTOS
 th:action AÇÃO QUE AQUELA DETERMINADA TAG VAI FAZER
 th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI SE TRATAR-->
 
-
-	<br />
-
 	<section layout:fragment="corpo2">
 
 		<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
@@ -77,6 +74,8 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							<div class="mb-3" style="text-align: left;">
 								<input class="btn btn-success" type="submit"
 									th:value="${usuario.id}  == 0 ? Cadastrar : Editar" />
+								<input class="btn btn-danger" type="submit" th:if="${usuario.id} > 0" th:value="Cancelar"
+									formaction="/usuario/cadastro/" formmethod="GET" />
 								<input class="btn btn-warning" type="reset" value="Limpar" />
 							</div>
 						</form>
