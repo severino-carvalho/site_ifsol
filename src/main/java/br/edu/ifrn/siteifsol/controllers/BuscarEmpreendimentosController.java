@@ -1,5 +1,6 @@
 package br.edu.ifrn.siteifsol.controllers;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,18 +41,28 @@ public class BuscarEmpreendimentosController {
 	@GetMapping("/buscaempre")
 	public String buscaempre(@RequestParam(name = "nome", required = false) String nome,
 			@RequestParam(name = "email", required = false) String email,
-			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, ModelMap model) {
+			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, ModelMap modelo) {
 
-		// LISTA DE EMPREENDIMENTOS
-		List<empreendimento> empreendimentosEncontrados = empreendimentosrepository.findByEmailAndNome(email, nome);
+		try {
+			// LISTA DE EMPREENDIMENTOS ENCONTRADOS PARA A PÁGINA WEB
+			List<empreendimento> empreendimentosEncontrados = empreendimentosrepository.findByEmailAndNome(email, nome);
 
-		// RETORNA PARA A PÁGINA UM NOVO EMPREENDIMENTO
-		model.addAttribute("empre", new empreendimento());
-		model.addAttribute("empreendimentosEncontrados", empreendimentosEncontrados); // RETORNA OS EMPREENDIMENTOS
-																						// ENCONTRADOS PARA A PÁGINA WEB
+			if (empreendimentosEncontrados.isEmpty()) {
+				modelo.addAttribute("msgErro", "Nenhuma notícia encontrada");
+			} else {
+				Collections.reverse(empreendimentosEncontrados);
+				modelo.addAttribute("empreendimentosEncontrados", empreendimentosEncontrados);
+			}
 
-		if (mostrarTodosDados != null) {
-			model.addAttribute("mostrarTodosDados", true);
+			if (mostrarTodosDados != null) {
+				modelo.addAttribute("mostrarTodosDados", true);
+			}
+
+			// RETORNA PARA A PÁGINA UM NOVO EMPREENDIMENTO
+			modelo.addAttribute("empre", new empreendimento());
+
+		} catch (Exception e) {
+			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
 
 		return "/admin/empreendimento/cadastroEmpre";
