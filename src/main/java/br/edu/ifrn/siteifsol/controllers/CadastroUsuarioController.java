@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -65,11 +66,12 @@ public class CadastroUsuarioController {
 				// FAZ A BUSCA DO USUÁRIO PELO ID E RETORNA SEU EMAIL
 				String emailUsuario = usuarioRepository.findById(usuario.getId()).get().getEmail();
 
-				// SE O EMAIL DO USUÁRIO CADASTRADO NO BANCO FOR DIFERENTE DO EMAIL DO USUÁRIO PASSADO PARA O MÉTODO
+				// SE O EMAIL DO USUÁRIO CADASTRADO NO BANCO FOR DIFERENTE DO EMAIL DO USUÁRIO
+				// PASSADO PARA O MÉTODO
 				// SIGNIFICA QUE ELE QUER ATUALIZAR
 				if (!emailUsuario.equals(usuario.getEmail())) {
-					//	FAZEMOS A VALIDAÇÃO DESSE EMAIL NOVO
-					//	SE JÁ HOUVER UMA PESSOA COM ESSE EMAIL ENTÃO NÃO PODE SER CADASTRADO
+					// FAZEMOS A VALIDAÇÃO DESSE EMAIL NOVO
+					// SE JÁ HOUVER UMA PESSOA COM ESSE EMAIL ENTÃO NÃO PODE SER CADASTRADO
 					if (!validarEmail(usuario)) {
 						modelo.addAttribute("msgErro", "Email já cadastrado. Por favor, informe um email válido!");
 						return "/admin/usuario/cadastro";
@@ -107,6 +109,11 @@ public class CadastroUsuarioController {
 
 			// SALVA O OBJETO USUÁRIO NO BANCO DE DADOS
 			usuarioRepository.save(usuario);
+
+			List<Usuario> usuariosCadastrados = usuarioRepository.findAll();
+			Collections.reverse(usuariosCadastrados);
+			// RETORNA A LISTA PARA A PÁGINA
+			attr.addFlashAttribute("usuariosEncontrados", usuariosCadastrados);
 
 			// RETORNA A MENSAGEM PARA O A PÁGINA , PARA O USUSARIO VER
 			attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
@@ -167,10 +174,10 @@ public class CadastroUsuarioController {
 		return formataData.format(data);
 	}
 
-	//	VALIDAÇÃO DE EMAIL PARA CADASTRO E ATUALIZAÇÃO DE DADOS
+	// VALIDAÇÃO DE EMAIL PARA CADASTRO E ATUALIZAÇÃO DE DADOS
 	@Transactional(readOnly = true)
 	private Boolean validarEmail(Usuario usuario) {
-		//	PESQUISA NO BANCO POR UM EMAIL DO USUÁRIO EM QUESTÃO
+		// PESQUISA NO BANCO POR UM EMAIL DO USUÁRIO EM QUESTÃO
 		Optional<Usuario> user = usuarioRepository.findByEmail(usuario.getEmail());
 
 		// SE ESTIVER PRESENTE RETORNA FALSO SINALIZANDO UM ERRO
@@ -178,7 +185,7 @@ public class CadastroUsuarioController {
 			return false;
 		}
 
-		//	SE ESTIVER TUDO OK RETORNA TRUE
+		// SE ESTIVER TUDO OK RETORNA TRUE
 		return true;
 	}
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -129,7 +130,7 @@ public class CadastroEmpreController {
 
 				// LISTA DE EMPREENDIMENTOS ENCONTRADOS
 				List<empreendimento> empEnc = empreendimentosrepository.findAll();
-
+				Collections.reverse(empEnc);
 				// RETORNA A LISTA PARA A PÁGINA
 				attr.addFlashAttribute("empreendimentosEncontrados", empEnc);
 

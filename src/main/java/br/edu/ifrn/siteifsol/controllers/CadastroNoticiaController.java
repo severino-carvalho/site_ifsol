@@ -3,6 +3,7 @@ package br.edu.ifrn.siteifsol.controllers;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -87,6 +88,7 @@ public class CadastroNoticiaController {
 				attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
 				
 				List<Noticia> noticias = noticiaRepository.findAll();
+				Collections.reverse(noticias);
 				attr.addFlashAttribute("noticias", noticias);
 
 			} catch (Exception e) {
