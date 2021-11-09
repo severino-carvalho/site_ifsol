@@ -31,10 +31,10 @@
 				</div>
 
 				<div class="row mx-0">
-					<div class="col-md-6 col-lg-4 mt-4 br-15" th:each="n : ${noticias}">
-						<div class="card br-15" style="min-width: 18rem;">
+					<div class="col-md-6 col-lg-4 mt-4 bor-rad" th:each="n : ${noticias}">
+						<div class="card bor-rad" style="min-width: 18rem;">
 							<img th:if="${n.foto != null}" th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
-								class="card-img-top brt-15" alt="...">
+								class="card-img-top bor-top-rad" alt="...">
 							<div class="card-body">
 								<h5 class="card-title" th:text="${n.titulo}"></h5>
 								<p class="card-text" style="text-align: justify;" th:text="${n.texto}"
@@ -62,7 +62,7 @@
 
 				<div class="row pt-4">
 					<div class="col-sm-12 col-md-6 col-lg-4">
-						<div class="card br-15">
+						<div class="card bor-rad">
 							<div class="card-header text-dark fw-bold text-center">Missão</div>
 							<div class="card-body">
 								<p class="card-text" style="text-align: justify;">Fortalecer a Economia solidaria a
@@ -75,7 +75,7 @@
 					</div>
 
 					<div class="col-sm-12 col-md-6 col-lg-4">
-						<div class="card br-15">
+						<div class="card bor-rad">
 							<div class="card-header text-dark fw-bold text-center">Nossos valores
 							</div>
 							<div class="card-body ">
@@ -89,7 +89,7 @@
 					</div>
 
 					<div class="col-sm-12 col-md-6 col-lg-4">
-						<div class="card br-15">
+						<div class="card bor-rad">
 							<div class="card-header text-dark fw-bold text-center">Como fazer parte da IFsol João
 								Câmara?</div>
 							<div class="card-body">
