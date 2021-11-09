@@ -3,54 +3,59 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<title>Inicio</title>
 
-	<!-- FORMULARIO DE LOGIN -->
+	<link rel="stylesheet" th:href="@{/css/utils.css}">
+
+	<title>Inicio</title>
 
 </head>
 
 <body>
-
+	
 	<section layout:fragment="corpo">
-
-		<div class="container mt-5" align="center">
-			<div class="card border-success mb-5" style="max-width: 26rem;" align="center">
-				<div class="card-header border-success fw-bold alert-success fs-4" align="center">Login</div>
-				<div class="card-body text-success">
-
+		
+		<div class="container" align="center">
+			
+			<!-- FORMULARIO DE LOGIN -->
+			
+			<div class="card my-4 border-top border-success br-15 text-center shadow" style="max-width: 26rem;">
+				<div class="card-header border-success fw-bold alert-success fs-4 text-center brt-15">Login</div>
+				<div class="card-body">
+					
 					<div th:replace="fragmentos/mensagens"></div>
-
+					
 					<form th:action="@{/login}" method="POST">
 						<div class="mb-3" style="text-align: left;">
 							<label for="exampleInputEmail1" class="form-label">
-								Email
+								Email:
 							</label>
 							<input type="text" name="username" required autofocus class="form-control"
-								id="exampleInputEmail1" aria-describedby="emailHelp" />
+							id="exampleInputEmail1" aria-describedby="emailHelp" />
 						</div>
 						<div class="mb-3" style="text-align: left;">
 							<label for="exampleInputPassword1" class="form-label" style="text-align: left;">
-								Senha
+								Senha:
 							</label>
 							<input type="password" name="password" required class="form-control"
-								id="exampleInputPassword1" />
+							id="exampleInputPassword1" />
 							<div id="emailHelp" class="form-text" style="font-size: 13px;">
 								Sua senha deve ter no mínimo 6 dígitos.
 							</div>
 						</div>
 						<div class="mb-3" style="text-align: left;">
-							<input type="checkbox" name="remenber-me" />Lembrar-me
+							<input type="checkbox" name="remenber-me" /> Lembrar-me
 						</div>
 						<button class="btn btn-outline-success" type="submit">Entrar</button>
 					</form>
 				</div>
 			</div>
 
-			<div class="col-8 mb-5">
+			<div class="col-8 mb-2">
 				<div class="alert alert-warning fw-bold" role="alert">
-					Area restrita aos Administradores!
+					Área restrita aos Administradores!
 				</div>
 			</div>
+
 		</div>
 	</section>
 
