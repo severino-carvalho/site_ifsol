@@ -27,28 +27,7 @@
 					Página de Controle
 				</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link text-secondary" href="/usuario/cadastroem" target="_self">
-					Cadastro de Empreendimentos
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link text-secondary" href="/usuarios/buscaem " target="_self">
-					Busca de empreendimentos
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link text-secondary" href="/usuario/cadastro" sec:authorize="hasAuthority('ADMIN')"
-					target="_self">
-					Cadastro de Usuarios
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link text-secondary" href="/usuarios/busca " sec:authorize="hasAuthority('ADMIN')"
-					target="_self">
-					Busca de Adm's
-				</a>
-			</li>
+			
 			<li>
 				<form th:action="@{/logout}" method="post">
 					<input class="btn btn-outline-danger" type="submit" value="Sair" />
