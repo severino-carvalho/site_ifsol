@@ -31,8 +31,8 @@
 				<div class="col-lg-9 d-flex justify-content-center">
 					<div class="card bor-rad">
 						<img th:if="${noticia.foto != null}"
-							th:src="@{/download/} + ${noticia.foto.id} + '?salvar=false'" class="card-img-top bor-top-rad"
-							alt="...">
+							th:src="@{/download/} + ${noticia.foto.id} + '?salvar=false'"
+							class="card-img-top bor-top-rad" alt="...">
 						<div class="card-body">
 							<h5 class="card-title" th:text="${noticia.titulo}"></h5>
 							<p class="card-text" style="text-align: justify;" th:text="${noticia.texto}"></p>
