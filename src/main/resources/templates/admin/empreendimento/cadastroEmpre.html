@@ -86,9 +86,17 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							<div class="mb-3" style="text-align: left;">
 								<label for="exampleInputName1" class="form-label">Cidade:
 								</label>
+
+								<select class="form-select" id="cid" th:field="${empre.cidade.nome}">
+									<option selected disabled value="" class="select">Escolha uma cidade</option>
+									<option th:each="c : ${cidades}" th:value="${c.id}" th:text="${c.nome}"
+										th:selected="(${c.id} == ${empre.cidade.id})">
+									</option>
+								</select>
+								<!--
 								<input id="cidade" th:field="${empre.cidade.nome}" class="form-control" />
 								<input id="idCidade" type="hidden" th:field="${empre.cidade.id}" />
-
+								-->
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
@@ -153,6 +161,8 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							<div class="mb-3 py-2" style="text-align: left;">
 								<input class="btn btn-success" type="submit"
 									th:value="${empre.id}  == 0 ? Cadastrar : Editar" />
+								<input class="btn btn-danger" type="submit" th:if="${empre.id} > 0" value="Cancelar"
+									formaction="/usuario/cadastroem" formmethod="GET" />
 								<input class="btn btn-warning" type="reset" value="Limpar" />
 							</div>
 						</form>
