@@ -65,7 +65,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 								<label for="exampleInputName1" class="form-label">Função: </label>
 								<select class="form-select" th:field="${usuario.funcao}">
-									<option value="" class="select">Selecione...</option>
+									<option value="" class="select">Escolha uma função</option>
 									<option th:each="p : ${funcao}" th:text="${p}" th:value="${p}">Selecione...
 									</option>
 								</select>
@@ -74,8 +74,8 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							<div class="mb-3" style="text-align: left;">
 								<input class="btn btn-success" type="submit"
 									th:value="${usuario.id}  == 0 ? Cadastrar : Editar" />
-								<input class="btn btn-danger" type="submit" th:if="${usuario.id} > 0" th:value="Cancelar"
-									formaction="/usuario/cadastro/" formmethod="GET" />
+								<input class="btn btn-danger" type="submit" th:if="${usuario.id} > 0"
+									value="Cancelar" formaction="/usuario/cadastro/" formmethod="GET" />
 								<input class="btn btn-warning" type="reset" value="Limpar" />
 							</div>
 						</form>
