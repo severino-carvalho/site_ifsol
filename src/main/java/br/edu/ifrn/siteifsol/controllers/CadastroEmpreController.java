@@ -107,6 +107,8 @@ public class CadastroEmpreController {
 
 					// SAlVA O ARQUIVO NO BANCO DE DADOS
 					arquivoRepository.save(arquivoBD);
+				} else {
+					empre.setFoto(null);
 				}
 
 				/*
