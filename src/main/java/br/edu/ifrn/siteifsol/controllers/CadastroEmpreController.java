@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -52,6 +53,8 @@ public class CadastroEmpreController {
 	@GetMapping("/cadastroem") // URL PARA ACESSAR A PAGINA
 	public String entrarCadastro(ModelMap model) {
 		model.addAttribute("empre", new empreendimento());
+		model.addAttribute("cidades", getCidades());
+
 		return "/admin/empreendimento/cadastroEmpre";
 	}
 
@@ -71,6 +74,7 @@ public class CadastroEmpreController {
 			 * POSSA EDITAR SEM PREENCHER TUDO NOVAMENTE
 			 */
 			model.addAttribute("empre", empre);
+			model.addAttribute("cidades", getCidades());
 			return "/admin/empreendimento/cadastroEmpre";
 
 		} else { // SE NÃO, VIA SEGUIR O FLUXO NORMAL
@@ -86,12 +90,11 @@ public class CadastroEmpreController {
 				 * O CODIGO A SEGUIR FOI FEITO PARA UPLOAD E DOWNLOAD DE UM ARQUIVO NO BANCO DE
 				 * DADOS E O TRY FOI NECESSARIO PARA CASO OCORRA UM ERRO SEJA LANÇADO UMA
 				 * EXCECAO
-				 * 
 				 */
 
-				if (arquivo != null && !arquivo.isEmpty()) {
+				System.out.println("Size: " + arquivo.getSize());
 
-					// NORMALIZANDO NOME DO ARQUIVO
+				if (arquivo.getSize() > 0) {
 					String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
 					Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
 
@@ -104,9 +107,6 @@ public class CadastroEmpreController {
 
 					// SAlVA O ARQUIVO NO BANCO DE DADOS
 					arquivoRepository.save(arquivoBD);
-
-				} else {
-					empre.setFoto(null);
 				}
 
 				/*
@@ -125,6 +125,14 @@ public class CadastroEmpreController {
 					empre.setDataCriacao(getData());
 				}
 
+				// BLOCO PARA ACHAR A CIDADE SELECIONADA E TROCAR O NOME EO ID DA MESMA NO
+				// OBJETO EMPRE
+				Optional<Cidade> cidade = cidaderepository.findById(Integer.parseInt(empre.getCidade().getNome()));
+				Cidade c = cidade.get();
+
+				empre.getCidade().setId(c.getId());
+				empre.getCidade().setNome(c.getNome());
+
 				// CADASTRA E EDITA O EMPREENDIMENTO NO BANCO DE DADOS
 				empreendimentosrepository.save(empre);
 
@@ -133,6 +141,8 @@ public class CadastroEmpreController {
 				Collections.reverse(empEnc);
 				// RETORNA A LISTA PARA A PÁGINA
 				attr.addFlashAttribute("empreendimentosEncontrados", empEnc);
+
+				attr.addFlashAttribute("cidades", getCidades());
 
 				// RETORNA A MENSAGEM PARA A PÁGINA
 				attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
@@ -170,7 +180,7 @@ public class CadastroEmpreController {
 	 * CADASTRO, ELE VER SE OS CAMPOS ESTÃO PREENCHIDOS DE ACORDO COM E O EXIGIDO E
 	 * RETORNA UMA MENSAGEM DE ERRO CASO NÃO
 	 */
-	
+
 	private List<String> validaDados(empreendimento empre) {
 
 		List<String> msgs = new ArrayList<>(); // LISTA DE MENSAGENS DE ERRO, POIS MUITOS CAMPOS PODE ESTAR INCORRETOS
@@ -184,7 +194,8 @@ public class CadastroEmpreController {
 		if (empre.getEmail() == null || empre.getEmail().isEmpty()) {
 			msgs.add("O campo Email é obrigatório");
 		}
-		if (empre.getCidade().toString() == null || empre.getCidade().toString().isEmpty()) {
+
+		if (empre.getCidade().getNome() == null || empre.getCidade().getNome().isEmpty()) {
 			msgs.add("O campo Cidade é obrigatório");
 		}
 
@@ -206,5 +217,20 @@ public class CadastroEmpreController {
 		DateFormat formataData = DateFormat.getDateInstance();
 
 		return formataData.format(data);
+	}
+
+	@Transactional(readOnly = false)
+	public void inserirFoto(empreendimento empre, MultipartFile arquivo) {
+		try {
+
+		} catch (Exception e) {
+
+		}
+	}
+
+	@Transactional(readOnly = true)
+	public List<Cidade> getCidades() {
+		List<Cidade> cidades = cidaderepository.findAll();
+		return cidades;
 	}
 }
