@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.edu.ifrn.siteifsol.dominio.Cidade;
 import br.edu.ifrn.siteifsol.dominio.empreendimento;
 import br.edu.ifrn.siteifsol.repositories.ArquivoRepository;
+import br.edu.ifrn.siteifsol.repositories.Cidaderepository;
 import br.edu.ifrn.siteifsol.repositories.empreendimentorepository;
 
 @Controller
@@ -26,6 +28,9 @@ public class BuscarEmpreendimentosController {
 
 	@Autowired
 	private ArquivoRepository arquivoRepository;
+
+	@Autowired
+	private Cidaderepository cidaderepository;
 
 	@GetMapping("/buscaem") // URL PARA ACESSAR A PAGINA
 	public String entrarBusca() {
@@ -60,6 +65,7 @@ public class BuscarEmpreendimentosController {
 
 			// RETORNA PARA A PÁGINA UM NOVO EMPREENDIMENTO
 			modelo.addAttribute("empre", new empreendimento());
+			modelo.addAttribute("cidades", getCidades());
 
 		} catch (Exception e) {
 			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
@@ -87,6 +93,7 @@ public class BuscarEmpreendimentosController {
 
 			// RETORNA A LISTA DE EMPREENDIMENTO PARA A PÁGINA
 			model.addAttribute("empreendimentosEncontrados", empEnc);
+			model.addAttribute("cidades", getCidades());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -118,6 +125,7 @@ public class BuscarEmpreendimentosController {
 
 			// RETORNA A LISTA DE EMPREENDIMENTO PARA A PÁGINA
 			attr.addFlashAttribute("empreendimentosEncontrados", empEnc);
+			attr.addFlashAttribute("cidades", getCidades());
 
 			// RETORNA A MENSAGEM DE SUCESSO PARA A PÁGINA
 			attr.addFlashAttribute("msgSucesso", "Usuario removido com sucesso!");
@@ -126,5 +134,11 @@ public class BuscarEmpreendimentosController {
 		}
 
 		return "redirect:/usuario/cadastroem";
+	}
+
+	@Transactional(readOnly = true)
+	public List<Cidade> getCidades() {
+		List<Cidade> cidades = cidaderepository.findAll();
+		return cidades;
 	}
 }
