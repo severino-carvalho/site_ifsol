@@ -5,8 +5,6 @@
 
 	<title>Cadastro de empreendimentos</title>
 
-	<link rel="stylesheet" href="../static/css/style.css" />
-
 	<!-- jQuery Autocomplete -->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -98,8 +96,30 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 									Descrição:
 								</label>
 								<textarea class="form-control" placeholder="Escreva a descrição do empreendimento"
-									id="textoNot" style="height: 130px" th:field="${empre.descricao}">
+									style="height: 130px" th:field="${empre.descricao}" id="texto_descricao">
 								</textarea>
+
+								<script>
+									let textArea = document.getElementById("texto_descricao");
+
+									function checkNumberCharecters() {
+										let limite = 255;
+										let caracteresDigitados = document.getElementById("texto_descricao").innerText.length;
+
+										console.log(caracteresDigitados);
+
+										if (caracteresDigitados > limite) {
+											textArea.classList.add("border-danger text-danger");
+										} else {
+											if (textArea.classList.contains("border-danger text-danger")) {
+												textArea.classList.remove("border-danger text-danger");
+											}
+										}
+									}
+
+									textArea.addEventListener("keypress", checkNumberCharecters);
+
+								</script>
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
@@ -173,7 +193,8 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 									<span style="color:red;">*</span> Para buscar todos os empreendimentos clíque em
 									buscar
 									sem
-									preencher nenhum dado </p>
+									preencher nenhum dado
+								</p>
 							</div>
 
 						</div>
