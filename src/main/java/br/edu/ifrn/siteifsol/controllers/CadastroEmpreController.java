@@ -127,12 +127,11 @@ public class CadastroEmpreController {
 					empre.setDataCriacao(getData());
 				}
 
-				// BLOCO PARA ACHAR A CIDADE SELECIONADA E TROCAR O NOME EO ID DA MESMA NO
+				// BLOCO PARA ACHAR A CIDADE SELECIONADA E TROCAR O NOME E O ID DA MESMA NO
 				// OBJETO EMPRE
-				Optional<Cidade> cidade = cidaderepository.findById(Integer.parseInt(empre.getCidade().getNome()));
+				Optional<Cidade> cidade = cidaderepository.findById(empre.getCidade().getId());
 				Cidade c = cidade.get();
 
-				empre.getCidade().setId(c.getId());
 				empre.getCidade().setNome(c.getNome());
 
 				// CADASTRA E EDITA O EMPREENDIMENTO NO BANCO DE DADOS
@@ -197,7 +196,7 @@ public class CadastroEmpreController {
 			msgs.add("O campo Email é obrigatório");
 		}
 
-		if (empre.getCidade().getNome() == null || empre.getCidade().getNome().isEmpty()) {
+		if (empre.getCidade().getId() == 0) {
 			msgs.add("O campo Cidade é obrigatório");
 		}
 
