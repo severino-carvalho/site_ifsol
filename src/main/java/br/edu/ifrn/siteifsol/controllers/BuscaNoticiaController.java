@@ -81,7 +81,7 @@ public class BuscaNoticiaController {
 			// GUARDA A NOTICIA QUE O ADM QUER REMOVER NA VARIÁVEL
 			Noticia noticia = noticiaRepository.findById(idNoticia).get();
 
-			if (noticia.getFoto().getId() != null) {
+			if (noticia.getFoto() != null) {
 				// ANTES DE REMOVER A NOTÍCIA, FAZ A REMORÇÃO DA IMAGEM
 				arquivoRepository.deleteById(noticia.getFoto().getId());
 

@@ -95,7 +95,7 @@ public class BuscarEmpreendimentosController {
 			model.addAttribute("empreendimentosEncontrados", empEnc);
 			model.addAttribute("cidades", getCidades());
 		} catch (Exception e) {
-			e.printStackTrace();
+			model.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
 		return "/admin/empreendimento/cadastroEmpre";
 	}
@@ -112,7 +112,7 @@ public class BuscarEmpreendimentosController {
 			// FAZ A BUSCA DO EMPREENDIMENTO SOLICITADO DA REMOÇÃO
 			empreendimento em = empreendimentosrepository.findById(idempree).get();
 
-			if (em.getFoto().getId() != null) {
+			if (em.getFoto() != null) {
 				// DELETA A FOTO DO EMPREENDIMENTO PELO ID
 				arquivoRepository.deleteById(em.getFoto().getId());
 			}
@@ -130,7 +130,7 @@ public class BuscarEmpreendimentosController {
 			// RETORNA A MENSAGEM DE SUCESSO PARA A PÁGINA
 			attr.addFlashAttribute("msgSucesso", "Usuario removido com sucesso!");
 		} catch (Exception e) {
-			e.printStackTrace();
+			attr.addFlashAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
 
 		return "redirect:/usuario/cadastroem";
