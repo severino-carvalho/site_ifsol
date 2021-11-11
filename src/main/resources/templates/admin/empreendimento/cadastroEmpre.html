@@ -13,7 +13,7 @@
 
 	<!--FUNÇÃO DO JQUERY QUE EXECUTA O AUTOCOMPLETE NO CAMPO DE CIDADE   -->
 	<script>
-		$(function () {
+		/*$(function () {
 			$("#cidade").autocomplete({
 				source: "/usuario/autocompleteCidade",
 				minLength: 1,
@@ -23,7 +23,7 @@
 					return false;
 				}
 			});
-		});
+		});*/
 	</script>
 </head>
 
@@ -87,10 +87,9 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 								<label for="exampleInputName1" class="form-label">Cidade:
 								</label>
 
-								<select class="form-select" id="cid" th:field="${empre.cidade.nome}">
-									<option selected disabled value="" class="select">Escolha uma cidade</option>
-									<option th:each="c : ${cidades}" th:value="${c.id}" th:text="${c.nome}"
-										th:selected="(${c.id} == ${empre.cidade.id})">
+								<select class="form-select" id="cidade" th:field="${empre.cidade.id}">
+									<option selected th:value="0" class="select">Escolha uma cidade</option>
+									<option th:each="c : ${cidades}" th:value="${c.id}" th:text="${c.nome}">
 									</option>
 								</select>
 								<!--
