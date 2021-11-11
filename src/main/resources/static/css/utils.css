@@ -1,10 +1,15 @@
 
 /*  border-radius   */
-.br-15 {
-    border-radius: 15px;
+.bor-rad {
+    border-radius: 15px !important;
 }
 
-.brt-15 {
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+.bor-top-rad {
+    border-top-left-radius: 14px !important;
+    border-top-right-radius: 14px !important;
+}
+
+.bor-bottom-rad {
+    border-bottom-left-radius: 14px !important;
+    border-bottom-right-radius: 14px !important;
 }

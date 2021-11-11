@@ -13,7 +13,7 @@
 		<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
 			aria-label="breadcrumb" class="w-100">
 			<div class="container">
-				<ol class="breadcrumb mt-2">
+				<ol class="breadcrumb mt-3">
 					<li class="breadcrumb-item"><a class="text-decoration-none " href="/adm">Início</a></li>
 					<li class="breadcrumb-item active" aria-current="page">Configurações de notícias</li>
 				</ol>
@@ -32,7 +32,7 @@
 				<div class="col-lg-6">
 					<div class="card border-dark mb-3" style="max-width: 36rem;">
 						<div class="card-header bg-dark text-white fw-bold text-center">Nova notícia</div>
-						<div class="card-body text-success pt-4 pb-2">
+						<div class="card-body pt-4 pb-2">
 
 							<form class="px-4" th:action="@{/noticia/salvar}" th:object="${noticia}" method="POST"
 								align="center" enctype="multipart/form-data">
@@ -78,7 +78,7 @@
 								<div class="mb-3" style="text-align: left;">
 									<input class="btn btn-success" type="submit"
 										th:value="${noticia.id}  == 0 ? Adicionar : Editar" />
-									<input class="btn btn-danger" type="submit" th:if="${noticia.id} != 0"
+									<input class="btn btn-danger " type="submit" th:if="${noticia.id} != 0"
 										value="Cancelar" formaction="/noticia/config/" formmethod="GET" />
 									<input class="btn btn-warning" type="reset" value="Limpar" />
 								</div>

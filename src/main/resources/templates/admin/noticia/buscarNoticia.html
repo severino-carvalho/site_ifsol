@@ -4,6 +4,7 @@
 <head>
 	<!--	Arquivo CSS para estilizar a página	-->
 	<link rel="stylesheet" th:href="@{/css/buscaNoticia.css}">
+	<link rel="stylesheet" th:href="@{/css/utils.css}">
 
 	<!--	Arquivo JS para limitar os caracteres	-->
 	<script th:src="@{/js/limitarCaracteres.js}"></script>
@@ -26,12 +27,12 @@
 		</nav>
 
 		<div class="container mt-2">
-			<div class="row" th:if="${noticia} != null">
-				<div class="col-lg-9 d-flex justify-content-center mb-4">
-					<div class="card">
+			<div class="row mb-2" th:if="${noticia} != null">
+				<div class="col-lg-9 d-flex justify-content-center">
+					<div class="card bor-rad">
 						<img th:if="${noticia.foto != null}"
-							th:src="@{/download/} + ${noticia.foto.id} + '?salvar=false'" class="card-img-top"
-							alt="...">
+							th:src="@{/download/} + ${noticia.foto.id} + '?salvar=false'"
+							class="card-img-top bor-top-rad" alt="...">
 						<div class="card-body">
 							<h5 class="card-title" th:text="${noticia.titulo}"></h5>
 							<p class="card-text" style="text-align: justify;" th:text="${noticia.texto}"></p>
@@ -46,11 +47,11 @@
 				<div class="col-lg-3">
 					<div class="row d-flex justify-content-center">
 						<div class="col-lg-12 col-sm-6 " th:each="n : ${noticias}" th:if="${n.id != noticia.id}">
-							<div class="card mb-2">
+							<div class="card mt-3 bor-rad" name="card_noticia">
 								<div class="card-header p-0">
 									<a th:href="${n.id}" class="box-noticia">
 										<div class="box-img">
-											<img th:if="${n.foto.id != null}"
+											<img class="bor-top-rad" th:if="${n.foto.id != null}"
 												th:src="@{/download/} + ${n.foto.id} + '?salvar=false'" alt="...">
 										</div>
 										<div class="box-hover">
@@ -71,11 +72,17 @@
 							</div>
 
 						</div>
+
+						<script>
+							let card_noticia = document.getElementsByName("card_noticia");
+							card_noticia[0].classList.remove("mt-3");
+						</script>
+
 					</div>
 				</div>
 			</div>
 
-			<div class="row mt-2 mb-4 text-">
+			<div class="row my-4 text-">
 				<div class="col-12 text-center">
 					<a href="/publico/home/" class="btn btn-primary rounded-pill" type="button">
 						<span class="fs-6">

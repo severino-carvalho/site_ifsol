@@ -1,6 +1,7 @@
 package br.edu.ifrn.siteifsol.controllers;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,21 +40,29 @@ public class BuscaUsuarioController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String buscar(@RequestParam(name = "nome", required = false) String nome,
 			@RequestParam(name = "email", required = false) String email,
-			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, ModelMap model) {
+			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, ModelMap modelo) {
 
-		// BUSCA OS USUARIOS NO BANCO DE DADOS ATRAVES DO NOME E EMAIL
-		List<Usuario> usuariosEncontrados = usuarioRepository.findByEmailAndNome(email, nome);
+		try {
+			// BUSCA OS USUARIOS NO BANCO DE DADOS ATRAVES DO NOME E EMAIL
+			List<Usuario> usuariosEncontrados = usuarioRepository.findByEmailAndNome(email, nome);
 
-		// INSTANCIA UM NOVO USUÁRIO PARA A PÁGINA DE CADASTRO SE NÃO VAI OCORRER ERRO
-		model.addAttribute("usuario", new Usuario());
-
-		if (!usuariosEncontrados.isEmpty()) {
-			model.addAttribute("usuariosEncontrados", usuariosEncontrados); // RETORNA OS USUARIOS ENCONTRADOS PARA A
-																			// PÁGINA WEB
+			if (usuariosEncontrados.isEmpty()) {
+				modelo.addAttribute("msgErro", "Nenhuma notícia encontrada");
+			} else {
+				Collections.reverse(usuariosEncontrados);
+				// RETORNA OS USUARIOS ENCONTRADOS PARA A PÁGINA WEB
+				modelo.addAttribute("usuariosEncontrados", usuariosEncontrados);
+			}
 
 			if (mostrarTodosDados != null) {
-				model.addAttribute("mostrarTodosDados", true);
+				modelo.addAttribute("mostrarTodosDados", true);
 			}
+
+			// INSTANCIA UM NOVO USUÁRIO PARA A PÁGINA DE CADASTRO SE NÃO VAI OCORRER ERRO
+			modelo.addAttribute("usuario", new Usuario());
+
+		} catch (Exception e) {
+			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
 
 		return "/admin/usuario/cadastro";

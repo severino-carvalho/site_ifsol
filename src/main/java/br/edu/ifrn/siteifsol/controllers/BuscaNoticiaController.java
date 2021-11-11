@@ -1,5 +1,6 @@
 package br.edu.ifrn.siteifsol.controllers;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -36,10 +37,11 @@ public class BuscaNoticiaController {
 
 		try {
 			List<Noticia> noticiasEncontradas = noticiaRepository.findByTituloAndTexto(titulo, texto);
-
+			
 			if (noticiasEncontradas.isEmpty()) {
 				modelo.addAttribute("msgErro", "Nenhuma notícia encontrada");
 			} else {
+				Collections.reverse(noticiasEncontradas);
 				modelo.addAttribute("noticias", noticiasEncontradas);
 			}
 

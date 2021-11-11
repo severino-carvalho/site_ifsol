@@ -31,12 +31,16 @@
 		<div class="bg-light">
 			<div class="container  bg-light">
 				<div class="row py-5 justify-content-center">
-					<div class="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-center">
-						<div class="card mb-4 br-15 " style="max-width: 18rem;">
-							<img src="/Imagens/mel.jpg" class="img-fluid brt-15">
-							<div class="card-body ">
-								<h5 class="card-title text-center">Arizona - mel</h5>
-								<p class="card-text" style="text-align: justify;">Lorem ipsum dolor sit amet,
+
+					<div class="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-center"
+						th:each="emp : ${empEncontrados}">
+						<div class="card mb-4 bor-rad " style="max-width: 18rem;">
+							<img th:src="@{/download/} + ${emp.foto.id} + '?salvar=false'"
+								class="img-fluid bor-top-rad">
+							<div class="card-body">
+								<h5 class="card-title text-center" th:text="${emp.nome}">Arizona - mel</h5>
+								<p class="card-text" style="text-align: justify;" th:text="${emp.descricao}">Lorem ipsum
+									dolor sit amet,
 									consectetur
 									adipiscing elit, sed do eiusmod tempor incididunt ut labore et
 									dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -46,49 +50,6 @@
 						</div>
 					</div>
 
-					<div class="col-lg-3 col-md-4  col-sm-6 d-flex justify-content-center">
-						<div class="card mb-4 br-15" style="max-width: 18rem;">
-							<img src="/Imagens/artesanato.jpg" class="img-fluid brt-15">
-							<div class="card-body ">
-								<h5 class="card-title text-center">Tabua - grupo de artesanato</h5>
-								<p class="card-text" style="text-align: justify;">Lorem ipsum dolor sit amet,
-									consectetur
-									adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-									dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-									exercício .</p>
-							</div>
-						</div>
-					</div>
-
-					<div class=" col-lg-3 col-md-4   col-sm-6 d-flex justify-content-center">
-						<div class="card mb-4 br-15" style="max-width: 18rem;">
-							<img src="/Imagens/farinha.jpg" class="img-fluid brt-15">
-							<div class="card-body ">
-								<h5 class="card-title text-center">Acauã - casa da farinha</h5>
-								<p class="card-text" style="text-align: justify;">Lorem ipsum dolor sit amet,
-									consectetur
-									adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-									dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-									exercício ullamco laboris nisi
-									consequat.</p>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-3 col-md-4  col-sm-6  d-flex justify-content-center">
-						<div class="card br-15" style="max-width: 18rem;">
-							<img src="/Imagens/amarelao.jpg" class="img-fluid brt-15">
-							<div class="card-body">
-								<h5 class="card-title text-center">Amarelão</h5>
-								<p class="card-text" style="text-align: justify;">Lorem ipsum dolor sit amet,
-									consectetur
-									adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-									dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-									exercício ullamco laboris nisi ut
-									consequat.</p>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
