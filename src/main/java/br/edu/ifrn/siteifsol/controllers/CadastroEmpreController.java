@@ -62,7 +62,8 @@ public class CadastroEmpreController {
 	public String salvar(empreendimento empre, @RequestParam("file") MultipartFile arquivo, Model model,
 			RedirectAttributes attr) {
 
-		List<String> msgValidacao = validaDados(empre); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DO CAMPOS
+		// RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DO CAMPOS
+		List<String> msgValidacao = validaDados(empre);
 
 		// SE HOUVER ALGUM ERRO, VAI SER RETORNADO O PROMEIRO ERRO PARA A PÁGINA
 		if (!msgValidacao.isEmpty()) {
@@ -84,31 +85,8 @@ public class CadastroEmpreController {
 				String currentPrincipalName = authentication.getName();
 				String nomeUsuarioADM = usuariorepository.findByEmail(currentPrincipalName).get().getNome();
 
-				/*
-				 * O CODIGO A SEGUIR FOI FEITO PARA UPLOAD E DOWNLOAD DE UM ARQUIVO NO BANCO DE
-				 * DADOS E O TRY FOI NECESSARIO PARA CASO OCORRA UM ERRO SEJA LANÇADO UMA
-				 * EXCECAO
-				 */
-
-				// SE O EMPREENDIMENTO JÁ ESTIVER CADASTRADO
-				if (empre.getId() != 0) {
-					// VERIFICAMOS SE ELE QUER MODIFICAR A IMAGEM
-					if (empre.getFoto() != null && arquivo.getSize() > 0) {
-						// SE SIM, REMOVEMOS A IMAGEM ANTIGA DO RANCO E INSERIMOS A NOVA
-						arquivoRepository.deleteById(empre.getFoto().getId());
-						empre.setFoto(inserirFoto(empre, arquivo));
-					} else {
-						// ENTÃO SE, QUISER INSERIR PELA PRIMEIRA VEZ
-						empre.setFoto(inserirFoto(empre, arquivo));
-					}
-					// SE NÃO ESTIVER CADASTRADO
-				} else {
-					// VERIFICA SE QUER INSERIR UMA IMAGEM NO EMPREENDIMENTO
-					if (arquivo.getSize() > 0) {
-						// SE SIM, INSERE
-						empre.setFoto(inserirFoto(empre, arquivo));
-					}
-				}
+				// PROCESSO DE CRIAÇÃO OU ATUALIZAÇÃO DA IMAGEM
+				atualizarImagem(empre, arquivo);
 
 				/*
 				 * SE ESTIVER VAZIO, SIGNIFICA QUE O EMPREENDIMENTO ESTÁ SENDO CADASTRADO ENTÃO
@@ -220,7 +198,45 @@ public class CadastroEmpreController {
 	}
 
 	@Transactional(readOnly = false)
+	public void atualizarImagem(empreendimento empre, MultipartFile arquivo) {
+		// SE O EMPREENDIMENTO JÁ ESTIVER CADASTRADO
+		if (empre.getId() > 0) {
+			// VERIFICAMOS SE CONTÉM UM ARQUIVO DE IMAGEM PASSADO NO FORM
+			if (arquivo.getSize() > 0) {
+				// CRIAMOS UM EMPREENDIMENTO PARA ANALIZAR SE ELE JÁ CONTEM FOTO
+				empreendimento empreGetFoto = empreendimentosrepository.findById(empre.getId()).get();
+				// SE O EMPREENDIMENTO JÁ TIVER UMA FOTO
+				if (empreGetFoto.getFoto() != null) {
+					// REMOVEMOS A IMAGEM ANTIGA DO RANCO E INSERIMOS A NOVA
+					arquivoRepository.deleteById(empre.getFoto().getId());
+					empre.setFoto(inserirFoto(empre, arquivo));
+				} else {
+					// SE NÃO TIVER FOTO, INSERIMOS PELA PRIMEIRA VEZ
+					empre.setFoto(inserirFoto(empre, arquivo));
+				}
+			}
+
+		}
+		// SE O EMPREENDIMENTO NÃO ESTIVER CADASTRADO
+		else {
+			// VERIFICAMOS SE CONTÉM UM ARQUIVO DE IMAGEM PASSADO NO FORM
+			if (arquivo.getSize() > 0) {
+				// SE SIM, INSERERIMOS
+				empre.setFoto(inserirFoto(empre, arquivo));
+			} else {
+				empre.setFoto(null);
+			}
+		}
+	}
+
+	@Transactional(readOnly = false)
 	public Arquivo inserirFoto(empreendimento empre, MultipartFile arquivo) {
+		/*
+		 * O CODIGO A SEGUIR FOI FEITO PARA UPLOAD E DOWNLOAD DE UM ARQUIVO NO BANCO DE
+		 * DADOS E O TRY FOI NECESSARIO PARA CASO OCORRA UM ERRO SEJA LANÇADO UMA
+		 * EXCECAO
+		 */
+
 		try {
 			String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
 			Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
