@@ -128,7 +128,7 @@ public class BuscarEmpreendimentosController {
 			attr.addFlashAttribute("cidades", getCidades());
 
 			// RETORNA A MENSAGEM DE SUCESSO PARA A PÁGINA
-			attr.addFlashAttribute("msgSucesso", "Usuario removido com sucesso!");
+			attr.addFlashAttribute("msgSucesso", "Empreendimento removido com sucesso!");
 		} catch (Exception e) {
 			attr.addFlashAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
