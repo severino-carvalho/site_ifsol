@@ -2,7 +2,7 @@
 <html lang="pt" layout:decorate="~{layouts/layoutL}">
 
 <head>
-
+	<link rel="stylesheet" th:href="@{/css/utils.css}">
 </head>
 
 <body>
@@ -12,13 +12,13 @@
 
 		<div class="container mt-2">
 
-			<div class="alert alert-success alert-dismissible fade show" role="alert">
+			<div class="alert alert-success alert-dismissible fade show bor-rad" role="alert">
 				<h4>Bem vindo!</h4>
 				<p style="text-align: justify; font-size: 11pt;">
 					Esta e a pagina de administracao do Website da IFSOL. Aqui a equipe do projeto podera adicionar e
 					administrar os empreendimentos, e os usuarios que podem acessar a pagina de administrador. Lembrando
 					que
-					so usuarios administradores podem cadastrar um usuario
+					so usuarios administradores podem cadastrar um usuario.
 				</p>
 
 				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -27,8 +27,8 @@
 			<div class="row mt-4">
 				<div class="col-md-4">
 
-					<div class="card border-success">
-						<div class="card-header text-center fw-bolder bg-success text-white">
+					<div class="card border-success bor-rad">
+						<div class="card-header text-center fw-bolder bg-success text-white bor-top-rad">
 							Configurações de Usuários
 						</div>
 						<div class="card-body">
@@ -48,8 +48,8 @@
 
 				<div class="col-md-4">
 
-					<div class="card border-primary">
-						<div class="card-header text-center fw-bolder bg-primary text-white">
+					<div class="card border-primary bor-rad">
+						<div class="card-header text-center fw-bolder bg-primary text-white bor-top-rad">
 							Configurações de Empreendimentos
 						</div>
 						<div class="card-body">
@@ -68,8 +68,8 @@
 
 				<div class="col-md-4">
 
-					<div class="card border-dark">
-						<div class="card-header text-center fw-bolder bg-dark text-white">
+					<div class="card border-dark bor-rad">
+						<div class="card-header text-center fw-bolder bg-dark text-white bor-top-rad">
 							Configurações de Notícias
 						</div>
 						<div class="card-body">
