@@ -122,6 +122,7 @@ public class BuscarEmpreendimentosController {
 
 			// APÓS A REMOÇÃO, LISTA OS EMPREENDIMENTOS
 			List<empreendimento> empEnc = empreendimentosrepository.findAll();
+			Collections.reverse(empEnc);
 
 			// RETORNA A LISTA DE EMPREENDIMENTO PARA A PÁGINA
 			attr.addFlashAttribute("empreendimentosEncontrados", empEnc);
