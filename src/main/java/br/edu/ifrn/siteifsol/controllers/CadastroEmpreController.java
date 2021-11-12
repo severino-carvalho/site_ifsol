@@ -1,6 +1,5 @@
 package br.edu.ifrn.siteifsol.controllers;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -94,21 +93,8 @@ public class CadastroEmpreController {
 
 				System.out.println("Size: " + arquivo.getSize());
 
-				if (arquivo.getSize() > 0) {
-					String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
-					Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
+				if (empre.getId() != 0) {
 
-					if (empre.getFoto() != null && empre.getFoto().getId() != null && empre.getFoto().getId() > 0) {
-						arquivoRepository.deleteById(empre.getFoto().getId());
-					}
-
-					// SALVA O NOVO ARQUIVO DO EMPREENDIMENTO
-					empre.setFoto(arquivoBD);
-
-					// SAlVA O ARQUIVO NO BANCO DE DADOS
-					arquivoRepository.save(arquivoBD);
-				} else {
-					empre.setFoto(null);
 				}
 
 				/*
@@ -148,7 +134,7 @@ public class CadastroEmpreController {
 				// RETORNA A MENSAGEM PARA A PÁGINA
 				attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
 
-			} catch (IOException e) {
+			} catch (Exception e) {
 				attr.addFlashAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 			}
 		}
@@ -223,7 +209,18 @@ public class CadastroEmpreController {
 	@Transactional(readOnly = false)
 	public void inserirFoto(empreendimento empre, MultipartFile arquivo) {
 		try {
+			String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
+			Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
 
+			if (empre.getFoto() != null && empre.getFoto().getId() != null && empre.getFoto().getId() > 0) {
+				arquivoRepository.deleteById(empre.getFoto().getId());
+			}
+
+			// SALVA O NOVO ARQUIVO DO EMPREENDIMENTO
+			empre.setFoto(arquivoBD);
+
+			// SAlVA O ARQUIVO NO BANCO DE DADOS
+			arquivoRepository.save(arquivoBD);
 		} catch (Exception e) {
 
 		}
