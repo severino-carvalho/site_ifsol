@@ -79,7 +79,6 @@ public class CadastroEmpreController {
 		} else { // SE NÃO, VIA SEGUIR O FLUXO NORMAL
 
 			try {
-
 				// FAZ A BUSCA NO BD E RETORNA O NOME DO USUÁRIO LOGADO NO SISTEMA
 				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 				String currentPrincipalName = authentication.getName();
@@ -91,10 +90,24 @@ public class CadastroEmpreController {
 				 * EXCECAO
 				 */
 
-				System.out.println("Size: " + arquivo.getSize());
-
+				// SE O EMPREENDIMENTO JÁ ESTIVER CADASTRADO
 				if (empre.getId() != 0) {
-
+					// VERIFICAMOS SE ELE QUER MODIFICAR A IMAGEM
+					if (empre.getFoto() != null && arquivo.getSize() > 0) {
+						// SE SIM, REMOVEMOS A IMAGEM ANTIGA DO RANCO E INSERIMOS A NOVA
+						arquivoRepository.deleteById(empre.getFoto().getId());
+						empre.setFoto(inserirFoto(empre, arquivo));
+					} else {
+						// ENTÃO SE, QUISER INSERIR PELA PRIMEIRA VEZ
+						empre.setFoto(inserirFoto(empre, arquivo));
+					}
+					// SE NÃO ESTIVER CADASTRADO
+				} else {
+					// VERIFICA SE QUER INSERIR UMA IMAGEM NO EMPREENDIMENTO
+					if (arquivo.getSize() > 0) {
+						// SE SIM, INSERE
+						empre.setFoto(inserirFoto(empre, arquivo));
+					}
 				}
 
 				/*
@@ -207,23 +220,22 @@ public class CadastroEmpreController {
 	}
 
 	@Transactional(readOnly = false)
-	public void inserirFoto(empreendimento empre, MultipartFile arquivo) {
+	public Arquivo inserirFoto(empreendimento empre, MultipartFile arquivo) {
 		try {
 			String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
 			Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
-
-			if (empre.getFoto() != null && empre.getFoto().getId() != null && empre.getFoto().getId() > 0) {
-				arquivoRepository.deleteById(empre.getFoto().getId());
-			}
 
 			// SALVA O NOVO ARQUIVO DO EMPREENDIMENTO
 			empre.setFoto(arquivoBD);
 
 			// SAlVA O ARQUIVO NO BANCO DE DADOS
 			arquivoRepository.save(arquivoBD);
+
+			return arquivoBD;
 		} catch (Exception e) {
 
 		}
+		return null;
 	}
 
 	@Transactional(readOnly = true)

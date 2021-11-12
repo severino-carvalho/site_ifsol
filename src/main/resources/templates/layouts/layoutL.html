@@ -16,24 +16,26 @@
 
 	<!-- Menu -->
 
-	<nav class="navbar navbar-light bg" style="background-color: #FFFFF0;">
+	<nav class="navbar navbar-expand-lg bg" style="background-color: #FFFFbf;">
 
-		<a class="navbar-brand ms-5" href="#">
-			<img src="/Imagens/logoifsol.png" alt="logo" width="120px" height="70px" />
-		</a>
-		<ul class="nav justify-content-end me-5">
-			<li class="nav-item">
-				<a class="nav-link active text-secondary" aria-current="page" href="/adm">
-					Página de Controle
-				</a>
-			</li>
+		<div class="container">
+			<a class="navbar-brand" href="/adm">
+				<img src="/Imagens/logoifsol.png" alt="logo" width="120px" height="70px" />
+			</a>
+			<ul class="nav justify-content-end">
+				<li class="nav-item">
+					<a class="nav-link active text-secondary" aria-current="page" href="/adm">
+						Página de Controle
+					</a>
+				</li>
 
-			<li>
-				<form th:action="@{/logout}" method="post">
-					<input class="btn btn-outline-danger" type="submit" value="Sair" />
-				</form>
-			</li>
-		</ul>
+				<li>
+					<form th:action="@{/logout}" method="post">
+						<input class="btn btn-outline-danger" type="submit" value="Sair" />
+					</form>
+				</li>
+			</ul>
+		</div>
 	</nav>
 
 	<!-- finalMenu -->
