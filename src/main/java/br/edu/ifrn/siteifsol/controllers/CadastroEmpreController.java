@@ -166,7 +166,7 @@ public class CadastroEmpreController {
 		if (empre.getNome() == null || empre.getNome().isEmpty()) {
 			msgs.add("O campo nome é obrigatório");
 		}
-		if (empre.getNome().length() <= 5) {// NOME TEM QUER TER MAIS DE 5 CARACTERES
+		if (empre.getNome().trim().length() <= 5) {// NOME TEM QUER TER MAIS DE 5 CARACTERES
 			msgs.add("Nome inválido");
 		}
 		if (empre.getEmail() == null || empre.getEmail().isEmpty()) {
@@ -179,8 +179,13 @@ public class CadastroEmpreController {
 
 		if (empre.getDescricao() == null || empre.getDescricao().isEmpty()) {
 			msgs.add("O campo Descrição é obrigatório");
+		} 
+
+		if (empre.getDescricao().trim().length() > 255) {
+			msgs.add("O Tamanho máximo da descrição é 255 caracteres");
 		}
-		if (empre.getDescricao().length() <= 15) {
+
+		if (empre.getDescricao().trim().length() <= 15) {
 			msgs.add("Descrição inválido");
 		}
 
