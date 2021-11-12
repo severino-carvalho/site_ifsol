@@ -10,34 +10,20 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
-	<!--FUNÇÃO DO JQUERY QUE EXECUTA O AUTOCOMPLETE NO CAMPO DE CIDADE   -->
-	<script>
-		/*$(function () {
-			$("#cidade").autocomplete({
-				source: "/usuario/autocompleteCidade",
-				minLength: 1,
-				select: function (event, ui) {
-					this.value = ui.item.label;
-					$("#idCidade").val(ui.item.value);
-					return false;
-				}
-			});
-		});*/
-	</script>
 </head>
 
 <body>
 
 	<!-- FORMULARIO PARA CADASTRAR UM EMPREENDIMENTO 
-th:object DIZ O OBJETO PARA QUAL O FORMULARIO PREENCHERA OS ATRIBUTOS
-th:action A��O QUE AQUELA DETERMINADA TAG VAI FAZER
-th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI SE TRATAR-->
-
-
+		th:object DIZ O OBJETO PARA QUAL O FORMULARIO PREENCHERA OS ATRIBUTOS
+		th:action AÇÃO QUE AQUELA DETERMINADA TAG VAI FAZER
+		th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI SE TRATAR
+	-->
 
 	<section layout:fragment="corpo2">
-		<!--INFORMA QUE ESSA � A PARTE QUE FICA EM DETERMINADA PARTE DO ARQUIVO DE LAYOUT  -->
+		<!--
+			INFORMA QUE ESSA É A PARTE QUE FICA EM DETERMINADA PARTE DO ARQUIVO DE LAYOUT  
+		-->
 
 		<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
 			aria-label="breadcrumb" class="w-100">
@@ -92,10 +78,6 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 									<option th:each="c : ${cidades}" th:value="${c.id}" th:text="${c.nome}">
 									</option>
 								</select>
-								<!--
-								<input id="cidade" th:field="${empre.cidade.nome}" class="form-control" />
-								<input id="idCidade" type="hidden" th:field="${empre.cidade.id}" />
-								-->
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
