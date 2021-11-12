@@ -65,7 +65,7 @@ public class CadastroEmpreController {
 		// RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DO CAMPOS
 		List<String> msgValidacao = validaDados(empre);
 
-		// SE HOUVER ALGUM ERRO, VAI SER RETORNADO O PROMEIRO ERRO PARA A PÁGINA
+		// SE HOUVER ALGUM ERRO, VAI SER RETORNADO O PRiMEIRO ERRO PARA A PÁGINA
 		if (!msgValidacao.isEmpty()) {
 			model.addAttribute("msgErro", msgValidacao);
 

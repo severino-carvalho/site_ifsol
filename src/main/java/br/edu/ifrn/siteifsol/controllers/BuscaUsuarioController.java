@@ -47,11 +47,12 @@ public class BuscaUsuarioController {
 			List<Usuario> usuariosEncontrados = usuarioRepository.findByEmailAndNome(email, nome);
 
 			if (usuariosEncontrados.isEmpty()) {
-				modelo.addAttribute("msgErro", "Nenhuma notícia encontrada");
+				modelo.addAttribute("msgErro", "Nenhum usuário encontrado");
 			} else {
 				Collections.reverse(usuariosEncontrados);
 				// RETORNA OS USUARIOS ENCONTRADOS PARA A PÁGINA WEB
 				modelo.addAttribute("usuariosEncontrados", usuariosEncontrados);
+				modelo.addAttribute("msgSucesso", "Busca concluída! Usuário(s) encontrado(s)");
 			}
 
 			if (mostrarTodosDados != null) {
