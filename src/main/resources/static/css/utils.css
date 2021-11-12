@@ -4,12 +4,27 @@
     border-radius: 15px !important;
 }
 
+.bor-rad .bor-top-rad {
+    border-top-left-radius: 14px !important;
+    border-top-right-radius: 14px !important;
+}
+
 .bor-top-rad {
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+}
+
+.bor-top-rad .bor-top-rad {
     border-top-left-radius: 14px !important;
     border-top-right-radius: 14px !important;
 }
 
 .bor-bottom-rad {
+    border-bottom-left-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+}
+
+.bor-bottom-rad .bor-bottom-rad {
     border-bottom-left-radius: 14px !important;
     border-bottom-right-radius: 14px !important;
 }
