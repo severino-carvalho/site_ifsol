@@ -3,7 +3,7 @@
 
 <head>
 
-	<title>Cadastro de empreendimentos</title>
+	<title>Configurações - Empreendimentos</title>
 
 	<!-- jQuery Autocomplete -->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -20,10 +20,10 @@
 		th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI SE TRATAR
 	-->
 
+	<!--
+		INFORMA QUE ESSA É A PARTE QUE FICA EM DETERMINADA PARTE DO ARQUIVO DE LAYOUT  
+	-->
 	<section layout:fragment="corpo2">
-		<!--
-			INFORMA QUE ESSA É A PARTE QUE FICA EM DETERMINADA PARTE DO ARQUIVO DE LAYOUT  
-		-->
 
 		<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
 			aria-label="breadcrumb" class="w-100">
@@ -85,31 +85,10 @@
 									Descrição:
 								</label>
 								<textarea class="form-control" placeholder="Escreva a descrição do empreendimento"
-									style="height: 130px" th:field="${empre.descricao}" id="texto_descricao">
+									maxlength="255" style="height: 130px" th:field="${empre.descricao}"
+									id="texto_descricao">
 								</textarea>
 
-								<script>
-									let textArea = document.getElementById("texto_descricao");
-
-									function checkNumberCharecters() {
-										let limite = 255;
-										let caracteresDigitados = document.getElementById("texto_descricao").innerText.length;
-										let classeEstiloErro = "border-danger text-danger";
-
-										console.log(caracteresDigitados);
-
-										if (caracteresDigitados > limite) {
-											textArea.classList.add("border-danger text-danger");
-										} else {
-											if (textArea.classList.contains("border-danger text-danger")) {
-												textArea.classList.remove("border-danger text-danger");
-											}
-										}
-									}
-
-									textArea.addEventListener("keypress", checkNumberCharecters);
-
-								</script>
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
