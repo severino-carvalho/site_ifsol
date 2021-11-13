@@ -12,81 +12,84 @@
 
 	<section layout:fragment="corpo2">
 
+		<div class="bg-light py-3">
+			<div class="container">
 
-		<div class="container mt-2">
+				<div class="alert alert-success alert-dismissible fade show bor-rad" role="alert">
+					<h4>Bem vindo!</h4>
+					<p style="text-align: justify; font-size: 11pt;">
+						Esta e a pagina de administracao do Website da IFSOL. Aqui a equipe do projeto podera adicionar
+						e
+						administrar os empreendimentos, e os usuarios que podem acessar a pagina de administrador.
+						Lembrando
+						que
+						so usuarios administradores podem cadastrar um usuario.
+					</p>
 
-			<div class="alert alert-success alert-dismissible fade show bor-rad" role="alert">
-				<h4>Bem vindo!</h4>
-				<p style="text-align: justify; font-size: 11pt;">
-					Esta e a pagina de administracao do Website da IFSOL. Aqui a equipe do projeto podera adicionar e
-					administrar os empreendimentos, e os usuarios que podem acessar a pagina de administrador. Lembrando
-					que
-					so usuarios administradores podem cadastrar um usuario.
-				</p>
-
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			</div>
-
-			<div class="row mt-4">
-				<div class="col-md-4">
-
-					<div class="card border-success bor-rad">
-						<div class="card-header text-center fw-bolder bg-success text-white bor-top-rad">
-							Configurações de Usuários
-						</div>
-						<div class="card-body">
-							<p class="card-text fw-bold">
-								Total de usuáros: <span class="badge rounded-pill bg-success"
-									th:text="${totUsuarios}"></span>
-							</p>
-
-							<div>
-								<a href="/usuario/cadastro" sec:authorize="hasAuthority('ADMIN')"
-									class="btn btn-success">Abrir</a>
-							</div>
-						</div>
-					</div>
-
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 				</div>
 
-				<div class="col-md-4">
+				<div class="row mt-4">
+					<div class="col-md-4">
 
-					<div class="card border-primary bor-rad">
-						<div class="card-header text-center fw-bolder bg-primary text-white bor-top-rad">
-							Configurações de Empreendimentos
-						</div>
-						<div class="card-body">
-							<p class="card-text fw-bold">
-								Total de empreendimentos: <span class="badge rounded-pill bg-primary"
-									th:text="${totEmpre}"></span>
-							</p>
-							<div>
-								<a href="/usuario/cadastroem" sec:authorize="hasAuthority('ADMIN')"
-									class="btn btn-primary">Abrir</a>
+						<div class="card border-success bor-rad">
+							<div class="card-header text-center fw-bolder bg-success text-white bor-top-rad">
+								Configurações de Usuários
+							</div>
+							<div class="card-body">
+								<p class="card-text fw-bold">
+									Total de usuáros: <span class="badge rounded-pill bg-success"
+										th:text="${totUsuarios}"></span>
+								</p>
+
+								<div>
+									<a href="/usuario/cadastro" sec:authorize="hasAuthority('ADMIN')"
+										class="btn btn-success">Abrir</a>
+								</div>
 							</div>
 						</div>
+
 					</div>
 
-				</div>
+					<div class="col-md-4">
 
-				<div class="col-md-4">
-
-					<div class="card border-dark bor-rad">
-						<div class="card-header text-center fw-bolder bg-dark text-white bor-top-rad">
-							Configurações de Notícias
-						</div>
-						<div class="card-body">
-							<p class="card-text fw-bold">
-								Total de notícias: <span class="badge rounded-pill bg-dark"
-									th:text="${totNoticias}"></span>
-							</p>
-							<div>
-								<a href="/noticia/config" sec:authorize="hasAuthority('ADMIN')"
-									class="btn btn-dark">Abrir</a>
+						<div class="card border-primary bor-rad">
+							<div class="card-header text-center fw-bolder bg-primary text-white bor-top-rad">
+								Configurações de Empreendimentos
+							</div>
+							<div class="card-body">
+								<p class="card-text fw-bold">
+									Total de empreendimentos: <span class="badge rounded-pill bg-primary"
+										th:text="${totEmpre}"></span>
+								</p>
+								<div>
+									<a href="/usuario/cadastroem" sec:authorize="hasAuthority('ADMIN')"
+										class="btn btn-primary">Abrir</a>
+								</div>
 							</div>
 						</div>
+
 					</div>
 
+					<div class="col-md-4">
+
+						<div class="card border-dark bor-rad">
+							<div class="card-header text-center fw-bolder bg-dark text-white bor-top-rad">
+								Configurações de Notícias
+							</div>
+							<div class="card-body">
+								<p class="card-text fw-bold">
+									Total de notícias: <span class="badge rounded-pill bg-dark"
+										th:text="${totNoticias}"></span>
+								</p>
+								<div>
+									<a href="/noticia/config" sec:authorize="hasAuthority('ADMIN')"
+										class="btn btn-dark">Abrir</a>
+								</div>
+							</div>
+						</div>
+
+					</div>
 				</div>
 			</div>
 		</div>
