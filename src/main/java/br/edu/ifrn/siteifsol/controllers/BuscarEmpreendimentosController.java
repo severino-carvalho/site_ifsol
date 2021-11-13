@@ -84,6 +84,7 @@ public class BuscarEmpreendimentosController {
 		try {
 			// LISTA DE EMPREENDIMENTOS ENCONTRADOS
 			List<empreendimento> empEnc = empreendimentosrepository.findAll();
+			Collections.reverse(empEnc);
 
 			// BUSCA O EMPREENDIMENTO ESPECÍFICO DA EDIÇÃO
 			empreendimento e = empreendimentosrepository.findById(idempre).get();
