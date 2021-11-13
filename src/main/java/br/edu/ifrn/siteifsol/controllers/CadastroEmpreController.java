@@ -88,6 +88,9 @@ public class CadastroEmpreController {
 				// PROCESSO DE CRIAÇÃO OU ATUALIZAÇÃO DA IMAGEM
 				atualizarImagem(empre, arquivo);
 
+				// REMOVER ESPAÇOS EM BRANCOS DA DESCRIÇÃO
+				empre.setDescricao(empre.getDescricao().trim());
+
 				/*
 				 * SE ESTIVER VAZIO, SIGNIFICA QUE O EMPREENDIMENTO ESTÁ SENDO CADASTRADO ENTÃO
 				 * É COLOCADO O NOME DO USUÁRIO ADM QUE REALIZA O CADASTRO
@@ -179,7 +182,7 @@ public class CadastroEmpreController {
 
 		if (empre.getDescricao() == null || empre.getDescricao().isEmpty()) {
 			msgs.add("O campo Descrição é obrigatório");
-		} 
+		}
 
 		if (empre.getDescricao().trim().length() > 255) {
 			msgs.add("O Tamanho máximo da descrição é 255 caracteres");
@@ -219,6 +222,8 @@ public class CadastroEmpreController {
 					// SE NÃO TIVER FOTO, INSERIMOS PELA PRIMEIRA VEZ
 					empre.setFoto(inserirFoto(empre, arquivo));
 				}
+			} else {
+				empre.setFoto(inserirFoto(empre, arquivo));
 			}
 
 		}
