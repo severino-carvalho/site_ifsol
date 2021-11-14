@@ -26,13 +26,14 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 
 		<div class="container" align="center">
+
 			<!--IMPORTA PARA ESSA PAGINAS O ARQUIVO QUE CONTEM AS MENSAGENS DE ERRO E SUCESSO  -->
 			<div th:replace="fragmentos/mensagens"></div>
-			<div class="row mt-2">
+
+			<div class="row">
 				<div class="col-md-6">
-					<div class="card mb-3" style="max-width: 36rem;">
-						<div class="card-header bg-success text-white fw-bold">Cadastro
-							de Usuários</div>
+					<div class="card mb-3 bor-rad shadow" style="max-width: 36rem;">
+						<div class="card-header bg-dark bor-top-rad text-white fw-bold">Novo Usuário</div>
 
 						<form class="px-4 pt-3" th:action="@{/usuario/salvar}" th:object="${usuario}" method="POST"
 							align="center">
@@ -72,11 +73,12 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 							</div>
 							<div class="mb-3" style="text-align: left;">
-								<input class="btn btn-success" type="submit"
+								<input class="btn btn-success rounded-pill shadow" type="submit"
 									th:value="${usuario.id}  == 0 ? Cadastrar : Editar" />
-								<input class="btn btn-danger" type="submit" th:if="${usuario.id} > 0"
-									value="Cancelar" formaction="/usuario/cadastro/" formmethod="GET" />
-								<input class="btn btn-warning" type="reset" value="Limpar" />
+								<input class="btn btn-danger rounded-pill shadow" type="submit"
+									th:if="${usuario.id} > 0" value="Cancelar" formaction="/usuario/cadastro/"
+									formmethod="GET" />
+								<input class="btn btn-warning rounded-pill shadow" type="reset" value="Limpar" />
 							</div>
 						</form>
 						<!--QUANDO O FOR PARA CADASTRAR O USUARIO APARECERA O BOTÃO "CADASTRO"E PARA EDITAR "EDITAR"  -->
@@ -84,9 +86,9 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 					</div>
 				</div>
 
-				<div class="col-md-6">
-					<div class="card mb-3" ; style="max-width: 26rem">
-						<div class="card-header bg-success text-white fw-bold">Busca de Acessos</div>
+				<div class="col-md-6 d-flex justify-content-center ">
+					<div class="card mb-3 bor-rad shadow" ; style="max-width: 26rem; max-height: 24rem;">
+						<div class="card-header bg-dark bor-top-rad text-white fw-bold">Busca de Usuários</div>
 						<div class="card-body">
 
 							<form class="pd-0" th:action="@{/usuarios/buscar}" method="GET" align="center">
@@ -110,13 +112,13 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 								</div>
 
 								<div class="my-3">
-									<input type="checkbox" th:name="mostrarTodosDados" th:value="true" />Mostrar todos
+									<input type="checkbox" th:name="mostrarTodosDados" th:value="true" /> Mostrar todos
 									os dados
 								</div>
 
 
-								<input class="btn btn-primary" type="submit" value="Buscar" />
-
+								<input class="btn btn-primary rounded-pill shadow" type="submit" value="Buscar" />
+								<input class="btn btn-warning rounded-pill shadow" type="reset" value="Limpar" />
 
 								<div class="mt-3 md-0">
 									<p class="fw-bold my-0 py-0 text-muted"
@@ -129,7 +131,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							</form>
 
 							<!--MOSTRA NA PÁGINAS OS EMPREENDIMENTOS EMCONTRADOS E SEUS DADOS
-													   E MOSTRA AS OPÇÕES DE EDITAR E REMOVER  -->
+	 							E MOSTRA AS OPÇÕES DE EDITAR E REMOVER  -->
 
 						</div>
 					</div>
@@ -139,8 +141,8 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 			<div class="row">
 				<div th:if="${not #lists.isEmpty(usuariosEncontrados)}">
-					<table class="table table-bordered table-striped table-hover">
-						<thead>
+					<table class="table table-bordered table-striped table-hover shadow">
+						<thead class="bg-dark text-white">
 							<tr class="text-center">
 								<th>Nome</th>
 								<th>Email</th>
@@ -151,9 +153,9 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="u : ${usuariosEncontrados}">
-								<td th:text="${u.nome}"></td>
-								<td th:text="${u.email}"></td>
+							<tr th:each="u : ${usuariosEncontrados}" class="bor-bottom-rad">
+								<td style="max-width: 150px;" th:text="${u.nome}" class="ps-3"></td>
+								<td th:text="${u.email}" class="ps-3"></td>
 								<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${u.funcao}">
 								</td>
 								<td class="text-center" th:if="${mostrarTodosDados} == true" th:text="${u.criadoPor}">

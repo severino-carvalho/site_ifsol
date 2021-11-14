@@ -17,8 +17,11 @@
 		<div class="container py-4">
 			<div class="card " style="border-radius: 15px;">
 				<div class="card-body bg-light" style="border-radius: 15px;">
-					<h5 class="card-title text-center"><b>Emprendimentos atendidos</b></h5>
-					<p class="card-text" style="text-align: justify;">A IFSol João Câmara atende a
+					<h5 class="card-title text-center">
+						<b>Emprendimentos atendidos</b>
+					</h5>
+					<p class="card-text" style="text-align: justify;">
+						A IFSol João Câmara atende a
 						empreendimentos (grupos, informais, associações, cooperativas) que
 						trabalham ou queiram trabalhar sob a filosofia da economia
 						solidária que estejam sediados na região do Mato Grande Potiguar.
@@ -34,9 +37,9 @@
 
 					<div class="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-center"
 						th:each="emp : ${empEncontrados}">
-						<div class="card mb-4 bor-rad " style="max-width: 18rem;">
-							<img th:src="@{/download/} + ${emp.foto.id} + '?salvar=false'"
-								class="img-fluid bor-top-rad">
+						<div class="card mb-4 bor-rad shadow" style="max-width: 18rem;">
+							<img th:src="@{/download/} + ${emp.foto.id} + '?salvar=false'" class="img-fluid bor-top-rad"
+								alt="Imagem não disponível">
 							<div class="card-body">
 								<h5 class="card-title text-center" th:text="${emp.nome}">Arizona - mel</h5>
 								<p class="card-text" style="text-align: justify;" th:text="${emp.descricao}">Lorem ipsum

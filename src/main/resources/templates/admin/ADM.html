@@ -18,12 +18,9 @@
 				<div class="alert alert-primary alert-dismissible fade show bor-rad shadow" role="alert">
 					<h4>Bem vindo!</h4>
 					<p style="text-align: justify; font-size: 11pt;">
-						Esta e a pagina de administracao do Website da IFSOL. Aqui a equipe do projeto podera adicionar
-						e
-						administrar os empreendimentos, e os usuarios que podem acessar a pagina de administrador.
-						Lembrando
-						que
-						so usuarios administradores podem cadastrar um usuario.
+						Esta é a pagina de administração do Website da IFSOL. Aqui a equipe do projeto podera adicionar
+						e administrar os empreendimentos, e os usuarios que podem acessar a pagina de administrador.
+						Lembrando que so usuários administradores podem cadastrar usuários.
 					</p>
 
 					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -38,13 +35,13 @@
 							</div>
 							<div class="card-body">
 								<p class="card-text fw-bold">
-									Total de usuáros: <span class="badge rounded-pill bg-dark"
+									Total de usuáros: <span class="badge rounded-pill bg-dark shadow"
 										th:text="${totUsuarios}"></span>
 								</p>
 
 								<div>
 									<a href="/usuario/cadastro" sec:authorize="hasAuthority('ADMIN')"
-										class="btn btn-dark">Abrir</a>
+										class="btn btn-dark rounded-pill shadow">Abrir</a>
 								</div>
 							</div>
 						</div>
@@ -59,12 +56,12 @@
 							</div>
 							<div class="card-body">
 								<p class="card-text fw-bold">
-									Total de empreendimentos: <span class="badge rounded-pill bg-dark"
+									Total de empreendimentos: <span class="badge rounded-pill bg-dark shadow"
 										th:text="${totEmpre}"></span>
 								</p>
 								<div>
 									<a href="/usuario/cadastroem" sec:authorize="hasAuthority('ADMIN')"
-										class="btn btn-dark">Abrir</a>
+										class="btn btn-dark rounded-pill shadow">Abrir</a>
 								</div>
 							</div>
 						</div>
@@ -79,12 +76,12 @@
 							</div>
 							<div class="card-body bg-gradient bor-bottom-rad">
 								<p class="card-text fw-bold">
-									Total de notícias: <span class="badge rounded-pill bg-dark"
+									Total de notícias: <span class="badge rounded-pill bg-dark shadow"
 										th:text="${totNoticias}"></span>
 								</p>
 								<div>
 									<a href="/noticia/config" sec:authorize="hasAuthority('ADMIN')"
-										class="btn btn-dark">Abrir</a>
+										class="btn btn-dark rounded-pill shadow">Abrir</a>
 								</div>
 							</div>
 						</div>

@@ -30,8 +30,8 @@
 
 			<div class="row mt-4">
 				<div class="col-lg-6">
-					<div class="card border-dark mb-3" style="max-width: 36rem;">
-						<div class="card-header bg-dark text-white fw-bold text-center">Nova notícia</div>
+					<div class="card mb-3 bor-rad shadow" style="max-width: 36rem;">
+						<div class="card-header bg-dark bor-top-rad text-white fw-bold text-center">Nova Notícia</div>
 						<div class="card-body pt-4 pb-2">
 
 							<form class="px-4" th:action="@{/noticia/salvar}" th:object="${noticia}" method="POST"
@@ -76,11 +76,11 @@
 								</div>
 
 								<div class="mb-3" style="text-align: left;">
-									<input class="btn btn-success" type="submit"
+									<input class="btn btn-success rounded-pill shadow" type="submit"
 										th:value="${noticia.id}  == 0 ? Adicionar : Editar" />
-									<input class="btn btn-danger " type="submit" th:if="${noticia.id} != 0"
+									<input class="btn btn-danger rounded-pill shadow" type="submit" th:if="${noticia.id} != 0"
 										value="Cancelar" formaction="/noticia/config/" formmethod="GET" />
-									<input class="btn btn-warning" type="reset" value="Limpar" />
+									<input class="btn btn-warning rounded-pill shadow" type="reset" value="Limpar" />
 								</div>
 							</form>
 						</div>
@@ -90,9 +90,9 @@
 					</div>
 				</div>
 
-				<div class="col-lg-6">
-					<div class="card border-dark md-3" style="max-width: 26rem;">
-						<div class="card-header bg-dark fw-bold text-white">Busca de notícias</div>
+				<div class="col-lg-6 d-flex justify-content-center">
+					<div class="card bor-rad md-3 shadow" style="max-width: 26rem; max-height: 24rem;">
+						<div class="card-header bor-top-rad bg-dark fw-bold text-white">Busca de Notícias</div>
 						<div class="card-body text-dark">
 
 							<form th:action="@{/noticias/buscarnoticia}" method="GET" align="center">
@@ -108,7 +108,7 @@
 									<label for="buscaTexto" class="form-label" style="text-align: left;">
 										Texto:
 									</label>
-									<input type="text" th:name="texto" class="form-control" id="buscaTexto" />
+									<input type="text" th:name="texto" class="form-control" id="buscaTexto" maxlength="5000" />
 								</div>
 
 								<div class="my-3">
@@ -116,8 +116,8 @@
 									os dados
 								</div>
 
-								<input class="btn btn-success" type="submit" value="Buscar" />
-								<input class="btn btn-warning" type="reset" value="Limpar" />
+								<input class="btn btn-primary rounded-pill shadow" type="submit" value="Buscar" />
+								<input class="btn btn-warning rounded-pill shadow" type="reset" value="Limpar" />
 							</form>
 
 							<div class="mt-3 md-0">
@@ -135,7 +135,7 @@
 			<div class="row">
 				<div class="mt-5" th:if="${not #lists.isEmpty(noticias)}">
 					<table class="table table-bordered table-striped table-hover">
-						<thead class="text-center">
+						<thead class="text-center bg-dark text-white">
 							<tr class="align-middle">
 								<th>Foto</th>
 								<th>Título</th>

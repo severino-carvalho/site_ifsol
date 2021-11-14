@@ -28,3 +28,20 @@
     border-bottom-left-radius: 14px !important;
     border-bottom-right-radius: 14px !important;
 }
+
+/*
+
+thead th, thead td, thead tr{
+    border: 0ch;
+    border-style: none;
+}
+
+tbody td {
+    border: 0ch;
+}
+
+.table-bor-rad {
+    border-radius: 15px !important;
+}
+
+*/
