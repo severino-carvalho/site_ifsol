@@ -12,10 +12,10 @@
 
 	<section layout:fragment="corpo2">
 
-		<div class="bg-light py-3">
+		<div class="bg-light py-4">
 			<div class="container">
 
-				<div class="alert alert-success alert-dismissible fade show bor-rad" role="alert">
+				<div class="alert alert-primary alert-dismissible fade show bor-rad" role="alert">
 					<h4>Bem vindo!</h4>
 					<p style="text-align: justify; font-size: 11pt;">
 						Esta e a pagina de administracao do Website da IFSOL. Aqui a equipe do projeto podera adicionar
@@ -32,19 +32,19 @@
 				<div class="row mt-4">
 					<div class="col-md-4">
 
-						<div class="card border-success bor-rad">
-							<div class="card-header text-center fw-bolder bg-success text-white bor-top-rad">
+						<div class="card bor-rad shadow">
+							<div class="card-header text-center fw-bolder bg-dark text-white bor-top-rad">
 								Configurações de Usuários
 							</div>
 							<div class="card-body">
 								<p class="card-text fw-bold">
-									Total de usuáros: <span class="badge rounded-pill bg-success"
+									Total de usuáros: <span class="badge rounded-pill bg-dark"
 										th:text="${totUsuarios}"></span>
 								</p>
 
 								<div>
 									<a href="/usuario/cadastro" sec:authorize="hasAuthority('ADMIN')"
-										class="btn btn-success">Abrir</a>
+										class="btn btn-dark">Abrir</a>
 								</div>
 							</div>
 						</div>
@@ -53,18 +53,18 @@
 
 					<div class="col-md-4">
 
-						<div class="card border-primary bor-rad">
-							<div class="card-header text-center fw-bolder bg-primary text-white bor-top-rad">
+						<div class="card bor-rad shadow">
+							<div class="card-header text-center fw-bolder bg-dark text-white bor-top-rad">
 								Configurações de Empreendimentos
 							</div>
 							<div class="card-body">
 								<p class="card-text fw-bold">
-									Total de empreendimentos: <span class="badge rounded-pill bg-primary"
+									Total de empreendimentos: <span class="badge rounded-pill bg-dark"
 										th:text="${totEmpre}"></span>
 								</p>
 								<div>
 									<a href="/usuario/cadastroem" sec:authorize="hasAuthority('ADMIN')"
-										class="btn btn-primary">Abrir</a>
+										class="btn btn-dark">Abrir</a>
 								</div>
 							</div>
 						</div>
@@ -73,11 +73,11 @@
 
 					<div class="col-md-4">
 
-						<div class="card border-dark bor-rad">
+						<div class="card border-light bor-rad shadow">
 							<div class="card-header text-center fw-bolder bg-dark text-white bor-top-rad">
 								Configurações de Notícias
 							</div>
-							<div class="card-body">
+							<div class="card-body bg-gradient bor-bottom-rad">
 								<p class="card-text fw-bold">
 									Total de notícias: <span class="badge rounded-pill bg-dark"
 										th:text="${totNoticias}"></span>
