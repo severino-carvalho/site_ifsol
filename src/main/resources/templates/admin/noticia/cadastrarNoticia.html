@@ -78,8 +78,9 @@
 								<div class="mb-3" style="text-align: left;">
 									<input class="btn btn-success rounded-pill shadow" type="submit"
 										th:value="${noticia.id}  == 0 ? Adicionar : Editar" />
-									<input class="btn btn-danger rounded-pill shadow" type="submit" th:if="${noticia.id} != 0"
-										value="Cancelar" formaction="/noticia/config/" formmethod="GET" />
+									<input class="btn btn-danger rounded-pill shadow" type="submit"
+										th:if="${noticia.id} != 0" value="Cancelar" formaction="/noticia/config/"
+										formmethod="GET" />
 									<input class="btn btn-warning rounded-pill shadow" type="reset" value="Limpar" />
 								</div>
 							</form>
@@ -108,7 +109,8 @@
 									<label for="buscaTexto" class="form-label" style="text-align: left;">
 										Texto:
 									</label>
-									<input type="text" th:name="texto" class="form-control" id="buscaTexto" maxlength="5000" />
+									<input type="text" th:name="texto" class="form-control" id="buscaTexto"
+										maxlength="5000" />
 								</div>
 
 								<div class="my-3">
