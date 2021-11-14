@@ -11,33 +11,33 @@
 </head>
 
 <body>
-	
+
 	<section layout:fragment="corpo">
-		
+
 		<div class="container" align="center">
-			
+
 			<!-- FORMULARIO DE LOGIN -->
-			
-			<div class="card my-4 border-top border-success bor-rad text-center shadow" style="max-width: 26rem;">
+
+			<div class="card my-4 border-secundary bor-rad text-center shadow" style="max-width: 26rem;">
 				<div class="card-header border-success fw-bold alert-success fs-4 text-center bor-top-rad">Login</div>
 				<div class="card-body">
-					
+
 					<div th:replace="fragmentos/mensagens"></div>
-					
+
 					<form th:action="@{/login}" method="POST">
 						<div class="mb-3" style="text-align: left;">
 							<label for="exampleInputEmail1" class="form-label">
 								Email:
 							</label>
 							<input type="text" name="username" required autofocus class="form-control"
-							id="exampleInputEmail1" aria-describedby="emailHelp" />
+								id="exampleInputEmail1" aria-describedby="emailHelp" />
 						</div>
 						<div class="mb-3" style="text-align: left;">
 							<label for="exampleInputPassword1" class="form-label" style="text-align: left;">
 								Senha:
 							</label>
 							<input type="password" name="password" required class="form-control"
-							id="exampleInputPassword1" />
+								id="exampleInputPassword1" />
 							<div id="emailHelp" class="form-text" style="font-size: 13px;">
 								Sua senha deve ter no mínimo 6 dígitos.
 							</div>
