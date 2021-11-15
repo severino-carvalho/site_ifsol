@@ -43,6 +43,7 @@ public class BuscaNoticiaController {
 			} else {
 				Collections.reverse(noticiasEncontradas);
 				modelo.addAttribute("noticias", noticiasEncontradas);
+				modelo.addAttribute("msgSucesso", "Busca concluída! Notícia(s) encontrada(s)");
 			}
 
 			if (mostrarTodosDados != null) {

@@ -57,6 +57,7 @@ public class BuscarEmpreendimentosController {
 			} else {
 				Collections.reverse(empreendimentosEncontrados);
 				modelo.addAttribute("empreendimentosEncontrados", empreendimentosEncontrados);
+				modelo.addAttribute("msgSucesso", "Busca concluída! Empreendimento(s) encontrado(s)");
 			}
 
 			if (mostrarTodosDados != null) {
