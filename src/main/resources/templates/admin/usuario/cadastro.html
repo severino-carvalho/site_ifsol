@@ -30,12 +30,12 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 			<!--IMPORTA PARA ESSA PAGINAS O ARQUIVO QUE CONTEM AS MENSAGENS DE ERRO E SUCESSO  -->
 			<div th:replace="fragmentos/mensagens"></div>
 
-			<div class="row">
+			<div class="row my-3">
 				<div class="col-md-6">
 					<div class="card mb-3 bor-rad shadow" style="max-width: 36rem;">
 						<div class="card-header bg-dark bor-top-rad text-white fw-bold">Novo Usuário</div>
 
-						<form class="px-4 pt-3" th:action="@{/usuario/salvar}" th:object="${usuario}" method="POST"
+						<form class="px-4 mt-3" th:action="@{/usuario/salvar}" th:object="${usuario}" method="POST"
 							align="center">
 
 							<input type="hidden" th:field="${usuario.id}" />
@@ -72,7 +72,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 								</select>
 
 							</div>
-							<div class="mb-3" style="text-align: left;">
+							<div class="my-4" style="text-align: left;">
 								<input class="btn btn-success bor-rad-btn shadow" type="submit"
 									th:value="${usuario.id}  == 0 ? Cadastrar : Editar" />
 								<input class="btn btn-danger bor-rad-btn shadow" type="submit"
@@ -87,11 +87,11 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 				</div>
 
 				<div class="col-md-6 d-flex justify-content-center ">
-					<div class="card mb-3 bor-rad shadow" ; style="max-width: 26rem; max-height: 24rem;">
+					<div class="card mb-3 bor-rad shadow" ; style="max-width: 28rem; max-height: 24rem;">
 						<div class="card-header bg-dark bor-top-rad text-white fw-bold">Busca de Usuários</div>
 						<div class="card-body">
 
-							<form class="pd-0" th:action="@{/usuarios/buscar}" method="GET" align="center">
+							<form class="pd-0 px-2" th:action="@{/usuarios/buscar}" method="GET" align="center">
 
 
 								<div class="mb-3" style="text-align: left;">
