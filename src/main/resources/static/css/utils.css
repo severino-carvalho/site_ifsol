@@ -40,6 +40,23 @@
     transition: all .4s ease-in-out;
 }
 
+.star {
+    border: 0ch;
+    background-color: transparent;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.link-star {
+    color: #fff;
+}
+
+.link-star:hover{
+    color: yellow;
+    transition:  all .4s ease-in-out;
+
+}
+
 /*
 
 thead th, thead td, thead tr{
