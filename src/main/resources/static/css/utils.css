@@ -29,6 +29,10 @@
     border-bottom-right-radius: 14px !important;
 }
 
+.bor-rad-btn {
+    border-radius: 10px;
+}
+
 /*
 
 thead th, thead td, thead tr{
