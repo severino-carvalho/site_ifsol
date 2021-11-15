@@ -61,6 +61,10 @@
     color: #ffff00;
 }
 
+.olho:hover {
+    cursor: pointer;
+}
+
 /*
 
 thead th, thead td, thead tr{
