@@ -42,7 +42,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 							<div class="mb-3" style="text-align: left;">
 								<label for="nomeCad" class="form-label">Nome: </label>
-								<input type="text" th:field="${usuario.nome}" class="form-control" id="nomeCad">
+								<input type="text" th:field="${usuario.nome}" class="form-control bor-rad-btn" id="nomeCad">
 
 							</div>
 
@@ -50,14 +50,14 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 								<label for="exampleInputEmail1" class="form-label"
 									style="text-align: left;">Email</label>
-								<input input type="email" th:field="${usuario.email}" class="form-control"
+								<input input type="email" th:field="${usuario.email}" class="form-control bor-rad-btn"
 									id="exampleInputEmail1" aria-describedby="emailHelp">
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
 
 								<label for="exampleInputPassword1" class="form-label">Senha: </label>
-								<input type="password" th:field="${usuario.senha}" class="form-control"
+								<input type="password" th:field="${usuario.senha}" class="form-control bor-rad-btn"
 									id="exampleInputPassword1">
 
 							</div>
@@ -65,7 +65,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							<div class="mb-3" style="text-align: left;">
 
 								<label for="exampleInputName1" class="form-label">Função: </label>
-								<select class="form-select" th:field="${usuario.funcao}">
+								<select class="form-select bor-rad-btn" th:field="${usuario.funcao}">
 									<option value="" class="select">Escolha uma função</option>
 									<option th:each="p : ${funcao}" th:text="${p}" th:value="${p}">Selecione...
 									</option>
@@ -73,12 +73,12 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 							</div>
 							<div class="mb-3" style="text-align: left;">
-								<input class="btn btn-success rounded-pill shadow" type="submit"
+								<input class="btn btn-success bor-rad-btn shadow" type="submit"
 									th:value="${usuario.id}  == 0 ? Cadastrar : Editar" />
-								<input class="btn btn-danger rounded-pill shadow" type="submit"
+								<input class="btn btn-danger bor-rad-btn shadow" type="submit"
 									th:if="${usuario.id} > 0" value="Cancelar" formaction="/usuario/cadastro/"
 									formmethod="GET" />
-								<input class="btn btn-warning rounded-pill shadow" type="reset" value="Limpar" />
+								<input class="btn btn-warning bor-rad-btn shadow" type="reset" value="Limpar" />
 							</div>
 						</form>
 						<!--QUANDO O FOR PARA CADASTRAR O USUARIO APARECERA O BOTÃO "CADASTRO"E PARA EDITAR "EDITAR"  -->
@@ -99,7 +99,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 										Nome:
 									</label>
 
-									<input type="text" th:name="nome" class="form-control" id="exampleInputEmail1"
+									<input type="text" th:name="nome" class="form-control bor-rad-btn" id="exampleInputEmail1"
 										aria-describedby="emailHelp">
 								</div>
 
@@ -108,7 +108,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 										Email
 									</label>
 
-									<input type="email" th:name="email" class="form-control" id="exampleInputPassword1">
+									<input type="email" th:name="email" class="form-control bor-rad-btn" id="exampleInputPassword1">
 								</div>
 
 								<div class="my-3">
@@ -117,8 +117,8 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 								</div>
 
 
-								<input class="btn btn-primary rounded-pill shadow" type="submit" value="Buscar" />
-								<input class="btn btn-warning rounded-pill shadow" type="reset" value="Limpar" />
+								<input class="btn btn-primary bor-rad-btn shadow" type="submit" value="Buscar" />
+								<input class="btn btn-warning bor-rad-btn shadow" type="reset" value="Limpar" />
 
 								<div class="mt-3 md-0">
 									<p class="fw-bold my-0 py-0 text-muted"

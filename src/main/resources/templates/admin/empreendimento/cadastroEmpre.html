@@ -57,13 +57,14 @@
 
 							<div class="my-3" style="text-align: left;">
 								<label for="exampleInputName1" class="form-label">Nome: </label>
-								<input type="text" th:field="${empre.nome}" class="form-control" id="exampleInputName1">
+								<input type="text" th:field="${empre.nome}" class="form-control bor-rad-btn"
+									id="exampleInputName1">
 
 							</div>
 							<div class="mb-3" style="text-align: left;">
 								<label for="exampleInputEmail1" class="form-label"
 									style="text-align: left;">Email:</label>
-								<input input type="email" th:field="${empre.email}" class="form-control"
+								<input input type="email" th:field="${empre.email}" class="form-control bor-rad-btn"
 									id="exampleInputEmail1" aria-describedby="emailHelp">
 							</div>
 
@@ -71,7 +72,7 @@
 								<label for="exampleInputName1" class="form-label">Cidade:
 								</label>
 
-								<select class="form-select" id="cidade" th:field="${empre.cidade.id}">
+								<select class="form-select bor-rad-btn" id="cidade" th:field="${empre.cidade.id}">
 									<option selected th:value="0" class="select">Escolha uma cidade</option>
 									<option th:each="c : ${cidades}" th:value="${c.id}" th:text="${c.nome}">
 									</option>
@@ -82,9 +83,9 @@
 								<label for="exampleInputName1" class="form-label">
 									Descrição:
 								</label>
-								<textarea class="form-control" placeholder="Escreva a descrição do empreendimento"
-									maxlength="255" style="height: 130px" th:field="${empre.descricao}"
-									id="texto_descricao">
+								<textarea class="form-control bor-rad-btn"
+									placeholder="Escreva a descrição do empreendimento" maxlength="255"
+									style="height: 130px" th:field="${empre.descricao}" id="texto_descricao">
 								</textarea>
 
 							</div>
@@ -93,7 +94,7 @@
 								<label for="exampleInputName1" class="form-label mt-0">
 									Foto:
 								</label>
-								<input class="form-control" type="file" th:name="file" />
+								<input class="form-control bor-rad-btn" type="file" th:name="file" />
 								<input type="hidden" th:field="${empre.foto.id}" />
 							</div>
 
@@ -117,11 +118,11 @@
 							</div>
 
 							<div class="mb-3 py-2" style="text-align: left;">
-								<input class="btn btn-success rounded-pill shadow" type="submit"
+								<input class="btn btn-success bor-rad-btn shadow" type="submit"
 									th:value="${empre.id}  == 0 ? Cadastrar : Editar" />
-								<input class="btn btn-danger rounded-pill shadow" type="submit" th:if="${empre.id} > 0"
+								<input class="btn btn-danger bor-rad-btn shadow" type="submit" th:if="${empre.id} > 0"
 									value="Cancelar" formaction="/usuario/cadastroem" formmethod="GET" />
-								<input class="btn btn-warning rounded-pill shadow" type="reset" value="Limpar" />
+								<input class="btn btn-warning bor-rad-btn shadow" type="reset" value="Limpar" />
 							</div>
 						</form>
 						<!--QUANDO O FOR PARA CADASTRAR O USUARIO APARECERA O BOT�O "CADASTRO"E PARA EDITAR "EDITAR"  -->
@@ -139,14 +140,14 @@
 
 							<form th:action="@{/usuarios/buscaempre}" method="GET" align="center">
 								<div class="mb-3" style="text-align: left;">
-									<label for="exampleInputEmail1" class="form-label">Nome:
-									</label> <input type="text" th:name="nome" class="form-control"
-										id="exampleInputEmail1" aria-describedby="emailHelp">
+									<label for="exampleInputEmail1" class="form-label">Nome:</label>
+									<input type="text" th:name="nome" class="form-control bor-rad-btn" id="exampleInputEmail1"
+										aria-describedby="emailHelp">
 
 								</div>
 								<div class="mb-4" style="text-align: left;">
 									<label for="inputSenha" class="form-label" style="text-align: left;">Email:</label>
-									<input type="email" th:name="email" class="form-control" id="inputSenha" />
+									<input type="email" th:name="email" class="form-control bor-rad-btn" id="inputSenha" />
 								</div>
 
 								<div class="my-3">
@@ -154,8 +155,8 @@
 									os dados
 								</div>
 
-								<input class="btn btn-primary rounded-pill shadow" type="submit" value="Buscar" />
-								<input class="btn btn-warning rounded-pill shadow" type="reset" value="Limpar" />
+								<input class="btn btn-primary bor-rad-btn shadow" type="submit" value="Buscar" />
+								<input class="btn btn-warning bor-rad-btn shadow" type="reset" value="Limpar" />
 							</form>
 
 							<div class="mt-3 md-0">
