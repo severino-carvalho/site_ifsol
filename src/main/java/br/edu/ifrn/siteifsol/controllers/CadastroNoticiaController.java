@@ -47,8 +47,8 @@ public class CadastroNoticiaController {
 	public String salvar(Noticia noticia, @RequestParam("file") MultipartFile arquivo, RedirectAttributes attr,
 			ModelMap modelo) {
 
-		List<String> msgValidacao = validaDados(noticia); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DOS CAMPOS
-
+		List<String> msgValidacao = validaDados(noticia); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DOS
+															// CAMPOS
 		/*
 		 * O CODIGO A SEGUIR FOI FEITO PARA UPLOAD E DOWNLOAD DE UM ARQUIVO NO BANCO DE
 		 * DADOS E O TRY FOI NECESSARIO PARA CASO OCORRA UM ERRO SEJA LANÇADO UMA
@@ -58,21 +58,23 @@ public class CadastroNoticiaController {
 
 		if (msgValidacao.isEmpty()) {
 			try {
-				if (arquivo != null && !arquivo.isEmpty()) {
-				
-					// NORMALIZANDO NOME DO ARQUIVO
-					String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
-					Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
-					
-					// SALVA O ARQUIVO NO BANCO DE DADOS
-					arquivoRepository.save(arquivoBD); 
-					
-					// SALVA O NOVO ARQUIVO DO NOTICIA
-					noticia.setFoto(arquivoBD);
+
+				if (noticia.getId() != 0) {
+					// Já está cadastrada
+					if (arquivo.getSize() > 0) {
+						arquivoRepository.deleteById(noticia.getFoto().getId());
+						insertFoto(noticia, arquivo, modelo);
+					}
 				} else {
-					noticia.setFoto(null);
-					modelo.addAttribute("msgErro", "Não foi selecionada nenhuma imagem!");
-					return "/admin/noticia/cadastrarNoticia";
+
+					if (arquivo.getSize() > 0) {
+						insertFoto(noticia, arquivo, modelo);
+					}
+
+					if (arquivo.getSize() == 0) {
+						modelo.addAttribute("msgErro", "Não foi selecionada nenhuma imagem!");
+						return "/admin/noticia/cadastrarNoticia";
+					}
 				}
 
 				// SE ESTIVER VAZIA ENTÃO É CADASTRO
@@ -86,7 +88,7 @@ public class CadastroNoticiaController {
 
 				// RETORNA A MENSAGEM PARA A PÁGINA
 				attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
-				
+
 				List<Noticia> noticias = noticiaRepository.findAll();
 				Collections.reverse(noticias);
 				attr.addFlashAttribute("noticias", noticias);
@@ -95,7 +97,9 @@ public class CadastroNoticiaController {
 				attr.addFlashAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 				return "redirect:/noticia/config";
 			}
-		} else {
+		} else
+
+		{
 			modelo.addAttribute("msgErro", msgValidacao);
 			return "/admin/noticia/cadastrarNoticia";
 		}
@@ -126,6 +130,24 @@ public class CadastroNoticiaController {
 		DateFormat formataData = DateFormat.getDateInstance();
 
 		return formataData.format(data);
+	}
+
+	@Transactional(readOnly = false)
+	public void insertFoto(Noticia noticia, MultipartFile arquivo, ModelMap modelo) {
+		try {
+			// NORMALIZANDO NOME DO ARQUIVO
+			String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
+			Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
+
+			// SALVA O ARQUIVO NO BANCO DE DADOS
+			arquivoRepository.save(arquivoBD);
+
+			// SALVA O NOVO ARQUIVO DO NOTICIA
+			noticia.setFoto(arquivoBD);
+
+		} catch (Exception e) {
+			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR!");
+		}
 	}
 
 }
