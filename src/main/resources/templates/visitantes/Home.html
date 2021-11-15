@@ -32,10 +32,40 @@
 
 				<div class="row mx-0 d-flex justify-content-center">
 					<div class="col-md-6 col-lg-4 mt-4 d-flex justify-content-center" th:each="n : ${noticias}">
-						<div class="card bor-rad shadow" style="min-width: 18rem;">
-							<img th:if="${n.foto != null}" th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
-								class="card-img-top bor-top-rad" alt="...">
-							<div class="card-body bor-rad">
+						<div class="card bor-rad shadow d-flex" style="min-width: 18rem;">
+							<div class="d-flex justify-content-end">
+								<div class="position-absolute">
+									<button class="star link-star" name="buttom-star">
+										<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+											fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+											<path
+												d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+										</svg>
+									</button>
+
+									<script>
+
+										onload = () => {
+											let stars = document.getElementsByName("buttom-star");
+
+											stars.forEach(star => {
+												star.addEventListener("click", () => {
+													if (!star.classList.contains("star-select")) {
+														star.classList.add('star-select');
+													} else {
+														star.classList.remove("star-select");
+													}
+												});
+											});
+										}
+
+									</script>
+								</div>
+								<img th:if="${n.foto != null}" th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
+									class="card-img-top bor-top-rad" alt="...">
+							</div>
+
+							<div class="card-body bor-rad ">
 								<h5 class="card-title" th:text="${n.titulo}"></h5>
 								<p class="card-text" style="text-align: justify;" th:text="${n.texto}"
 									name="texto_noticia">
@@ -45,13 +75,14 @@
 									limitarCaracteres(250);
 								</script>
 
-								<div class="d-flex justify-content-center flex-column">
-									<a th:href="'/publico/noticia/' + ${n.id}"
-										class="btn btn-primary rounded-pill shadow">Leia
-										Mais</a>
-								</div>
 							</div>
-							<div class="card-footer text-muted bor-bottom-rad" th:text="${n.dataPublicacao}"></div>
+							<div class="d-flex justify-content-center flex-column mx-3 mb-3">
+								<a th:href="'/publico/noticia/' + ${n.id}"
+									class="btn btn-primary bor-rad-btn shadow">Leia
+									Mais</a>
+							</div>
+							<div class="card-footer text-muted bor-bottom-rad text-end" th:text="${n.dataPublicacao}">
+							</div>
 						</div>
 					</div>
 				</div>
