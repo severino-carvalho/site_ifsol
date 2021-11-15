@@ -30,9 +30,9 @@
 					</script>
 				</div>
 
-				<div class="row mx-0">
-					<div class="col-md-6 col-lg-4 mt-4" th:each="n : ${noticias}">
-						<div class="card bor-rad" style="min-width: 18rem;">
+				<div class="row mx-0 d-flex justify-content-center">
+					<div class="col-md-6 col-lg-4 mt-4 d-flex justify-content-center" th:each="n : ${noticias}">
+						<div class="card bor-rad shadow" style="min-width: 18rem;">
 							<img th:if="${n.foto != null}" th:src="@{/download/} + ${n.foto.id} + '?salvar=false'"
 								class="card-img-top bor-top-rad" alt="...">
 							<div class="card-body bor-rad">
@@ -42,11 +42,14 @@
 								</p>
 
 								<script>
-									limitarCaracteres(300);
+									limitarCaracteres(250);
 								</script>
 
-								<a th:href="'/publico/noticia/' + ${n.id}" class="btn btn-primary rounded-pill">Leia
-									Mais</a>
+								<div class="d-flex justify-content-center flex-column">
+									<a th:href="'/publico/noticia/' + ${n.id}"
+										class="btn btn-primary rounded-pill shadow">Leia
+										Mais</a>
+								</div>
 							</div>
 							<div class="card-footer text-muted bor-bottom-rad" th:text="${n.dataPublicacao}"></div>
 						</div>

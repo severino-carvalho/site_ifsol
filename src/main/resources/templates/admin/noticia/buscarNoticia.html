@@ -28,7 +28,7 @@
 
 		<div class="container">
 			<div class="row mb-2" th:if="${noticia} != null">
-				<div class="col-lg-9 d-flex justify-content-center">
+				<div class="col-lg-9">
 					<div class="card bor-rad">
 						<img th:if="${noticia.foto != null}"
 							th:src="@{/download/} + ${noticia.foto.id} + '?salvar=false'"
@@ -47,7 +47,7 @@
 				<div class="col-lg-3">
 					<div class="row d-flex justify-content-center">
 						<div class="col-lg-12 col-sm-6 " th:each="n : ${noticias}" th:if="${n.id != noticia.id}">
-							<div class="card mt-3 bor-rad" name="card_noticia">
+							<div class="card mt-3 bor-rad mt-lg-0" name="card_noticia">
 								<div class="card-header p-0">
 									<a th:href="${n.id}" class="box-noticia">
 										<div class="box-img">
@@ -72,11 +72,6 @@
 							</div>
 
 						</div>
-
-						<script>
-							let card_noticia = document.getElementsByName("card_noticia");
-							card_noticia[0].classList.remove("mt-3");
-						</script>
 
 					</div>
 				</div>
