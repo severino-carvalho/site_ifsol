@@ -2,7 +2,6 @@
 <html lang="pt" layout:decorate="~{layouts/layoutL}">
 
 <head>
-	<link rel="stylesheet" th:href="@{/css/utils.css}">
 
 	<title>Página de Controle</title>
 
@@ -35,13 +34,13 @@
 							</div>
 							<div class="card-body">
 								<p class="card-text fw-bold">
-									Total de usuáros: <span class="badge rounded-pill bg-dark shadow"
-										th:text="${totUsuarios}"></span>
+									Cadastrados:
+									<span class="badge bg-dark shadow" th:text="${totUsuarios}"></span>
 								</p>
 
 								<div>
 									<a href="/usuario/cadastro" sec:authorize="hasAuthority('ADMIN')"
-										class="btn btn-dark rounded-pill shadow">Abrir</a>
+										class="btn btn-dark bor-rad-btn shadow d-flex justify-content-center">Abrir</a>
 								</div>
 							</div>
 						</div>
@@ -56,12 +55,12 @@
 							</div>
 							<div class="card-body">
 								<p class="card-text fw-bold">
-									Total de empreendimentos: <span class="badge rounded-pill bg-dark shadow"
-										th:text="${totEmpre}"></span>
+									Cadastrados:
+									<span class="badge bg-dark shadow" th:text="${totEmpre}"></span>
 								</p>
 								<div>
 									<a href="/usuario/cadastroem" sec:authorize="hasAuthority('ADMIN')"
-										class="btn btn-dark rounded-pill shadow">Abrir</a>
+										class="btn btn-dark bor-rad-btn shadow d-flex justify-content-center">Abrir</a>
 								</div>
 							</div>
 						</div>
@@ -75,13 +74,15 @@
 								Configurações de Notícias
 							</div>
 							<div class="card-body bg-gradient bor-bottom-rad">
-								<p class="card-text fw-bold">
-									Total de notícias: <span class="badge rounded-pill bg-dark shadow"
-										th:text="${totNoticias}"></span>
+								<p class="card-text fw-bold ">
+									Cadastrados:
+
+									<span class="badge bg-dark shadow" th:text="${totNoticias}"></span>
 								</p>
 								<div>
 									<a href="/noticia/config" sec:authorize="hasAuthority('ADMIN')"
-										class="btn btn-dark rounded-pill shadow">Abrir</a>
+										class="btn btn-dark bor-rad-btn shadow d-flex justify-content-center">Abrir
+									</a>
 								</div>
 							</div>
 						</div>
