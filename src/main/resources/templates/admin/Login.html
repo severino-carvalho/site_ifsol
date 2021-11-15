@@ -6,6 +6,9 @@
 
 	<link rel="stylesheet" th:href="@{/css/utils.css}">
 
+	<!--	Google CDN JQuery	-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 	<title>Login</title>
 
 </head>
@@ -29,15 +32,44 @@
 							<label for="exampleInputEmail1" class="form-label">
 								Email:
 							</label>
-							<input type="text" name="username" required autofocus class="form-control"
+							<input type="text" name="username" required autofocus class="form-control bor-rad-btn"
 								id="exampleInputEmail1" aria-describedby="emailHelp" />
 						</div>
 						<div class="mb-3" style="text-align: left;">
 							<label for="exampleInputPassword1" class="form-label" style="text-align: left;">
 								Senha:
 							</label>
-							<input type="password" name="password" required class="form-control"
-								id="exampleInputPassword1" />
+							<div class="d-flex justify-content-end">
+								<input type="password" name="password" required class="form-control bor-rad-btn"
+									id="senha" />
+								<div class="position-absolute m-2 mt-1 olho" id="olho">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-eye-fill" viewBox="0 0 16 16">
+										<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+										<path
+											d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+									</svg>
+								</div>
+							</div>
+
+							<script>
+								var senha = $('#senha');
+								var olho = $("#olho");
+
+								olho.mousedown(() => {
+									senha.attr("type", "text");
+								});
+
+								olho.mouseup(() => {
+									senha.attr("type", "password");
+								});
+
+								olho.mouseout(() => {
+									$("#senha").attr("type", "password");
+								});
+
+							</script>
+
 							<div id="emailHelp" class="form-text" style="font-size: 13px;">
 								Sua senha deve ter no mínimo 6 dígitos.
 							</div>
@@ -45,7 +77,7 @@
 						<div class="mb-3" style="text-align: left;">
 							<input type="checkbox" name="remenber-me" /> Lembrar-me
 						</div>
-						<button class="btn btn-outline-success" type="submit">Entrar</button>
+						<button class="btn btn-outline-success bor-rad-btn" type="submit">Entrar</button>
 					</form>
 				</div>
 			</div>
