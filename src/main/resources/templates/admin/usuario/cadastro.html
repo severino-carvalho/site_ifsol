@@ -30,36 +30,64 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 			<!--IMPORTA PARA ESSA PAGINAS O ARQUIVO QUE CONTEM AS MENSAGENS DE ERRO E SUCESSO  -->
 			<div th:replace="fragmentos/mensagens"></div>
 
-			<div class="row">
+			<div class="row my-3">
 				<div class="col-md-6">
 					<div class="card mb-3 bor-rad shadow" style="max-width: 36rem;">
 						<div class="card-header bg-dark bor-top-rad text-white fw-bold">Novo Usuário</div>
 
-						<form class="px-4 pt-3" th:action="@{/usuario/salvar}" th:object="${usuario}" method="POST"
+						<form class="px-4 mt-3" th:action="@{/usuario/salvar}" th:object="${usuario}" method="POST"
 							align="center">
 
 							<input type="hidden" th:field="${usuario.id}" />
 
 							<div class="mb-3" style="text-align: left;">
 								<label for="nomeCad" class="form-label">Nome: </label>
-								<input type="text" th:field="${usuario.nome}" class="form-control bor-rad-btn" id="nomeCad">
+								<input type="text" th:field="${usuario.nome}" class="form-control bor-rad-btn"
+									id="nomeCad">
 
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
 
-								<label for="exampleInputEmail1" class="form-label"
-									style="text-align: left;">Email</label>
+								<label for="email" class="form-label" style="text-align: left;">Email</label>
 								<input input type="email" th:field="${usuario.email}" class="form-control bor-rad-btn"
-									id="exampleInputEmail1" aria-describedby="emailHelp">
+									id="email" aria-describedby="emailHelp">
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
 
-								<label for="exampleInputPassword1" class="form-label">Senha: </label>
-								<input type="password" th:field="${usuario.senha}" class="form-control bor-rad-btn"
-									id="exampleInputPassword1">
+								<label for="senha" class="form-label">Senha: </label>
 
+								<div class="d-flex justify-content-end">
+									<input type="password" th:field="${usuario.senha}" class="form-control bor-rad-btn"
+										id="senha">
+									<div class="position-absolute m-2 mt-1 olho" id="olho">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+											<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+											<path
+												d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+										</svg>
+									</div>
+								</div>
+
+								<script>
+									var senha = $('#senha');
+									var olho = $("#olho");
+
+									olho.mousedown(() => {
+										senha.attr("type", "text");
+									});
+
+									olho.mouseup(() => {
+										senha.attr("type", "password");
+									});
+
+									olho.mouseout(() => {
+										$("#senha").attr("type", "password");
+									});
+
+								</script>
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
@@ -72,12 +100,11 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 								</select>
 
 							</div>
-							<div class="mb-3" style="text-align: left;">
+							<div class="my-4" style="text-align: left;">
 								<input class="btn btn-success bor-rad-btn shadow" type="submit"
 									th:value="${usuario.id}  == 0 ? Cadastrar : Editar" />
-								<input class="btn btn-danger bor-rad-btn shadow" type="submit"
-									th:if="${usuario.id} > 0" value="Cancelar" formaction="/usuario/cadastro/"
-									formmethod="GET" />
+								<input class="btn btn-danger bor-rad-btn shadow" type="submit" th:if="${usuario.id} > 0"
+									value="Cancelar" formaction="/usuario/cadastro/" formmethod="GET" />
 								<input class="btn btn-warning bor-rad-btn shadow" type="reset" value="Limpar" />
 							</div>
 						</form>
@@ -87,11 +114,11 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 				</div>
 
 				<div class="col-md-6 d-flex justify-content-center ">
-					<div class="card mb-3 bor-rad shadow" ; style="max-width: 26rem; max-height: 24rem;">
+					<div class="card mb-3 bor-rad shadow" ; style="max-width: 28rem; max-height: 24rem;">
 						<div class="card-header bg-dark bor-top-rad text-white fw-bold">Busca de Usuários</div>
 						<div class="card-body">
 
-							<form class="pd-0" th:action="@{/usuarios/buscar}" method="GET" align="center">
+							<form class="pd-0 px-2" th:action="@{/usuarios/buscar}" method="GET" align="center">
 
 
 								<div class="mb-3" style="text-align: left;">
@@ -99,8 +126,8 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 										Nome:
 									</label>
 
-									<input type="text" th:name="nome" class="form-control bor-rad-btn" id="exampleInputEmail1"
-										aria-describedby="emailHelp">
+									<input type="text" th:name="nome" class="form-control bor-rad-btn"
+										id="exampleInputEmail1" aria-describedby="emailHelp">
 								</div>
 
 								<div class="mb-3" style="text-align: left;">
@@ -108,7 +135,8 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 										Email
 									</label>
 
-									<input type="email" th:name="email" class="form-control bor-rad-btn" id="exampleInputPassword1">
+									<input type="email" th:name="email" class="form-control bor-rad-btn"
+										id="exampleInputPassword1">
 								</div>
 
 								<div class="my-3">

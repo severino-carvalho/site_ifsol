@@ -41,7 +41,7 @@
 					E SUCESSO  -->
 			<div th:replace="fragmentos/mensagens" style="color:black;"></div>
 
-			<div class="row mb-4">
+			<div class="row my-3 mb-4">
 
 				<div class="col-md-6">
 					<div class="card border-secundary bor-rad shadow" style="max-width: 36rem;">
@@ -117,7 +117,7 @@
 								</div>
 							</div>
 
-							<div class="mb-3 py-2" style="text-align: left;">
+							<div class="my-4" style="text-align: left;">
 								<input class="btn btn-success bor-rad-btn shadow" type="submit"
 									th:value="${empre.id}  == 0 ? Cadastrar : Editar" />
 								<input class="btn btn-danger bor-rad-btn shadow" type="submit" th:if="${empre.id} > 0"
@@ -132,7 +132,7 @@
 				</div>
 
 				<div class="col-md-6 d-flex justify-content-center">
-					<div class="card border-secundary bor-rad md-3 shadow" style="max-width: 26rem; max-height: 24rem;">
+					<div class="card border-secundary bor-rad md-3 shadow" style="max-width: 28rem; max-height: 24rem;">
 						<div class="card-header bg-dark fw-bold text-white bor-top-rad text-center">Busca de
 							Empreendimentos</div>
 						<div class="card-body text-dark">
@@ -175,7 +175,7 @@
 		</div>
 
 		<div class="row px-3">
-			<div class="mt-5" th:if="${not #lists.isEmpty(empreendimentosEncontrados)}">
+			<div class="mt-2" th:if="${not #lists.isEmpty(empreendimentosEncontrados)}">
 				<table class="table table-bordered table-striped table-hover">
 					<thead class="bg-dark text-white text-center">
 						<tr class="align-middle">
