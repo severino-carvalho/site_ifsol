@@ -14,7 +14,7 @@
 	<!-- FORMULARIO PARA CADASTRAR UM USUARIO 
 th:object DIZ O OBJETO PARA QUAL O FORMULARIO PREENCHERA OS ATRIBUTOS
 th:action AÇÃO QUE AQUELA DETERMINADA TAG VAI FAZER
-th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI SE TRATAR-->
+th:field="${usuario.*}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI SE TRATAR-->
 
 	<section layout:fragment="corpo2">
 
@@ -47,7 +47,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 							<div class="mb-3" style="text-align: left;">
 								<label for="nomeCad" class="form-label">Nome: </label>
 								<input type="text" th:field="${usuario.nome}" class="form-control bor-rad-btn"
-									id="nomeCad">
+									id="nomeCad" placeholder="Ex: Nome Exemplo da Silva">
 
 							</div>
 
@@ -55,7 +55,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 								<label for="email" class="form-label" style="text-align: left;">Email</label>
 								<input input type="email" th:field="${usuario.email}" class="form-control bor-rad-btn"
-									id="email" aria-describedby="emailHelp">
+									id="email" aria-describedby="emailHelp" placeholder="exemplo@gmail.com">
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
@@ -64,7 +64,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 								<div class="d-flex justify-content-end">
 									<input type="password" th:field="${usuario.senha}" class="form-control bor-rad-btn"
-										id="senha">
+										id="senha" placeholder="**">
 									<div class="position-absolute m-2 mt-1 olho" id="olho">
 										<svg id="visivel" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 											fill="currentColor" class="bi bi-eye-fill d-none" viewBox="0 0 16 16">
@@ -107,7 +107,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 
 								<label for="exampleInputName1" class="form-label">Função: </label>
 								<select class="form-select bor-rad-btn" th:field="${usuario.funcao}">
-									<option value="" class="select">Escolha uma função</option>
+									<option value="" class="select">Selecione a função</option>
 									<option th:each="p : ${funcao}" th:text="${p}" th:value="${p}">Selecione...
 									</option>
 								</select>
@@ -140,7 +140,8 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 									</label>
 
 									<input type="text" th:name="nome" class="form-control bor-rad-btn"
-										id="exampleInputEmail1" aria-describedby="emailHelp">
+										id="exampleInputEmail1" aria-describedby="emailHelp"
+										placeholder="Busque usuários pelo nome">
 								</div>
 
 								<div class="mb-3" style="text-align: left;">
@@ -149,7 +150,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 									</label>
 
 									<input type="email" th:name="email" class="form-control bor-rad-btn"
-										id="exampleInputPassword1">
+										id="exampleInputPassword1" placeholder="Busque usuários por E-mail">
 								</div>
 
 								<div class="my-3">
@@ -217,7 +218,7 @@ th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI S
 									</a>
 									|
 									<a class="text-decoration-none" th:href="'/usuarios/remover/' + ${u.id}"
-										onclick="if (!confirm('Deseja realmente remover o usuario?')) return false"
+										onclick="if (!confirm('Deseja realmente remover o usuário?')) return false"
 										title="Remover">
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 											fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">

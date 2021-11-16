@@ -17,7 +17,7 @@
 	<!-- FORMULARIO PARA CADASTRAR UM EMPREENDIMENTO 
 		th:object DIZ O OBJETO PARA QUAL O FORMULARIO PREENCHERA OS ATRIBUTOS
 		th:action AÇÃO QUE AQUELA DETERMINADA TAG VAI FAZER
-		th:field="${usuario.***}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI SE TRATAR
+		th:field="${usuario.*}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI SE TRATAR
 	-->
 
 	<!--
@@ -46,7 +46,7 @@
 				<div class="col-md-6">
 					<div class="card border-secundary bor-rad shadow" style="max-width: 36rem;">
 						<div class="card-header bg-dark bor-top-rad text-white fw-bold text-center">
-							Novo de Empreendimento
+							Novo Empreendimento
 						</div>
 
 
@@ -58,14 +58,15 @@
 							<div class="my-3" style="text-align: left;">
 								<label for="exampleInputName1" class="form-label">Nome: </label>
 								<input type="text" th:field="${empre.nome}" class="form-control bor-rad-btn"
-									id="exampleInputName1">
+									id="exampleInputName1" placeholder="Ex: Nome Exemplo da Silva">
 
 							</div>
 							<div class="mb-3" style="text-align: left;">
 								<label for="exampleInputEmail1" class="form-label"
 									style="text-align: left;">Email:</label>
 								<input input type="email" th:field="${empre.email}" class="form-control bor-rad-btn"
-									id="exampleInputEmail1" aria-describedby="emailHelp">
+									id="exampleInputEmail1" aria-describedby="emailHelp"
+									placeholder="exemplo@gmail.com">
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
@@ -73,7 +74,7 @@
 								</label>
 
 								<select class="form-select bor-rad-btn" id="cidade" th:field="${empre.cidade.id}">
-									<option selected th:value="0" class="select">Escolha uma cidade</option>
+									<option selected th:value="0" class="select">Selecione a cidade</option>
 									<option th:each="c : ${cidades}" th:value="${c.id}" th:text="${c.nome}">
 									</option>
 								</select>
@@ -141,13 +142,15 @@
 							<form th:action="@{/usuarios/buscaempre}" method="GET" align="center">
 								<div class="mb-3" style="text-align: left;">
 									<label for="exampleInputEmail1" class="form-label">Nome:</label>
-									<input type="text" th:name="nome" class="form-control bor-rad-btn" id="exampleInputEmail1"
-										aria-describedby="emailHelp">
+									<input type="text" th:name="nome" class="form-control bor-rad-btn"
+										id="exampleInputEmail1" aria-describedby="emailHelp"
+										placeholder="Busque empreendimentos pelo nome">
 
 								</div>
 								<div class="mb-4" style="text-align: left;">
 									<label for="inputSenha" class="form-label" style="text-align: left;">Email:</label>
-									<input type="email" th:name="email" class="form-control bor-rad-btn" id="inputSenha" />
+									<input type="email" th:name="email" class="form-control bor-rad-btn" id="inputSenha"
+										placeholder="Busque empreendimentos por E-mail" />
 								</div>
 
 								<div class="my-3">

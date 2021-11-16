@@ -41,8 +41,8 @@
 
 								<div class="mb-3" style="text-align: left;">
 									<label for="tituloNot" class="form-label">Título: </label>
-									<input type="text" th:field="${noticia.titulo}" class="form-control bor-rad-btn" id="tituloNot"
-										placeholder="Digite o título">
+									<input type="text" th:field="${noticia.titulo}" class="form-control bor-rad-btn"
+										id="tituloNot" placeholder="Digite o título">
 								</div>
 
 								<div class="mb-3" style="text-align: left;">
@@ -50,8 +50,9 @@
 										<label for="textoNot" class="form-label mt-0">
 											Texto:
 										</label>
-										<textarea class="form-control bor-rad-btn" placeholder="Escreva o texto da notícia aqui..."
-											id="textoNot" style="height: 130px" th:field="${noticia.texto}"></textarea>
+										<textarea class="form-control bor-rad-btn"
+											placeholder="Escreva o texto da notícia aqui..." id="textoNot"
+											style="height: 130px" th:field="${noticia.texto}"></textarea>
 									</div>
 								</div>
 
@@ -102,7 +103,8 @@
 									<label for="tituloBusca" class="form-label">
 										Título:
 									</label>
-									<input type="text" th:name="titulo" class="form-control bor-rad-btn" id="tituloBusca" />
+									<input type="text" th:name="titulo" class="form-control bor-rad-btn"
+										id="tituloBusca" placeholder="Busque notícias por título" />
 								</div>
 
 								<div class="mb-4" style="text-align: left;">
@@ -110,7 +112,7 @@
 										Texto:
 									</label>
 									<input type="text" th:name="texto" class="form-control bor-rad-btn" id="buscaTexto"
-										maxlength="5000" />
+										maxlength="5000" placeholder="Busque notícias inserindo texto" />
 								</div>
 
 								<div class="my-3">
@@ -174,7 +176,7 @@
 									</a>
 									|
 									<a class="text-decoration-none" th:href="'/noticias/remove/' + ${n.id}"
-										onclick="if (!confirm('Deseja realmente remover a noticia?')) return false"
+										onclick="if (!confirm('Deseja realmente remover a notícia?')) return false"
 										title="Remover">
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 											fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
