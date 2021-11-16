@@ -58,26 +58,26 @@
 											d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" />
 									</svg>
 								</div>
+
+								<script>
+									let senha = $('#senha');
+									let olho = $("#olho");
+									let oculta = $("#oculta");
+									let visivel = $("#visivel");
+
+									olho.mousedown(() => {
+										visivel.toggleClass("d-none");
+										oculta.toggleClass("d-none");
+
+										if (oculta.hasClass("d-none")) {
+											senha.attr("type", "text");
+										}
+										if (visivel.hasClass("d-none")) {
+											senha.attr("type", "password")
+										}
+									});
+								</script>
 							</div>
-
-							<script>
-								let senha = $('#senha');
-								let olho = $("#olho");
-								let oculta = $("#oculta");
-								let visivel = $("#visivel");
-
-								olho.mousedown(() => {
-									visivel.toggleClass("d-none");
-									oculta.toggleClass("d-none");
-
-									if (oculta.hasClass("d-none")) {
-										senha.attr("type", "text");
-									}
-									if (visivel.hasClass("d-none")) {
-										senha.attr("type", "password")
-									}
-								});
-							</script>
 
 							<div id="emailHelp" class="form-text" style="font-size: 13px;">
 								Sua senha deve ter no mínimo 6 dígitos.
