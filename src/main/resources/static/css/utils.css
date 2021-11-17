@@ -40,28 +40,31 @@
     transition: all .4s ease-in-out;
 }
 
-.star {
+.like {
     border: 0ch;
     background-color: transparent;
     margin-top: 5px;
     margin-right: 5px;
 }
 
-.link-star {
+.link-like {
     color: #fff;
 }
 
 .link-star:hover{
-    color: yellow;
+    color: rgb(0, 132, 255);
     transition:  all .4s ease-in-out;
-
 }
 
-.star-select {
-    color: #ffff00;
+.like-select {
+    color: rgb(0, 132, 255);
 }
 
 .olho:hover {
+    cursor: pointer;
+}
+
+.tema {
     cursor: pointer;
 }
 
