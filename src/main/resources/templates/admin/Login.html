@@ -28,32 +28,41 @@
 					<div th:replace="fragmentos/mensagens"></div>
 
 					<form th:action="@{/login}" method="POST">
-						<div class="mb-3" style="text-align: left;">
-							<label for="exampleInputEmail1" class="form-label">
-								Email:
+						<div class="input-group mb-3" style="text-align: left;">
+
+							<label for="emailLogin" class="input-group-text form-label my-0 bor-rad-start">
+								<span class="material-icons">
+									mail_outline
+								</span>
 							</label>
-							<input type="text" name="username" required autofocus class="form-control bor-rad-btn"
-								id="exampleInputEmail1" aria-describedby="emailHelp" />
+
+							<input type="text" name="username" required autofocus class="form-control bor-rad-btn py-0"
+								id="emailLogin" aria-describedby="emailHelp" />
 						</div>
-						<div class="mb-3" style="text-align: left;">
-							<label for="exampleInputPassword1" class="form-label" style="text-align: left;">
-								Senha:
+
+						<div class="input-group mb-3" style="text-align: left;">
+							<label for="senhaLogin" class="input-group-text form-label my-0 bor-rad-start">
+								<span class="material-icons">
+									lock
+								</span>
 							</label>
-							<div class="d-flex justify-content-end">
-								<input type="password" name="password" required class="form-control bor-rad-btn"
-									id="senha" />
-								<div class="position-absolute mx-3 olho" id="olho">
-									<span id="oculta" class="material-icons pt-2">
+
+							<input type="password" name="password" required class="form-control bor-rad-btn"
+								id="senhaLogin" />
+
+							<div class="form-control bor-rad-end" style="max-width: 45px;">
+								<div class="d-flex justify-content-center olho" id="olho">
+									<span id="oculta" class="material-icons">
 										visibility_off
 									</span>
 
-									<span id="visivel" class="material-icons pt-2 d-none">
+									<span id="visivel" class="material-icons d-none">
 										visibility
 									</span>
 								</div>
 
 								<script>
-									let senha = $('#senha');
+									let senha = $('#senhaLogin');
 									let olho = $("#olho");
 									let oculta = $("#oculta");
 									let visivel = $("#visivel");
@@ -71,14 +80,12 @@
 									});
 								</script>
 							</div>
-
-							<div id="emailHelp" class="form-text" style="font-size: 13px;">
-								Sua senha deve ter no mínimo 6 dígitos.
-							</div>
 						</div>
+
 						<div class="mb-3" style="text-align: left;">
 							<input type="checkbox" name="remenber-me" /> Lembrar-me
 						</div>
+
 						<button class="btn btn-outline-success bor-rad-btn" type="submit">Entrar</button>
 					</form>
 				</div>
