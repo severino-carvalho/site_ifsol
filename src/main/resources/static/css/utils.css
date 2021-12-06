@@ -1,42 +1,57 @@
+/*  Variaveis globais   */
+:root {
+    --bor-rad: 8px !important;
+    --bor-top-rad: 10px !important;
+}
 
 /*  border-radius   */
 .bor-rad {
-    border-radius: 15px !important;
+    border-radius: 9px !important;
 }
 
 .bor-rad .bor-top-rad {
-    border-top-left-radius: 14px !important;
-    border-top-right-radius: 14px !important;
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
 }
 
 .bor-top-rad {
-    border-top-left-radius: 15px !important;
-    border-top-right-radius: 15px !important;
+    border-top-left-radius: 9px !important;
+    border-top-right-radius: 8px !important;
 }
 
 .bor-top-rad .bor-top-rad {
-    border-top-left-radius: 14px !important;
-    border-top-right-radius: 14px !important;
+    border-top-left-radius: 8px !important;
+    border-top-right-radius: 8px !important;
 }
 
 .bor-bottom-rad {
-    border-bottom-left-radius: 15px !important;
-    border-bottom-right-radius: 15px !important;
+    border-bottom-left-radius: 9px !important;
+    border-bottom-right-radius: 9px !important;
 }
 
 .bor-bottom-rad .bor-bottom-rad {
-    border-bottom-left-radius: 14px !important;
-    border-bottom-right-radius: 14px !important;
+    border-bottom-left-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
 }
 
 .bor-rad-btn {
-    border-radius: 10px;
+    border-radius: 7px;
+}
+
+.bor-rad-end {
+    border-start-end-radius: var(--bor-rad);
+    border-end-end-radius: var(--bor-rad);
+}
+
+.bor-rad-start {
+    border-start-start-radius: var(--bor-rad);
+    border-end-start-radius: var(--bor-rad);
 }
 
 .card-hover:hover {
     border-spacing: 1px;
     border-style: solid;
-    box-shadow: 0 .8rem 2rem rgba(0, 0, 0, 0.788)!important;
+    box-shadow: 0 .8rem 2rem rgba(0, 0, 0, 0.788) !important;
     transition: all .4s ease-in-out;
 }
 
@@ -51,9 +66,9 @@
     color: #fff;
 }
 
-.link-star:hover{
+.link-star:hover {
     color: rgb(0, 132, 255);
-    transition:  all .4s ease-in-out;
+    transition: all .4s ease-in-out;
 }
 
 .like-select {
