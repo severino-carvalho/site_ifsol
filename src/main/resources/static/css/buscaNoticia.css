@@ -37,8 +37,8 @@
     background: rgba(44, 202, 97, 0.9);
     opacity: 0;
     transition: opacity 0.8s ease 0s;
-    border-top-left-radius: 14px;
-    border-top-right-radius: 14px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
 .box-hover:hover {

@@ -99,3 +99,13 @@ tbody td {
 }
 
 */
+
+input[type="checkbox"] {
+    display: inline-block;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    margin-left: 2px;
+    margin-right: 4px;
+    cursor: pointer;
+}
