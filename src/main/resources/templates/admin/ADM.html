@@ -3,6 +3,8 @@
 
 <head>
 
+	<link rel="stylesheet" th:href="@{/css/alter-bootstrap.css}">
+
 	<title>Página de Controle</title>
 
 </head>
@@ -25,70 +27,105 @@
 					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 				</div>
 
-				<div class="row mt-4">
-					<div class="col-md-4">
+				<div class="row mt-4 d-flex justify-content-center flex-row align-items-center ">
+
+					<div class="col-lg-4 col-md-6 col-sm-12">
 
 						<div class="card bor-rad shadow">
-							<div class="card-header text-center fw-bolder bg-dark text-white bor-top-rad">
-								Configurações de Usuários
-							</div>
-							<div class="card-body">
-								<p class="card-text fw-bold">
-									Cadastrados:
-									<span class="badge bg-dark shadow" th:text="${totUsuarios}"></span>
-								</p>
 
-								<div>
-									<a href="/usuario/cadastro" sec:authorize="hasAuthority('ADMIN')"
-										class="btn btn-dark bor-rad-btn shadow d-flex justify-content-center">Abrir</a>
+							<div class="row g-0">
+								<div
+									class="col-md-4 py-2 bg-dark d-flex justify-content-center bor-rad-config text-white">
+									<span class="material-icons fs-1 d-flex align-items-center">
+										manage_accounts
+									</span>
+								</div>
+								<div class="col-md-8">
+									<div class="card-body">
+										<h5 class="card-title">Configurações de Usuários</h5>
+										<div class="col-8 py-3">
+											<p class="card-text fw-bold">
+												Cadastrados:
+												<span class="badge bg-dark shadow" th:text="${totUsuarios}"></span>
+											</p>
+										</div>
+										<div>
+											<a href="/usuario/cadastro" sec:authorize="hasAuthority('ADMIN')"
+												class="btn btn-outline-dark bor-rad-btn shadow d-flex justify-content-center">Abrir</a>
+										</div>
+									</div>
 								</div>
 							</div>
+
 						</div>
 
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-lg-4 col-md-6 col-sm-12 pt-md-0 pt-3">
 
 						<div class="card bor-rad shadow">
-							<div class="card-header text-center fw-bolder bg-dark text-white bor-top-rad">
-								Configurações de Empreendimentos
-							</div>
-							<div class="card-body">
-								<p class="card-text fw-bold">
-									Cadastrados:
-									<span class="badge bg-dark shadow" th:text="${totEmpre}"></span>
-								</p>
-								<div>
-									<a href="/usuario/cadastroem" sec:authorize="hasAuthority('ADMIN')"
-										class="btn btn-dark bor-rad-btn shadow d-flex justify-content-center">Abrir</a>
+
+							<div class="row g-0">
+								<div
+									class="col-md-4 py-2 bg-dark d-flex justify-content-center bor-rad-config text-white">
+									<span class="material-icons fs-1 d-flex align-items-center">
+										business
+									</span>
+								</div>
+								<div class="col-md-8">
+									<div class="card-body">
+										<h5 class="card-title ">Configurações de Empreendimentos</h5>
+										<div class="col-8 py-3">
+											<p class="card-text fw-bold">
+												Cadastrados:
+												<span class="badge bg-dark shadow" th:text="${totEmpre}"></span>
+											</p>
+										</div>
+										<div>
+											<a href="/usuario/cadastroem" sec:authorize="hasAuthority('ADMIN')"
+												class="btn btn-outline-dark bor-rad-btn  shadow d-flex justify-content-center">Abrir</a>
+										</div>
+									</div>
 								</div>
 							</div>
+
 						</div>
 
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-lg-4 col-md-6 col-sm-12  pt-lg-0 pt-md-3 pt-3">
 
 						<div class="card border-light bor-rad shadow">
-							<div class="card-header text-center fw-bolder bg-dark text-white bor-top-rad">
-								Configurações de Notícias
-							</div>
-							<div class="card-body bg-gradient bor-bottom-rad">
-								<p class="card-text fw-bold ">
-									Cadastrados:
 
-									<span class="badge bg-dark shadow" th:text="${totNoticias}"></span>
-								</p>
-								<div>
-									<a href="/noticia/config" sec:authorize="hasAuthority('ADMIN')"
-										class="btn btn-dark bor-rad-btn shadow d-flex justify-content-center">Abrir
-									</a>
+
+							<div class="row g-0">
+								<div
+									class="col-md-4 py-2 bg-dark d-flex justify-content-center bor-rad-config text-white">
+									<span class="material-icons fs-1 d-flex align-items-center">
+										article
+									</span>
+								</div>
+								<div class="col-md-8">
+									<div class="card-body">
+										<h5 class="card-title">Configurações de Notícias</h5>
+										<div class="col-8 py-3">
+											<p class="card-text fw-bold">
+												Cadastrados:
+												<span class="badge bg-dark shadow" th:text="${totNoticias}"></span>
+											</p>
+										</div>
+										<div>
+											<a href="/noticia/config" sec:authorize="hasAuthority('ADMIN')"
+												class="btn btn-outline-dark bor-rad-btn  shadow d-flex justify-content-center">Abrir</a>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 
 					</div>
 				</div>
+
 			</div>
 		</div>
 	</section>

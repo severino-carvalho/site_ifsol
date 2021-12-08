@@ -21,6 +21,16 @@ public class HomeController {
 	@Autowired
 	private NoticiaRepository noticiaRepository;
 
+	@GetMapping("/publico/")
+	public String padrao() {
+		return "redirect:/publico/home";
+	}
+
+	@GetMapping("/publico")
+	public String padraoDois() {
+		return "redirect:/publico/home";
+	}
+
 	@GetMapping("/publico/home")
 	@Transactional(readOnly = true)
 	public String home(ModelMap modelo) {

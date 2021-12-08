@@ -9,9 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,8 +40,7 @@ public class CadastroUsuarioController {
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
 	@PostMapping("/salvar") // URL PARA ACESSAR A METODO SALVAR E EDITAR
-	public String salvar(Usuario usuario, @PathParam("editar") Boolean editar, ModelMap modelo, RedirectAttributes attr,
-			HttpSession sessao) {
+	public String salvar(Usuario usuario, ModelMap modelo, RedirectAttributes attr) {
 
 		// SE HAVER ALGUM DADO INVÁLIDO, ELE SERÁ COLOCADO DENTRO DA LISTA
 		List<String> msgValidacao = validarDados(usuario);

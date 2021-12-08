@@ -48,6 +48,21 @@
     border-end-start-radius: var(--bor-rad);
 }
 
+.bor-rad-config {
+    border-radius: 0px;
+    border-start-start-radius: var(--bor-rad);
+    border-end-start-radius: var(--bor-rad);
+}
+
+@media (max-width: 768px) {
+    .bor-rad-config {
+        border-radius: 0px;
+        border-top-left-radius: var(--bor-rad);
+        border-top-right-radius: var(--bor-rad);
+    }
+}
+
+
 .card-hover:hover {
     border-spacing: 1px;
     border-style: solid;
