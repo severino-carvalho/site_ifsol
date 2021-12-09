@@ -31,9 +31,9 @@
 	<!-- Menu -->
 	<div class="container">
 
-		<div class="col d-flex py-1">
+		<div class="col d-flex flex-wrap py-1">
 			<a class="text-dark text-decoration-none me-2" target="_blank" href="mailto:ifsol.jc@gmail.com">
-				<span class="d-flex">
+				<span class="d-flex flex-wrap">
 					<span class="material-icons fs-4 me-1 ">
 						markunread
 					</span>
@@ -41,13 +41,34 @@
 				</span>
 			</a>
 			|
-			<a class="text-dark text-decoration-none ms-2" href="tel:+558440028922">
-				<span class="d-flex">
+			<a id="telIFSol" class="text-dark text-decoration-none ms-0" href="tel:+558440028922">
+				<span class="d-flex flex-wrap">
 					<span class="material-icons fs-4 me-1">
 						phone
 					</span>
 					(84) 4002-8922
 				</span>
+
+				<script>
+					let telIFSol = document.getElementById("telIFSol");
+
+					function redmencionarMargemTell() {
+						let tamanhoScreen = window.screen.width;
+
+						if (tamanhoScreen >= 333) {
+							telIFSol.classList.add("ms-2");
+						}
+
+						if (tamanhoScreen < 333) {
+							telIFSol.classList.remove("ms-2");
+						}
+					}
+
+					window.addEventListener("load", redmencionarMargemTell);
+					window.addEventListener("resize", redmencionarMargemTell);
+
+				</script>
+
 			</a>
 		</div>
 	</div>
