@@ -85,8 +85,23 @@ public class CadastroEmpreController {
 				String currentPrincipalName = authentication.getName();
 				String nomeUsuarioADM = usuariorepository.findByEmail(currentPrincipalName).get().getNome();
 
-				// PROCESSO DE CRIAÇÃO OU ATUALIZAÇÃO DA IMAGEM
-				atualizarImagem(empre, arquivo);
+				// SE O EMPREENDIMENTO JÁ ESTIVER CADASTRADO
+				if (empre.getId() != 0) {
+					// VERIFICAMOS SE CONTÉM UM ARQUIVO DE IMAGEM PASSADO NO FORM
+					if (!arquivo.isEmpty()) {
+						arquivoRepository.deleteById(empre.getFoto().getId());
+						inserirFoto(empre, arquivo);
+					}
+				} else {
+					if (arquivo.isEmpty()) {
+						model.addAttribute("msgErro", "Não foi selecionada nenhuma imagem!");
+						model.addAttribute("empre", empre);
+						model.addAttribute("cidades", getCidades());
+						return "/admin/empreendimento/cadastroEmpre";
+					} else {
+						inserirFoto(empre, arquivo);
+					}
+				}
 
 				// REMOVER ESPAÇOS EM BRANCOS DA DESCRIÇÃO
 				empre.setDescricao(empre.getDescricao().trim());
@@ -206,41 +221,7 @@ public class CadastroEmpreController {
 	}
 
 	@Transactional(readOnly = false)
-	public void atualizarImagem(empreendimento empre, MultipartFile arquivo) {
-		// SE O EMPREENDIMENTO JÁ ESTIVER CADASTRADO
-		if (empre.getId() > 0) {
-			// VERIFICAMOS SE CONTÉM UM ARQUIVO DE IMAGEM PASSADO NO FORM
-			if (arquivo.getSize() > 0) {
-				// CRIAMOS UM EMPREENDIMENTO PARA ANALIZAR SE ELE JÁ CONTEM FOTO
-				empreendimento empreGetFoto = empreendimentosrepository.findById(empre.getId()).get();
-				// SE O EMPREENDIMENTO JÁ TIVER UMA FOTO
-				if (empreGetFoto.getFoto() != null) {
-					// REMOVEMOS A IMAGEM ANTIGA DO RANCO E INSERIMOS A NOVA
-					arquivoRepository.deleteById(empre.getFoto().getId());
-					empre.setFoto(inserirFoto(empre, arquivo));
-				} else {
-					// SE NÃO TIVER FOTO, INSERIMOS PELA PRIMEIRA VEZ
-					empre.setFoto(inserirFoto(empre, arquivo));
-				}
-			} else {
-				empre.setFoto(inserirFoto(empre, arquivo));
-			}
-
-		}
-		// SE O EMPREENDIMENTO NÃO ESTIVER CADASTRADO
-		else {
-			// VERIFICAMOS SE CONTÉM UM ARQUIVO DE IMAGEM PASSADO NO FORM
-			if (arquivo.getSize() > 0) {
-				// SE SIM, INSERERIMOS
-				empre.setFoto(inserirFoto(empre, arquivo));
-			} else {
-				empre.setFoto(null);
-			}
-		}
-	}
-
-	@Transactional(readOnly = false)
-	public Arquivo inserirFoto(empreendimento empre, MultipartFile arquivo) {
+	public void inserirFoto(empreendimento empre, MultipartFile arquivo) {
 		/*
 		 * O CODIGO A SEGUIR FOI FEITO PARA UPLOAD E DOWNLOAD DE UM ARQUIVO NO BANCO DE
 		 * DADOS E O TRY FOI NECESSARIO PARA CASO OCORRA UM ERRO SEJA LANÇADO UMA
@@ -251,17 +232,15 @@ public class CadastroEmpreController {
 			String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
 			Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
 
-			// SALVA O NOVO ARQUIVO DO EMPREENDIMENTO
-			empre.setFoto(arquivoBD);
-
 			// SAlVA O ARQUIVO NO BANCO DE DADOS
 			arquivoRepository.save(arquivoBD);
 
-			return arquivoBD;
+			// SALVA O NOVO ARQUIVO DO EMPREENDIMENTO
+			empre.setFoto(arquivoBD);
+
 		} catch (Exception e) {
 
 		}
-		return null;
 	}
 
 	@Transactional(readOnly = true)
