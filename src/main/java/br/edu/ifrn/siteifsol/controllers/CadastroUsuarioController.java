@@ -51,7 +51,7 @@ public class CadastroUsuarioController {
 			// VERIFICA SE É INSERSÃO (0:INSERT)
 			if (usuario.getId() == 0) {
 				// VALIDA SE O EMAIL INFORMADO DO USUÁRIO JÁ ESTÁ CADASTRADO NO BANCO
-				if (!validarEmail(usuario)) {
+				if (validarEmail(usuario)) {
 					modelo.addAttribute("msgErro", "Email já cadastrado. Por favor, informe um email válido!");
 					return "/admin/usuario/cadastro";
 				}
@@ -178,10 +178,10 @@ public class CadastroUsuarioController {
 
 		// SE ESTIVER PRESENTE RETORNA FALSO SINALIZANDO UM ERRO
 		if (user.isPresent()) {
-			return false;
+			return true;
 		}
 
 		// SE ESTIVER TUDO OK RETORNA TRUE
-		return true;
+		return false;
 	}
 }
