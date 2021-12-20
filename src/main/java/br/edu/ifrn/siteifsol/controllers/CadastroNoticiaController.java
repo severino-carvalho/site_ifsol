@@ -61,19 +61,16 @@ public class CadastroNoticiaController {
 
 				if (noticia.getId() != 0) {
 					// Já está cadastrada
-					if (arquivo.getSize() > 0) {
+					if (!arquivo.isEmpty()) {
 						arquivoRepository.deleteById(noticia.getFoto().getId());
 						insertFoto(noticia, arquivo, modelo);
 					}
 				} else {
-
-					if (arquivo.getSize() > 0) {
-						insertFoto(noticia, arquivo, modelo);
-					}
-
-					if (arquivo.getSize() == 0) {
+					if (arquivo.isEmpty()) {
 						modelo.addAttribute("msgErro", "Não foi selecionada nenhuma imagem!");
 						return "/admin/noticia/cadastrarNoticia";
+					} else {
+						insertFoto(noticia, arquivo, modelo);
 					}
 				}
 
