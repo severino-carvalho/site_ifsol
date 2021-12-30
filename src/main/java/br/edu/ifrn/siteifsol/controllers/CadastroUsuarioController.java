@@ -83,8 +83,8 @@ public class CadastroUsuarioController {
 			// CRIPTOGRAFANDO A SENHA
 			String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
 
-			// DEPOIS DE ENCRIPTADA A SENHA É SALVADA NO OBJETO USUÁRIO ANTES DE SER
-			// GUARDADO NO BANCO DE DADOS
+			// DEPOIS DE CRIPTOGRAFA A SENHA É SALVADA NO OBJETO USUÁRIO ANTES DE SER
+			// INSERIDO NO BANCO DE DADOS
 			usuario.setSenha(senhaCriptografada);
 
 			/*

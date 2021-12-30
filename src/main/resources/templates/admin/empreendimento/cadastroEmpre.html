@@ -56,21 +56,22 @@
 							<input type="hidden" th:field="${empre.id}" />
 
 							<div class="my-3" style="text-align: left;">
-								<label for="exampleInputName1" class="form-label">Nome: </label>
+								<label for="nomeEmpre" class="form-label">Nome: </label>
 								<input type="text" th:field="${empre.nome}" class="form-control bor-rad-btn"
-									id="exampleInputName1" placeholder="Ex: Nome Exemplo da Silva">
+									id="nomeEmpre" placeholder="Ex: Nome Exemplo da Silva">
 
 							</div>
 							<div class="mb-3" style="text-align: left;">
-								<label for="exampleInputEmail1" class="form-label"
+								<label for="emailEmpre" class="form-label"
 									style="text-align: left;">Email:</label>
+
 								<input input type="email" th:field="${empre.email}" class="form-control bor-rad-btn"
-									id="exampleInputEmail1" aria-describedby="emailHelp"
+									id="emailEmpre" aria-describedby="emailEmpre"
 									placeholder="exemplo@gmail.com">
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
-								<label for="exampleInputName1" class="form-label">Cidade:
+								<label for="cidade" class="form-label">Cidade:
 								</label>
 
 								<select class="form-select bor-rad-btn" id="cidade" th:field="${empre.cidade.id}">
@@ -81,7 +82,7 @@
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
-								<label for="exampleInputName1" class="form-label">
+								<label for="texto_descricao" class="form-label">
 									Descrição:
 								</label>
 								<textarea class="form-control bor-rad-btn"
@@ -92,10 +93,10 @@
 							</div>
 
 							<div class="mb-3" style="text-align: left;">
-								<label for="exampleInputName1" class="form-label mt-0">
-									Foto:
+								<label for="anexo" class="form-label mt-0">
+									Anexar imagem:
 								</label>
-								<input class="form-control bor-rad-btn" type="file" th:name="file" />
+								<input class="form-control bor-rad-btn" id="anexo" type="file" th:name="file" />
 								<input type="hidden" th:field="${empre.foto.id}" />
 							</div>
 
