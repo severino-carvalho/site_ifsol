@@ -15,8 +15,7 @@ import javax.persistence.Id;
 public class Usuario {
 
 	public static final String ADMIN = "ADMIN";
-	public static final String USUARIO_COMUM = "COMUM";
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -142,10 +141,6 @@ public class Usuario {
 
 	public static String getAdmin() {
 		return ADMIN;
-	}
-
-	public static String getUsuarioComum() {
-		return USUARIO_COMUM;
 	}
 
 }

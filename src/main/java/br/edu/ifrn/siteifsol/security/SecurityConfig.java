@@ -28,17 +28,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 				// QUE PODEM SER ACESSADAS SEM LOGIN
-				.antMatchers("/css/**", "/Imagens/**", "/js/**").permitAll().antMatchers("/publico/**", 
-						"/download/**").permitAll()
+				.antMatchers("/css/**", "/Imagens/**", "/js/**").permitAll()
+				.antMatchers("/publico/**", "/download/**").permitAll()
 
-				.antMatchers("/usuario/cadastro", "/usuario/salvar", "usuario/editar/**", "/usuario/remover/**",
+				.antMatchers(
+						"/usuario/cadastro",
+						"/usuario/salvar",
+						"usuario/editar/**",
+						"/usuario/remover/**",
 						"/noticia/**")
 				.hasAuthority(Usuario.ADMIN)
 
-				.anyRequest().authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/adm", true)
-				.failureUrl("/login-erro").permitAll()
+				.anyRequest().authenticated()
+				.and()
+					.formLogin()
+					.loginPage("/login")
+					.defaultSuccessUrl("/adm", true)
+					.failureUrl("/login-erro").permitAll()
 
-				.and().logout().logoutSuccessUrl("/adm").and().rememberMe(); // DESFAzER O LOGIN, SAIR
+				.and()
+					.logout()
+					.logoutSuccessUrl("/adm")
+				.and()
+					.rememberMe(); // DESFAzER O LOGIN, SAIR
 	}
 
 	@Override
