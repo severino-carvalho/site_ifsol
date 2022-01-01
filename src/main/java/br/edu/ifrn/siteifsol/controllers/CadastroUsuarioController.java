@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifrn.siteifsol.dominio.Usuario;
@@ -40,7 +41,10 @@ public class CadastroUsuarioController {
 
 	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
 	@PostMapping("/salvar") // URL PARA ACESSAR A METODO SALVAR E EDITAR
-	public String salvar(Usuario usuario, ModelMap modelo, RedirectAttributes attr) {
+	public String salvar(Usuario usuario, ModelMap modelo,
+			@RequestParam(name = "senhaAntiga", required = false) String senhaAntiga,
+			@RequestParam(name = "confirmarSenha", required = false) String confirmarSenha,
+			RedirectAttributes attr) {
 
 		// SE HAVER ALGUM DADO INVÁLIDO, ELE SERÁ COLOCADO DENTRO DA LISTA
 		List<String> msgValidacao = validarDados(usuario);
@@ -80,12 +84,53 @@ public class CadastroUsuarioController {
 			String currentPrincipalName = authentication.getName();
 			String nomeUsuarioADM = usuarioRepository.findByEmail(currentPrincipalName).get().getNome();
 
-			// CRIPTOGRAFANDO A SENHA
-			String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
+			if (usuario.getId() == 0) {
+				BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
-			// DEPOIS DE CRIPTOGRAFA A SENHA É SALVADA NO OBJETO USUÁRIO ANTES DE SER
-			// INSERIDO NO BANCO DE DADOS
-			usuario.setSenha(senhaCriptografada);
+				// CRIPTOGRAFANDO A SENHA
+				String senhaCript = bCrypt.encode(usuario.getSenha());
+
+				if (!bCrypt.matches(confirmarSenha, senhaCript)) {
+					modelo.addAttribute("msgErro", "Senhas diferentes.");
+					return "/admin/usuario/cadastro";
+				}
+
+				// DEPOIS DE CRIPTOGRAFA E VALIDACAO, A SENHA É SALVADA NO OBJETO USUÁRIO ANTES
+				// DE SER
+				// INSERIDO NO BANCO DE DADOS
+				usuario.setSenha(senhaCript);
+			}
+
+			if (usuario.getId() != 0) {
+
+				int idUserLogado = usuarioRepository.findByEmail(currentPrincipalName).get().getId();
+
+				if (usuario.getId() == idUserLogado) {
+					BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
+					String senhaCript = bCrypt.encode(usuario.getSenha());
+
+					String senhaBanco = usuarioRepository.findById(usuario.getId()).get().getSenha();
+
+					if (!bCrypt.matches(senhaAntiga, senhaBanco)) {
+						modelo.addAttribute("msgErro", "Senha antiga incorreta.");
+						return "/admin/usuario/cadastro";
+					}
+
+					if (!bCrypt.matches(confirmarSenha, senhaCript)) {
+						modelo.addAttribute("msgErro", "Senha e confirmar senha estão diferentes.");
+						return "/admin/usuario/cadastro";
+					}
+
+					// DEPOIS DE CRIPTOGRAFA E VALIDACAO, A SENHA É SALVADA NO OBJETO USUÁRIO ANTES
+					// DE SER
+					// INSERIDO NO BANCO DE DADOS
+					usuario.setSenha(senhaCript);
+				} else {
+					modelo.addAttribute("msgErro", "Você não pode modificar a senha de outro usuário.");
+					return "/admin/usuario/cadastro";
+				}
+
+			}
 
 			/*
 			 * SE ESTIVER VAZIO, SIGNIFICA QUE O USUÁRIO ESTÁ SENDO CADASTRADO ENTÃO É

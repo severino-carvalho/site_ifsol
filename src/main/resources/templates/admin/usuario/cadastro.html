@@ -60,6 +60,54 @@ th:field="${usuario.*}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI SE 
 
 							<div class="mb-3" style="text-align: left;">
 
+								<label for="funcao" class="form-label">Função: </label>
+								<select id="funcao" class="form-select bor-rad-btn" th:field="${usuario.funcao}">
+									<option value="" class="select">Selecione a função</option>
+									<option th:each="p : ${funcao}" th:text="${p}" th:value="${p}">Selecione...
+									</option>
+								</select>
+							</div>
+
+							<div class="mb-3" th:if="${usuario.id} != 0" style="text-align: left;">
+
+								<label for="senhaAntiga" class="form-label">Senha Antiga: </label>
+
+								<div class="d-flex justify-content-end">
+									<input type="password" th:name="senhaAntiga" class="form-control bor-rad-btn"
+										id="senhaAntiga" placeholder="******">
+									<div class="position-absolute m-2 mt-1 olho" id="olhoAntiga">
+										<span id="ocultaAntiga" class="material-icons pt-1 me-1">
+											visibility_off
+										</span>
+
+										<span id="visivelAntiga" class="material-icons pt-1 me-1 d-none">
+											visibility
+										</span>
+									</div>
+
+									<script>
+										let senhaAntiga = $('#senhaAntiga');
+										let olhoAntiga = $("#olhoAntiga");
+										let ocultaAntiga = $("#ocultaAntiga");
+										let visivelAntiga = $("#visivelAntiga");
+
+										olhoAntiga.mousedown(() => {
+											visivelAntiga.toggleClass("d-none");
+											ocultaAntiga.toggleClass("d-none");
+
+											if (ocultaAntiga.hasClass("d-none")) {
+												senhaAntiga.attr("type", "text");
+											}
+											if (visivelAntiga.hasClass("d-none")) {
+												senhaAntiga.attr("type", "password")
+											}
+										});
+									</script>
+								</div>
+							</div>
+
+							<div class="mb-3" style="text-align: left;">
+
 								<label for="senha" class="form-label">Senha: </label>
 
 								<div class="d-flex justify-content-end">
@@ -98,14 +146,42 @@ th:field="${usuario.*}", TRATA-SE DO ATRIBUTO DO OBEJTO QUE AQUELE CAMPO VAI SE 
 
 							<div class="mb-3" style="text-align: left;">
 
-								<label for="exampleInputName1" class="form-label">Função: </label>
-								<select class="form-select bor-rad-btn" th:field="${usuario.funcao}">
-									<option value="" class="select">Selecione a função</option>
-									<option th:each="p : ${funcao}" th:text="${p}" th:value="${p}">Selecione...
-									</option>
-								</select>
+								<label for="confirmarSenha" class="form-label">Confirmar Senha: </label>
 
+								<div class="d-flex justify-content-end">
+									<input type="password" th:name="confirmarSenha" class="form-control bor-rad-btn"
+										id="confirmarSenha" placeholder="******">
+									<div class="position-absolute m-2 mt-1 olho" id="olhoConf">
+										<span id="ocultaConf" class="material-icons pt-1 me-1">
+											visibility_off
+										</span>
+
+										<span id="visivelConf" class="material-icons pt-1 me-1 d-none">
+											visibility
+										</span>
+									</div>
+
+									<script>
+										let senhaConf = $('#confirmarSenha');
+										let olhoConf = $("#olhoConf");
+										let ocultaConf = $("#ocultaConf");
+										let visivelConf = $("#visivelConf");
+
+										olhoConf.mousedown(() => {
+											visivelConf.toggleClass("d-none");
+											ocultaConf.toggleClass("d-none");
+
+											if (ocultaConf.hasClass("d-none")) {
+												senhaConf.attr("type", "text");
+											}
+											if (visivelConf.hasClass("d-none")) {
+												senhaConf.attr("type", "password")
+											}
+										});
+									</script>
+								</div>
 							</div>
+
 							<div class="my-4" style="text-align: left;">
 								<input class="btn btn-success bor-rad-btn shadow" type="submit"
 									th:value="${usuario.id}  == 0 ? Cadastrar : Editar" />
