@@ -40,7 +40,7 @@ import br.edu.ifrn.siteifsol.dominio.Cidade;
 import br.edu.ifrn.siteifsol.dominio.Empreendimento;
 import br.edu.ifrn.siteifsol.repositories.ArquivoRepository;
 import br.edu.ifrn.siteifsol.repositories.Cidaderepository;
-import br.edu.ifrn.siteifsol.repositories.Empreendimentorepository;
+import br.edu.ifrn.siteifsol.repositories.EmpreendimentoRepository;
 
 @Controller
 @RequestMapping("/usuarios")
@@ -50,7 +50,7 @@ public class BuscarEmpreendimentosController {
 	 * Repositórios JPA par a auxiliar na manipulação dos dados
 	 */
 	@Autowired
-	private Empreendimentorepository empreendimentosrepository;
+	private EmpreendimentoRepository empreendimentosrepository;
 
 	@Autowired
 	private ArquivoRepository arquivoRepository;

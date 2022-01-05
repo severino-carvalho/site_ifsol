@@ -32,7 +32,7 @@ import org.springframework.data.repository.query.Param;
 
 import br.edu.ifrn.siteifsol.dominio.Empreendimento;
 
-public interface Empreendimentorepository extends JpaRepository<Empreendimento, Integer> {
+public interface EmpreendimentoRepository extends JpaRepository<Empreendimento, Integer> {
 
 	/**
 	 * 
@@ -42,7 +42,7 @@ public interface Empreendimentorepository extends JpaRepository<Empreendimento, 
 	 * 
 	 * @return É retornado o resultado da {@link Query}
 	 */
-	@Query("select u from empreendimento u where u.email like %:email%  "
+	@Query("select u from Empreendimento u where u.email like %:email%  "
 			+ "and u.nome like %:nome%")
 	List<Empreendimento> findByEmailAndNome(@Param("email") String email, @Param("nome") String nome);
 
@@ -52,7 +52,7 @@ public interface Empreendimentorepository extends JpaRepository<Empreendimento, 
 	 * 
 	 * @return É retornado o resultado da {@link Query}
 	 */
-	@Query("select u from empreendimento u where u.email like %:email%")
+	@Query("select u from Empreendimento u where u.email like %:email%")
 	Optional<Empreendimento> findByEmail(@Param("email") String email);
 
 }

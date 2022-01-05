@@ -49,7 +49,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.edu.ifrn.siteifsol.repositories.ArquivoRepository;
 import br.edu.ifrn.siteifsol.repositories.Cidaderepository;
 import br.edu.ifrn.siteifsol.repositories.Usuariorepository;
-import br.edu.ifrn.siteifsol.repositories.Empreendimentorepository;
+import br.edu.ifrn.siteifsol.repositories.EmpreendimentoRepository;
 import br.edu.ifrn.siteifsol.dominio.Arquivo;
 import br.edu.ifrn.siteifsol.dominio.Cidade;
 import br.edu.ifrn.siteifsol.dominio.Empreendimento;
@@ -65,7 +65,7 @@ public class CadastroEmpreController {
 	private Usuariorepository usuariorepository;
 
 	@Autowired
-	private Empreendimentorepository empreendimentosrepository;
+	private EmpreendimentoRepository empreendimentosrepository;
 
 	@Autowired
 	private Cidaderepository cidaderepository;

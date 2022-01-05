@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import br.edu.ifrn.siteifsol.repositories.NoticiaRepository;
 import br.edu.ifrn.siteifsol.repositories.Usuariorepository;
-import br.edu.ifrn.siteifsol.repositories.Empreendimentorepository;
+import br.edu.ifrn.siteifsol.repositories.EmpreendimentoRepository;
 
 @Controller
 public class ADMController {
@@ -42,7 +42,7 @@ public class ADMController {
 	private Usuariorepository usuariorepository;
 
 	@Autowired
-	private Empreendimentorepository empreendimentoRepository;
+	private EmpreendimentoRepository empreendimentoRepository;
 
 	@Autowired
 	private NoticiaRepository noticiaRepository;

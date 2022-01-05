@@ -149,7 +149,7 @@ public class BuscaUsuarioController {
 
 	/**
 	 * 
-	 * @return
+	 * @return Lista de funções que um Usuário pode ter
 	 */
 	@ModelAttribute("funcao")
 	public List<String> getFuncao() {
@@ -188,7 +188,7 @@ public class BuscaUsuarioController {
 			attr.addFlashAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
 
-		return "redirect:/usuario/buscar";
+		return "redirect:/usuario/cadastro";
 	}
 
 }

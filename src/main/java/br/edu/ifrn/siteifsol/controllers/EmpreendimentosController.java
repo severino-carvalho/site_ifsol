@@ -34,7 +34,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import br.edu.ifrn.siteifsol.dominio.Empreendimento;
-import br.edu.ifrn.siteifsol.repositories.Empreendimentorepository;
+import br.edu.ifrn.siteifsol.repositories.EmpreendimentoRepository;
 
 @Controller
 public class EmpreendimentosController {
@@ -43,7 +43,7 @@ public class EmpreendimentosController {
 	 * Repositório JPA par a auxiliar na manipulação dos dados
 	 */
 	@Autowired
-	private Empreendimentorepository empreendimentorepository;
+	private EmpreendimentoRepository empreendimentorepository;
 
 	/**
 	 * 
