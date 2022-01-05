@@ -1,5 +1,28 @@
 package br.edu.ifrn.siteifsol.controllers;
 
+/**
+ * 
+ * #####################################
+ * 
+ * Objetivo:	Esta classe tem o objetivo de ser uma classe controladora para a parte de cadastro e edição de {@link Noticia}
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * @author Severino Carvalho	(severinocarvalho14@gmail.com)
+ * 
+ * Data de Cricação:	05/07/2021
+ * 
+ * #####################################
+ * 
+ * Última alteração:	
+ * 
+ * @author Severino Carvalho	(severinocarvalho14@gmail.com)
+ * Data:	05/01/2022
+ * Alteração:	Implementação de documentação da classe
+ * 
+ * #####################################	 			
+ * 
+ */
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,12 +51,22 @@ import br.edu.ifrn.siteifsol.repositories.NoticiaRepository;
 @RequestMapping("/noticia")
 public class CadastroNoticiaController {
 
+	/**
+	 * Repositórios JPA par a auxiliar na manipulação dos dados
+	 */
 	@Autowired
 	private ArquivoRepository arquivoRepository;
 
 	@Autowired
 	private NoticiaRepository noticiaRepository;
 
+	/**
+	 * 
+	 * @param modelo Responsável pela criacao dos nomes de atributos que são
+	 *               retornados para a página
+	 * 
+	 * @return a página de CRUD de Notícias
+	 */
 	@GetMapping("/config")
 	public String entrar(ModelMap modelo) {
 
@@ -42,50 +75,77 @@ public class CadastroNoticiaController {
 		return "/admin/noticia/cadastrarNoticia";
 	}
 
+	/**
+	 * 
+	 * @param noticia Recebe do formulário o objeto noticia
+	 * 
+	 * @param arquivo Recebe do formulário o arquivo anexado no input com
+	 *                name 'file'
+	 * 
+	 * @param modelo  Responsável pela criacao dos nomes de atributos que são
+	 *                retornados para a página
+	 * 
+	 * @param attr    Responsável pela criacao dos nomes de atributos que são
+	 *                retornados com o uso do 'redirect' para a página
+	 * 
+	 * @return Retorna a mesma página de CRUD de Notícias
+	 */
 	@Transactional(readOnly = false)
 	@PostMapping("/salvar")
-	public String salvar(Noticia noticia, @RequestParam("file") MultipartFile arquivo, RedirectAttributes attr,
-			ModelMap modelo) {
+	public String salvar(Noticia noticia, @RequestParam("file") MultipartFile arquivo,
+			ModelMap modelo, RedirectAttributes attr) {
 
-		List<String> msgValidacao = validaDados(noticia); // RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DOS
-															// CAMPOS
-		/*
-		 * O CODIGO A SEGUIR FOI FEITO PARA UPLOAD E DOWNLOAD DE UM ARQUIVO NO BANCO DE
-		 * DADOS E O TRY FOI NECESSARIO PARA CASO OCORRA UM ERRO SEJA LANÇADO UMA
-		 * EXCECAO
-		 * 
+		/**
+		 * Lista com todos os erros do Objeto Noticia
 		 */
+		List<String> msgValidacao = validaDados(noticia);
 
+		/**
+		 * Se não houver nenhum erro segue o fluxo para o cadastro
+		 */
 		if (msgValidacao.isEmpty()) {
 			try {
 
-				if (noticia.getId() != 0) {
-					// Já está cadastrada
+				/**
+				 * Verifica se é cadastro ou atualização
+				 */
+				if (noticia.getId() == 0) {
+					/**
+					 * Faz a validação e insere a imagem
+					 */
+					if (arquivo.isEmpty()) {
+						modelo.addAttribute("msgErro", "Não foi selecionada nenhuma imagem!");
+						return "/admin/noticia/cadastrarNoticia";
+					}
+
+					insertFoto(noticia, arquivo, modelo);
+
+				} else {
+					/**
+					 * Se for atualização e tiver um arquivo então ele quer atualizar a imagem
+					 */
 					if (!arquivo.isEmpty()) {
 						arquivoRepository.deleteById(noticia.getFoto().getId());
 						insertFoto(noticia, arquivo, modelo);
 					}
-				} else {
-					if (arquivo.isEmpty()) {
-						modelo.addAttribute("msgErro", "Não foi selecionada nenhuma imagem!");
-						return "/admin/noticia/cadastrarNoticia";
-					} else {
-						insertFoto(noticia, arquivo, modelo);
-					}
 				}
 
-				// SE ESTIVER VAZIA ENTÃO É CADASTRO
+				/**
+				 * 
+				 * Colocamos no campo 'Data de Publicação' a data que a notícia foi criada
+				 */
 				if (noticia.getDataPublicacao() == null || noticia.getDataPublicacao().isEmpty()) {
-					// MODIFICA A DATA DE PUBLICAÇÃO
 					noticia.setDataPublicacao(getData());
 				}
 
-				// CADASTRA E EDITA O NOTICIA NO BANCO DE DADOS
 				noticiaRepository.save(noticia);
 
-				// RETORNA A MENSAGEM PARA A PÁGINA
 				attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
 
+				/**
+				 * Após o cadastro é retornado todas as notícias cadastradas para a
+				 * página
+				 */
 				List<Noticia> noticias = noticiaRepository.findAll();
 				Collections.reverse(noticias);
 				attr.addFlashAttribute("noticias", noticias);
@@ -94,9 +154,7 @@ public class CadastroNoticiaController {
 				attr.addFlashAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 				return "redirect:/noticia/config";
 			}
-		} else
-
-		{
+		} else {
 			modelo.addAttribute("msgErro", msgValidacao);
 			return "/admin/noticia/cadastrarNoticia";
 		}
@@ -104,9 +162,15 @@ public class CadastroNoticiaController {
 		return "redirect:/noticia/config";
 	}
 
+	/**
+	 * 
+	 * @param noticia Objeto {@link Noticia} para a validação de seus atributos
+	 *
+	 * @return Lista de erros que existe no Objeto {@link Noticia}
+	 */
 	private List<String> validaDados(Noticia noticia) {
 
-		List<String> msgs = new ArrayList<>(); // LISTA DE MENSAGENS DE ERRO, POIS MUITOS CAMPOS PODE ESTAR INCORRETOS
+		List<String> msgs = new ArrayList<>();
 
 		if (noticia.getTitulo() == null || noticia.getTitulo().isEmpty()) {
 			msgs.add("O campo 'Título' é obrigatório!");
@@ -114,12 +178,16 @@ public class CadastroNoticiaController {
 		if (noticia.getTexto() == null || noticia.getTexto().isEmpty()) {
 			msgs.add("O campo 'Texto' é origatório!");
 		}
-		if (noticia.getTexto().length() <= 15) { // TEXTO TEM QUER TER MAIS DE 30 CARACTERES
+		if (noticia.getTexto().length() <= 15) {
 			msgs.add("O campo 'Texto' deve conter mais de 15 caracteres!");
 		}
 		return msgs;
 	}
 
+	/**
+	 * 
+	 * @return A data formatada "dd de mm (ex: jan) de yyyy"
+	 */
 	public static String getData() {
 		Calendar c = Calendar.getInstance();
 
@@ -129,17 +197,21 @@ public class CadastroNoticiaController {
 		return formataData.format(data);
 	}
 
+	/**
+	 * 
+	 * @param noticia Objeto {@link Noticia} para inserir a foto
+	 * @param arquivo Arquivo de imagem selecionado pelo usuário
+	 * @param modelo  Responsável pela criacao dos nomes de atributos que são
+	 *                retornados para a página
+	 */
 	@Transactional(readOnly = false)
 	public void insertFoto(Noticia noticia, MultipartFile arquivo, ModelMap modelo) {
 		try {
-			// NORMALIZANDO NOME DO ARQUIVO
 			String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
 			Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
 
-			// SALVA O ARQUIVO NO BANCO DE DADOS
 			arquivoRepository.save(arquivoBD);
 
-			// SALVA O NOVO ARQUIVO DO NOTICIA
 			noticia.setFoto(arquivoBD);
 
 		} catch (Exception e) {

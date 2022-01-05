@@ -1,5 +1,28 @@
 package br.edu.ifrn.siteifsol.dominio;
 
+/**
+ * 
+ * #####################################
+ * 
+ * Objetivo:	Esta classe tem o objetivo de ser o modelo da entidade {@link Empreendimento}
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * @author Severino Carvalho	(severinocarvalho14@gmail.com)
+ * 
+ * Data de Cricação:	04/07/2021
+ * 
+ * #####################################
+ * 
+ * Última alteração:	
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * Data:	04/01/2022
+ * Alteração:	Implementação de documentação da classe
+ * 
+ * #####################################	 			
+ * 
+ */
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,42 +33,49 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-/*
- * ENTIDADE EMPREENDIMENTO É A TABELA EMPREENDIMENTO NO BANDO DE DADOS
- * TODOS OS ATRIBUTOS AQUI SÃO COLUNAS NO BANCO DE DADOS
- */
-
 @Entity
-public class empreendimento {
+public class Empreendimento {
 
+	/**
+	 * Atributo identificador da classe
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Id;
 
-	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
+	/**
+	 * Mapeamento de colunas para o Banco de Dados
+	 */
+	@Column(nullable = false)
 	private String nome;
 
-	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
+	@Column(nullable = false)
 	private String email;
 
-	@ManyToOne(optional = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
+	@ManyToOne(optional = false)
 	private Cidade cidade;
 
-	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
+	@Column(nullable = false)
 	private String descricao;
 
-	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
+	@Column(nullable = false)
 	private String criadoPor;
 
-	@Column(nullable = false) // DIZ QUE O ATRIBUTO É UMA COLUNA
+	@Column(nullable = false)
 	private String dataCriacao;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Arquivo foto;
 
+	/**
+	 * Métodos Construtores
+	 */
+	public Empreendimento() {
+		super();
+	}
+
 	/*
-	 * CONSTRUTORES PARA SITEMA POSSA DIFERENCIAR UM ID DO OUTRO NÃO ADICIONANDO
-	 * ASSIM IDS IGUAIS PARA USUARIOS DIFERENTES
+	 * Implementação dos métodos hashCode e equals
 	 */
 	@Override
 	public int hashCode() {
@@ -63,17 +93,15 @@ public class empreendimento {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		empreendimento other = (empreendimento) obj;
+		Empreendimento other = (Empreendimento) obj;
 		if (Id != other.Id)
 			return false;
 		return true;
 	}
 
-	/*
-	 * METODOS GET`S E SET`S ONDE OS ATRIBUTO SÃO DA ENTIDADE PARA QUE OS ATRIBUTOS
-	 * POSSAM SER ACESSADOS EM NA PÁGINA HMTL
+	/**
+	 * Implementação dos métodos get's e set's
 	 */
-
 	public Arquivo getFoto() {
 		return foto;
 	}

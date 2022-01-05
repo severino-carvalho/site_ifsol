@@ -1,5 +1,28 @@
 package br.edu.ifrn.siteifsol.service;
 
+/**
+ * 
+ * #####################################
+ * 
+ * Objetivo:	Esta classe tem o objetivo ser um serviço de {@link Usuario} 
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * @author Severino Carvalho	(severinocarvalho14@gmail.com)
+ * 
+ * Data de Cricação:	05/07/2021
+ * 
+ * #####################################
+ * 
+ * Última alteração:	
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * Data:	05/01/2022
+ * Alteração:	Implementação de documentação da classe
+ * 
+ * #####################################	 			
+ * 
+ */
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
@@ -17,9 +40,9 @@ public class UsuarioService implements UserDetailsService {
 	@Autowired
 	private Usuariorepository repository;
 
-	/*
-	 * FAZ O BUSCA E CONFERE SE O USUARIO QUE DESEJA FAZER LOGIN ESTA NO BANCO DE
-	 * DADOS OU NÃO
+	/**
+	 * Esse método especifica como deve ser o processo de login. No caso, usando o
+	 * email do usuário
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

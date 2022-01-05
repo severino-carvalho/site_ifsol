@@ -1,5 +1,28 @@
 package br.edu.ifrn.siteifsol.security;
 
+/**
+ * 
+ * #####################################
+ * 
+ * Objetivo:	Esta classe tem o objetivo de gerenciar a segurança da aplicação
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * @author Severino Carvalho	(severinocarvalho14@gmail.com)
+ * 
+ * Data de Cricação:	05/07/2021
+ * 
+ * #####################################
+ * 
+ * Última alteração:	
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * Data:	05/01/2022
+ * Alteração:	Implementação de documentação da classe
+ * 
+ * #####################################	 			
+ * 
+ */
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -11,17 +34,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import br.edu.ifrn.siteifsol.dominio.Usuario;
 import br.edu.ifrn.siteifsol.service.UsuarioService;
 
-//CLASSE PARA CRIÇÃO SEGURA DO LOGIN
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	/**
+	 * UsuarioService
+	 */
 	@Autowired
 	private UsuarioService service;
 
-	/*
-	 * METODO QUE CONFIGURA O ACESSO DE PÁGINAS ATRAVES DO LOGIN ONDE É DADO
-	 * PERMISÃO DE ACESSO A PÁGINAS ATRAVES DO LOGIN OU SEM LOGIN
+	/**
+	 * Configurações de segurança da aplicação
+	 * Autorizações e Restrinções
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -32,27 +57,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/publico/**", "/download/**").permitAll()
 
 				.antMatchers(
-						"/usuario/cadastro",
-						"/usuario/salvar",
-						"usuario/editar/**",
-						"/usuario/remover/**",
+						"/usuario/**",
+						"/usuarios/**",
 						"/noticia/**")
 				.hasAuthority(Usuario.ADMIN)
 
 				.anyRequest().authenticated()
 				.and()
-					.formLogin()
-					.loginPage("/login")
-					.defaultSuccessUrl("/adm", true)
-					.failureUrl("/login-erro").permitAll()
+				.formLogin()
+				.loginPage("/login")
+				.defaultSuccessUrl("/adm", true)
+				.failureUrl("/login-erro").permitAll()
 
 				.and()
-					.logout()
-					.logoutSuccessUrl("/adm")
+				.logout()
+				.logoutSuccessUrl("/adm")
 				.and()
-					.rememberMe(); // DESFAzER O LOGIN, SAIR
+				.rememberMe();
 	}
 
+	/**
+	 * Informa ao Spring como a senha está sendo Encriptada
+	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(service).passwordEncoder(new BCryptPasswordEncoder());

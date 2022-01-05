@@ -1,5 +1,28 @@
 package br.edu.ifrn.siteifsol.controllers;
 
+/**
+ * 
+ * #####################################
+ * 
+ * Objetivo:	Esta classe tem o objetivo de ser uma classe controladora para a parte de cadastro e edição de {@link Empreendimento}
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * @author Severino Carvalho	(severinocarvalho14@gmail.com)
+ * 
+ * Data de Cricação:	05/07/2021
+ * 
+ * #####################################
+ * 
+ * Última alteração:	
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * Data:	05/01/2022
+ * Alteração:	Implementação de documentação da classe
+ * 
+ * #####################################	 			
+ * 
+ */
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,28 +43,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.edu.ifrn.siteifsol.dto.*;
 import br.edu.ifrn.siteifsol.repositories.ArquivoRepository;
 import br.edu.ifrn.siteifsol.repositories.Cidaderepository;
 import br.edu.ifrn.siteifsol.repositories.Usuariorepository;
-import br.edu.ifrn.siteifsol.repositories.empreendimentorepository;
+import br.edu.ifrn.siteifsol.repositories.Empreendimentorepository;
 import br.edu.ifrn.siteifsol.dominio.Arquivo;
 import br.edu.ifrn.siteifsol.dominio.Cidade;
-import br.edu.ifrn.siteifsol.dominio.empreendimento;
+import br.edu.ifrn.siteifsol.dominio.Empreendimento;
 
 @Controller
-@RequestMapping("/usuario") // URL PARA ACESSAR A PAGINA
+@RequestMapping("/usuario")
 public class CadastroEmpreController {
 
+	/**
+	 * Repositórios JPA par a auxiliar na manipulação dos dados
+	 */
 	@Autowired
 	private Usuariorepository usuariorepository;
 
 	@Autowired
-	private empreendimentorepository empreendimentosrepository;
+	private Empreendimentorepository empreendimentosrepository;
 
 	@Autowired
 	private Cidaderepository cidaderepository;
@@ -49,142 +73,155 @@ public class CadastroEmpreController {
 	@Autowired
 	private ArquivoRepository arquivoRepository;
 
-	@GetMapping("/cadastroem") // URL PARA ACESSAR A PAGINA
+	/**
+	 * 
+	 * @param modelo Responsável pela criacao dos nomes de atributos que são
+	 *               retornados para a página
+	 * 
+	 * @return a página de CRUD de Empreendimentos
+	 */
+	@GetMapping("/cadastroem")
 	public String entrarCadastro(ModelMap model) {
-		model.addAttribute("empre", new empreendimento());
+		model.addAttribute("empre", new Empreendimento());
 		model.addAttribute("cidades", getCidades());
 
 		return "/admin/empreendimento/cadastroEmpre";
 	}
 
-	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERAÇÕES NO BANCO DE DADOS
-	@PostMapping("/salva") // URL PARA ACESSAR A METODO SALVAR E EDITAR OS EMPREENDIMENTOS
-	public String salvar(empreendimento empre, @RequestParam("file") MultipartFile arquivo, Model model,
+	/**
+	 * 
+	 * @param empre   Recebe do formulário o Objeto {@link Empreendimento}
+	 * 
+	 * @param arquivo Recebe do formulário o arquivo anexado no input com
+	 *                name 'file'
+	 * 
+	 * @param model   Responsável pela criacao dos nomes de atributos que são
+	 *                retornados para a página
+	 * 
+	 * @param attr    Responsável pela criacao dos nomes de atributos que são
+	 *                retornados com o uso do 'redirect' para a página
+	 * 
+	 * @return Retorna a mesma página de CRUD de empreendimentos
+	 */
+	@Transactional(readOnly = false)
+	@PostMapping("/salva")
+	public String salvar(Empreendimento empre, @RequestParam("file") MultipartFile arquivo, Model model,
 			RedirectAttributes attr) {
 
-		// RETORNA AS MENSAGENS DE ERRO NA VALITAÇÃO DO CAMPOS
+		/**
+		 * Lista com todos os erros do Objeto {@link Empreendimento}
+		 */
 		List<String> msgValidacao = validaDados(empre);
 
-		// SE HOUVER ALGUM ERRO, VAI SER RETORNADO O PRiMEIRO ERRO PARA A PÁGINA
-		if (!msgValidacao.isEmpty()) {
-			model.addAttribute("msgErro", msgValidacao);
-
-			/*
-			 * É ENVIADO O O OBJETO EMPRE QUE O USUÁRIO PREENCHEU ERRONIAMENTE PARA QUE ELE
-			 * POSSA EDITAR SEM PREENCHER TUDO NOVAMENTE
-			 */
-			model.addAttribute("empre", empre);
-			model.addAttribute("cidades", getCidades());
-			return "/admin/empreendimento/cadastroEmpre";
-
-		} else { // SE NÃO, VIA SEGUIR O FLUXO NORMAL
+		/**
+		 * Se não houver nenhum erro segue o fluxo para o cadastro
+		 */
+		if (msgValidacao.isEmpty()) {
 
 			try {
-				// FAZ A BUSCA NO BD E RETORNA O NOME DO USUÁRIO LOGADO NO SISTEMA
-				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-				String currentPrincipalName = authentication.getName();
-				String nomeUsuarioADM = usuariorepository.findByEmail(currentPrincipalName).get().getNome();
 
-				// SE O EMPREENDIMENTO JÁ ESTIVER CADASTRADO
-				if (empre.getId() != 0) {
-					// VERIFICAMOS SE CONTÉM UM ARQUIVO DE IMAGEM PASSADO NO FORM
-					if (!arquivo.isEmpty()) {
-						arquivoRepository.deleteById(empre.getFoto().getId());
-						inserirFoto(empre, arquivo);
-					}
-				} else {
+				/**
+				 * Verifica se é cadastro ou atualização
+				 */
+				if (empre.getId() == 0) {
+					/**
+					 * Faz a validação e insere a imagem
+					 */
 					if (arquivo.isEmpty()) {
 						model.addAttribute("msgErro", "Não foi selecionada nenhuma imagem!");
 						model.addAttribute("empre", empre);
 						model.addAttribute("cidades", getCidades());
 						return "/admin/empreendimento/cadastroEmpre";
-					} else {
+					}
+
+					inserirFoto(empre, arquivo);
+
+				} else {
+					/**
+					 * Se for atualização e tiver um arquivo então ele quer atualizar a imagem
+					 */
+					if (!arquivo.isEmpty()) {
+						arquivoRepository.deleteById(empre.getFoto().getId());
 						inserirFoto(empre, arquivo);
 					}
 				}
 
-				// REMOVER ESPAÇOS EM BRANCOS DA DESCRIÇÃO
 				empre.setDescricao(empre.getDescricao().trim());
 
-				/*
-				 * SE ESTIVER VAZIO, SIGNIFICA QUE O EMPREENDIMENTO ESTÁ SENDO CADASTRADO ENTÃO
-				 * É COLOCADO O NOME DO USUÁRIO ADM QUE REALIZA O CADASTRO
+				/**
+				 * sistema para sabermos quem quer criar um novo empreendimento
+				 * Como o username para login é o email, pegamos o email do usuário logado no
+				 */
+				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+				String currentPrincipalName = authentication.getName();
+				String nomeUsuarioADM = usuariorepository.findByEmail(currentPrincipalName).get().getNome();
+
+				/**
 				 * 
-				 * SE JÁ CONTER ALGUM VALOR, SIGNIFICA QUE É UMA EDIÇÃO, ENTÃO NÃO PRECISA
+				 * Quando quer criar o empreendimento, colocamos o nome de quem está criando no
+				 * campo 'Criado Por'
+				 * 
+				 * E colocamos no campo 'Data de Criação' a data que o empreendimento foi criado
 				 */
 				if (empre.getCriadoPor() == null || empre.getCriadoPor().isEmpty()) {
-					// MODIFICA O USUÁRIO QUE CRIOU O EMPREENDIMENTO
 					empre.setCriadoPor(nomeUsuarioADM);
 				}
 
 				if (empre.getDataCriacao() == null || empre.getDataCriacao().isEmpty()) {
-					// MODIFICA A DATA DE CRIAÇÃO
 					empre.setDataCriacao(getData());
 				}
 
-				// BLOCO PARA ACHAR A CIDADE SELECIONADA E TROCAR O NOME E O ID DA MESMA NO
-				// OBJETO EMPRE
+				/**
+				 * Trocamos o nome da cidade selecionada pelo ID dela
+				 */
 				Optional<Cidade> cidade = cidaderepository.findById(empre.getCidade().getId());
 				Cidade c = cidade.get();
 
 				empre.getCidade().setNome(c.getNome());
 
-				// CADASTRA E EDITA O EMPREENDIMENTO NO BANCO DE DADOS
 				empreendimentosrepository.save(empre);
 
-				// LISTA DE EMPREENDIMENTOS ENCONTRADOS
-				List<empreendimento> empEnc = empreendimentosrepository.findAll();
+				/**
+				 * Após o cadastro é retornado todos os empreendimentos cadastrados para a
+				 * página
+				 */
+				List<Empreendimento> empEnc = empreendimentosrepository.findAll();
 				Collections.reverse(empEnc);
-				// RETORNA A LISTA PARA A PÁGINA
 				attr.addFlashAttribute("empreendimentosEncontrados", empEnc);
-
 				attr.addFlashAttribute("cidades", getCidades());
-
-				// RETORNA A MENSAGEM PARA A PÁGINA
 				attr.addFlashAttribute("msgSucesso", "O peração realizada com sucesso!");
 
 			} catch (Exception e) {
 				attr.addFlashAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 			}
-		}
+		} else {
+			model.addAttribute("msgErro", msgValidacao);
+			/**
+			 * Sem o Objeto {@link Empreendimento} e as {@link Cidade} o documento não
+			 * carrega
+			 */
+			model.addAttribute("empre", empre);
+			model.addAttribute("cidades", getCidades());
+			return "/admin/empreendimento/cadastroEmpre";
 
+		}
 		return "redirect:/usuario/cadastroem";
 	}
 
-	/*
-	 * O AUTOCOMPLETE SERVE PARA RECEBER A LISTA DE PROFISSOES CONTIDA NO BANCO DE
-	 * DADOS E QUANDO O USUARIO DIGITAR ELE DAR SUGESTÕES DE COMPLEMENTO DO SE ESTA
-	 * SENDO DIGITADO
+	/**
+	 * 
+	 * @param empre Objeto {@link Empreendimento} para a validação de seus atributos
+	 * 
+	 * @return Lista de erros que existe no Objeto {@link Empreendimento}
 	 */
+	private List<String> validaDados(Empreendimento empre) {
 
-	@GetMapping("/autocompleteCidade") // URL PARA SE TER ACESSO AO METODO
-	@Transactional(readOnly = true) // PARA INFORMAR QUE NÃO FAZ ALTERAÇÕES NO BANCO DE DADOS
-	@ResponseBody
-	public List<AutocompleteDTO> autocompleteCidade(@RequestParam("term") String termo) {
-
-		List<Cidade> cidade = cidaderepository.findByNome(termo);
-
-		List<AutocompleteDTO> resultados = new ArrayList<>();
-
-		cidade.forEach(p -> resultados.add(new AutocompleteDTO(p.getNome(), p.getId())));
-
-		return resultados;
-	}
-
-	/*
-	 * METODO DE VALIDAÇÃO DOS CAMPOS NOME,EMAIL,SENHA E SITUAÇÃO DO FORMULARIO DE
-	 * CADASTRO, ELE VER SE OS CAMPOS ESTÃO PREENCHIDOS DE ACORDO COM E O EXIGIDO E
-	 * RETORNA UMA MENSAGEM DE ERRO CASO NÃO
-	 */
-
-	private List<String> validaDados(empreendimento empre) {
-
-		List<String> msgs = new ArrayList<>(); // LISTA DE MENSAGENS DE ERRO, POIS MUITOS CAMPOS PODE ESTAR INCORRETOS
+		List<String> msgs = new ArrayList<>();
 
 		if (empre.getNome() == null || empre.getNome().isEmpty()) {
 			msgs.add("O campo nome é obrigatório");
 		}
-		if (empre.getNome().trim().length() <= 5) {// NOME TEM QUER TER MAIS DE 5 CARACTERES
+		if (empre.getNome().trim().length() <= 5) {
 			msgs.add("Nome inválido");
 		}
 		if (empre.getEmail() == null || empre.getEmail().isEmpty()) {
@@ -210,7 +247,10 @@ public class CadastroEmpreController {
 		return msgs;
 	}
 
-	// FUNÇÃO PARA PEGAR A DATA ATUAL
+	/**
+	 * 
+	 * @return A data formatada "dd de mm (ex: jan) de yyyy"
+	 */
 	public static String getData() {
 		Calendar c = Calendar.getInstance();
 
@@ -220,22 +260,20 @@ public class CadastroEmpreController {
 		return formataData.format(data);
 	}
 
+	/**
+	 * 
+	 * @param empre   Objeto {@link Empreendimento} para inserir a foto
+	 * @param arquivo Arquivo de imagem selecionado pelo usuário
+	 */
 	@Transactional(readOnly = false)
-	public void inserirFoto(empreendimento empre, MultipartFile arquivo) {
-		/*
-		 * O CODIGO A SEGUIR FOI FEITO PARA UPLOAD E DOWNLOAD DE UM ARQUIVO NO BANCO DE
-		 * DADOS E O TRY FOI NECESSARIO PARA CASO OCORRA UM ERRO SEJA LANÇADO UMA
-		 * EXCECAO
-		 */
+	public void inserirFoto(Empreendimento empre, MultipartFile arquivo) {
 
 		try {
 			String nomeArquivo = StringUtils.cleanPath(arquivo.getOriginalFilename());
 			Arquivo arquivoBD = new Arquivo(nomeArquivo, arquivo.getContentType(), arquivo.getBytes());
 
-			// SAlVA O ARQUIVO NO BANCO DE DADOS
 			arquivoRepository.save(arquivoBD);
 
-			// SALVA O NOVO ARQUIVO DO EMPREENDIMENTO
 			empre.setFoto(arquivoBD);
 
 		} catch (Exception e) {
@@ -243,6 +281,10 @@ public class CadastroEmpreController {
 		}
 	}
 
+	/**
+	 * 
+	 * @return As {@link Cidade} que estão armazenadas no Banco de Dados
+	 */
 	@Transactional(readOnly = true)
 	public List<Cidade> getCidades() {
 		List<Cidade> cidades = cidaderepository.findAll();

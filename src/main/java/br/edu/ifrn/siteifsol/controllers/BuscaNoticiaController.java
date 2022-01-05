@@ -1,9 +1,30 @@
 package br.edu.ifrn.siteifsol.controllers;
 
+/**
+ * 
+ * #####################################
+ * 
+ * Objetivo:	Esta classe tem o objetivo de ser uma classe controladora para a parte de busca e remorção de {@link Noticia}
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * @author Severino Carvalho	(severinocarvalho14@gmail.com)
+ * 
+ * Data de Cricação:	05/07/2021
+ * 
+ * #####################################
+ * 
+ * Última alteração:	
+ * 
+ * @author Severino Carvalho	(severinocarvalho14@gmail.com)
+ * Data:	05/01/2022
+ * Alteração:	Implementação de documentação da classe
+ * 
+ * #####################################	 			
+ * 
+ */
+
 import java.util.Collections;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,12 +44,28 @@ import br.edu.ifrn.siteifsol.repositories.NoticiaRepository;
 @RequestMapping("/noticias")
 public class BuscaNoticiaController {
 
+	/**
+	 * Repositórios JPA par a auxiliar na manipulação dos dados
+	 */
 	@Autowired
 	private NoticiaRepository noticiaRepository;
 
 	@Autowired
 	private ArquivoRepository arquivoRepository;
 
+	/**
+	 * 
+	 * @param titulo            Parâmetro de busca
+	 *
+	 * @param texto             Parâmetro de busca
+	 * 
+	 * @param mostrarTodosDados Informa se ele quer que mostre todos os dados
+	 * 
+	 * @param modelo            Responsável pela criacao dos nomes de atributos que
+	 *                          são retornados para a página
+	 * 
+	 * @return página de CRUD de Noticia
+	 */
 	@Transactional(readOnly = true)
 	@GetMapping("/buscarnoticia")
 	public String buscarNoticia(@RequestParam(name = "titulo", required = false) String titulo,
@@ -36,8 +73,15 @@ public class BuscaNoticiaController {
 			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, ModelMap modelo) {
 
 		try {
+			/**
+			 * Busca os usuários pelos parâmetros informados
+			 */
 			List<Noticia> noticiasEncontradas = noticiaRepository.findByTituloAndTexto(titulo, texto);
-			
+
+			/**
+			 * Se não tiver nenhum notícia buscada, há um retorno visual para o
+			 * usuário
+			 */
 			if (noticiasEncontradas.isEmpty()) {
 				modelo.addAttribute("msgErro", "Nenhuma notícia encontrada");
 			} else {
@@ -59,14 +103,33 @@ public class BuscaNoticiaController {
 		return "/admin/noticia/cadastrarNoticia";
 	}
 
-	@Transactional(readOnly = true) // INFORMA QUE NÃO FAZ ALTERARÇÕES NO BANCO DE DADOS
+	/**
+	 * 
+	 * @param idNoticia Id da Noticia que vai para edição passado no path
+	 * 
+	 * @param modelo    Responsável pela criacao dos nomes de atributos que são
+	 *                  retornados para a página
+	 * 
+	 * @return Retorna a mesma página de CRUD de Noticia
+	 */
+	@Transactional(readOnly = true)
 	@GetMapping("/edita/{id}")
-	public String iniciarEdicao(@PathVariable("id") Integer idNoticia, ModelMap modelo, HttpSession sessao) {
+	public String iniciarEdicao(@PathVariable("id") Integer idNoticia, ModelMap modelo) {
 
 		try {
-			Noticia n = noticiaRepository.findById(idNoticia).get();
+			/**
+			 * Lista de empreendimentos para serem mostrados na página (BUSCA AUTOMÁTICA)
+			 */
+			List<Noticia> noticias = noticiaRepository.findAll();
+			Collections.reverse(noticias);
 
+			Noticia n = noticiaRepository.findById(idNoticia).get();
+			/**
+			 * Com isso, os dados da notícias vai ser carregado automaticamente pelo
+			 * Thymeleaf
+			 */
 			modelo.addAttribute("noticia", n);
+			modelo.addAttribute("noticias", noticias);
 		} catch (Exception e) {
 			modelo.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
@@ -74,31 +137,42 @@ public class BuscaNoticiaController {
 		return "/admin/noticia/cadastrarNoticia";
 	}
 
-	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERARÇÕES NO BANCO DE DADOS
+	/**
+	 * 
+	 * @param idNoticia Id da Noticia que vai para edição passado no path
+	 * 
+	 * @param attr      Responsável pela criacao dos nomes de atributos que são
+	 *                  retornados com o uso do 'redirect' para a página
+	 * 
+	 * @return Retorna a mesma página de CRUD de Noticia
+	 */
+	@Transactional(readOnly = false)
 	@GetMapping("/remove/{id}")
 	public String remover(@PathVariable("id") Integer idNoticia, RedirectAttributes attr) {
 
 		try {
-			// GUARDA A NOTICIA QUE O ADM QUER REMOVER NA VARIÁVEL
+			/**
+			 * Removemos a foto da Noticia antes de removela
+			 */
 			Noticia noticia = noticiaRepository.findById(idNoticia).get();
 
 			if (noticia.getFoto() != null) {
-				// ANTES DE REMOVER A NOTÍCIA, FAZ A REMORÇÃO DA IMAGEM
 				arquivoRepository.deleteById(noticia.getFoto().getId());
 
 			}
 
-			// DELETA A NOTÍCIA PELO ID
 			noticiaRepository.deleteById(idNoticia);
 
-			// LISTA TODAS AS NOTÍCIAS QUE ESTÃO NO BANCO
+			/**
+			 * Lista de usuários para serem mostrados na página (BUSCA AUTOMÁTICA)
+			 */
 			List<Noticia> noticias = noticiaRepository.findAll();
+			Collections.reverse(noticias);
 
-			// ENVIA UMA MENSAGEM DE SUCESSO PARA A PÁGINA
+			attr.addFlashAttribute("noticias", noticia);
 			attr.addFlashAttribute("msgSucesso", "Noticia removida com sucesso!");
 
 			if (!noticias.isEmpty()) {
-				// ENVIA TODAS AS NOTÍCIAS QUE ESTÃO NO BANCO PARA A PÁGINA
 				attr.addFlashAttribute("noticias", noticias);
 			}
 

@@ -1,5 +1,29 @@
 package br.edu.ifrn.siteifsol.controllers;
 
+/**
+ * 
+ * #####################################
+ * 
+ * Objetivo:	Esta classe tem o objetivo de ser uma classe controladora para a parte pública da aplicação
+ *				Responável pelas URLs 'publico/home' e 'publico/noticia/{id}'			
+
+ * Autor(es):	Felipe Barros	(primariaconta22@gmail.com)
+ * 			 	Severino Carvalho	(severinocarvalho14@gmail.com)
+ * 
+ * Data de Cricação:	05/07/2021
+ * 
+ * #####################################
+ * 
+ * Última alteração:	
+ * 
+ * @author Severino Carvalho	(severinocarvalho14@gmail.com)
+ * Data:	05/01/2022
+ * Alteração:	Implementação de documentação da classe
+ * 
+ * #####################################	 			
+ * 
+ */
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -18,19 +42,29 @@ import br.edu.ifrn.siteifsol.repositories.NoticiaRepository;
 @Controller
 public class HomeController {
 
+	/**
+	 * Repositórios JPA par a auxiliar na manipulação dos dados
+	 */
 	@Autowired
 	private NoticiaRepository noticiaRepository;
 
+	/**
+	 * 
+	 * @return Redireciona para a página home da parte pública
+	 */
 	@GetMapping("/publico/")
 	public String padrao() {
 		return "redirect:/publico/home";
 	}
 
-	@GetMapping("/publico")
-	public String padraoDois() {
-		return "redirect:/publico/home";
-	}
-
+	/**
+	 * 
+	 * @param modelo Responsável pela criacao dos nomes de atributos que
+	 *               são retornados para a página
+	 * 
+	 * @return A página home da parte pública com as notícias que estão cadastradas
+	 *         no sistema
+	 */
 	@GetMapping("/publico/home")
 	@Transactional(readOnly = true)
 	public String home(ModelMap modelo) {
@@ -43,6 +77,19 @@ public class HomeController {
 		return "/visitantes/Home";
 	}
 
+	/**
+	 * 
+	 * @param idNoticia Id da Notícia que vai ser lida com detalhe passado no path
+	 * 
+	 * @param modelo    Responsável pela criacao dos nomes de atributos que são
+	 *                  retornados para a página
+	 * 
+	 * @param attr      Responsável pela criacao dos nomes de atributos que são
+	 *                  retornados com o uso do 'redirect' para a página
+	 * 
+	 * @return Para a página de leia mais mostrando a notícia que quer ser lida com
+	 *         detalhe
+	 */
 	@GetMapping("/publico/noticia/{id}")
 	@Transactional(readOnly = true)
 	public String buscarNoticia(@PathVariable("id") Integer idNoticia, ModelMap modelo, RedirectAttributes attr) {
@@ -52,10 +99,8 @@ public class HomeController {
 			Optional<Noticia> noticiaEncontrada = noticiaRepository.findById(idNoticia);
 
 			if (noticiaEncontrada.isPresent()) {
-				// RETORNA A NOTICIA ENCONTRADA PARA A PÁGINA
 				modelo.addAttribute("noticia", noticiaEncontrada.get());
 
-				// RETORNA AS DEMAIS NOTICIA PARA A PÁGINA
 				Collections.reverse(noticias);
 				modelo.addAttribute("noticias", noticias);
 			} else {

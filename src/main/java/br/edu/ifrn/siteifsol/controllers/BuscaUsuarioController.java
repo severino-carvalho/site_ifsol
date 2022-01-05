@@ -1,5 +1,28 @@
 package br.edu.ifrn.siteifsol.controllers;
 
+/**
+ * 
+ * #####################################
+ * 
+ * Objetivo:	Esta classe tem o objetivo de ser uma classe controladora para a parte de busca e remorção de {@link Usuario}
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * @author Severino Carvalho	(severinocarvalho14@gmail.com)
+ * 
+ * Data de Cricação:	05/07/2021
+ * 
+ * #####################################
+ * 
+ * Última alteração:	
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * Data:	05/01/2022
+ * Alteração:	Implementação de documentação da classe
+ * 
+ * #####################################	 			
+ * 
+ */
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -20,37 +43,57 @@ import br.edu.ifrn.siteifsol.dominio.Usuario;
 import br.edu.ifrn.siteifsol.repositories.Usuariorepository;
 
 @Controller
-@RequestMapping("/usuarios") // URL PARA ACESSAR A PAGINA
+@RequestMapping("/usuarios")
 public class BuscaUsuarioController {
 
-	@GetMapping("/busca") // URL PARA ACESSAR A PAGINA
+	/**
+	 * Repositórios JPA par a auxiliar na manipulação dos dados
+	 */
+	@Autowired
+	private Usuariorepository usuarioRepository;
+
+	/**
+	 * 
+	 * @return a página de CRUD de Usuário
+	 */
+	@GetMapping("/busca")
 	public String entrarBusca() {
 		return "/admin/busca";
 	}
 
-	@Autowired
-	private Usuariorepository usuarioRepository;
-
-	/*
-	 * METODO A SEGUIR FAZ AS BUSCAS PELOS USUARIOS CADASTRADOS NO BANCO DE DADOS E
-	 * RETONA ESSA LISTA DE USUARIOS CADASTRADOS PARA A PÁGINA WEB
+	/**
+	 * 
+	 * @param nome              Parâmetro de busca
+	 * 
+	 * @param email             Parâmetro de busca
+	 * 
+	 * @param mostrarTodosDados Informa se ele quer que mostre todos os dados
+	 * 
+	 * @param modelo            Responsável pela criacao dos nomes de atributos que
+	 *                          são retornados para a página
+	 * 
+	 * @return A página de CRUD de Usuário
 	 */
-	@Transactional(readOnly = true) // INFORMA QUE NÃO FAZ ALTERAÇÕES NO BANCO DE DADOS
-	@GetMapping("/buscar") // URL PARA ACESSAR A METODO BUSCA DE EMPREENDIMENTOS
+	@Transactional(readOnly = true)
+	@GetMapping("/buscar")
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String buscar(@RequestParam(name = "nome", required = false) String nome,
 			@RequestParam(name = "email", required = false) String email,
 			@RequestParam(name = "mostrarTodosDados", required = false) Boolean mostrarTodosDados, ModelMap modelo) {
 
 		try {
-			// BUSCA OS USUARIOS NO BANCO DE DADOS ATRAVES DO NOME E EMAIL
+			/**
+			 * Busca os usuários pelos parâmetros informados
+			 */
 			List<Usuario> usuariosEncontrados = usuarioRepository.findByEmailAndNome(email, nome);
 
+			/**
+			 * Se não tiver nenhum usuário buscado, há um retorno visual para o usuário
+			 */
 			if (usuariosEncontrados.isEmpty()) {
 				modelo.addAttribute("msgErro", "Nenhum usuário encontrado");
 			} else {
 				Collections.reverse(usuariosEncontrados);
-				// RETORNA OS USUARIOS ENCONTRADOS PARA A PÁGINA WEB
 				modelo.addAttribute("usuariosEncontrados", usuariosEncontrados);
 				modelo.addAttribute("msgSucesso", "Busca concluída! Usuário(s) encontrado(s)");
 			}
@@ -59,7 +102,6 @@ public class BuscaUsuarioController {
 				modelo.addAttribute("mostrarTodosDados", true);
 			}
 
-			// INSTANCIA UM NOVO USUÁRIO PARA A PÁGINA DE CADASTRO SE NÃO VAI OCORRER ERRO
 			modelo.addAttribute("usuario", new Usuario());
 
 		} catch (Exception e) {
@@ -69,25 +111,33 @@ public class BuscaUsuarioController {
 		return "/admin/usuario/cadastro";
 	}
 
-	/*
-	 * METODO PARA FAZER A EDIÇÃO DE USUARIOS CADASTRADOS
+	/**
+	 * 
+	 * @param idUsuario Id do usuário que vai para edição passado no path
+	 * 
+	 * @param model     Responsável pela criacao dos nomes de atributos que são
+	 *                  retornados para a página
+	 * 
+	 * @return Retorna a mesma página de CRUD de Usuários
 	 */
-	@Transactional(readOnly = true) // INFORMA QUE NÃO FAZ ALTERARÇÕES NO BANCO DE DADOS
-	@GetMapping("/editar/{id}") // URL PARA ACESSAR O METODO
+	@Transactional(readOnly = true)
+	@GetMapping("/editar/{id}")
 	public String iniciarEdição(@PathVariable("id") Integer idUsuario, ModelMap model) {
 
 		try {
-			// LISTA TODOS OS USUÁRIOS PARA SEREM MOSTRADO NA PÁGINA DE DRUD APÓS O FIM DO
-			// MÉTODO
+			/**
+			 * Lista de usuários para serem mostrados na página (BUSCA AUTOMÁTICA)
+			 */
 			List<Usuario> usuarios = usuarioRepository.findAll();
 
-			// BUSCA O USUÁRIO SOLICITADO
 			Usuario u = usuarioRepository.findById(idUsuario).get();
 
-			// ENVIA O MESMO PARA A PÁGINA PARA EDIÇÃO
+			/**
+			 * Com isso, os dados do usuário vai ser carregado automaticamente pelo
+			 * Thymeleaf
+			 */
 			model.addAttribute("usuario", u);
 
-			// ENVIA TODOS OS USUÁRIOS PARA A PÁGINA PARA SEREM MOSTRADO NA BUSCA
 			model.addAttribute("usuariosEncontrados", usuarios);
 		} catch (Exception e) {
 			model.addAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
@@ -97,25 +147,39 @@ public class BuscaUsuarioController {
 		return "/admin/usuario/cadastro";
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	@ModelAttribute("funcao")
 	public List<String> getFuncao() {
 		return Arrays.asList("Docente", "Bolsista", "Voluntário");
 	}
 
-	/*
-	 * METODO FAZ A REMOÇÃO NO BANCO DE DADOS , DE USUARIOS CADASTRADOS
+	/**
+	 * 
+	 * @param idUsuario Id do usuário que vai para edição passado no path
+	 * 
+	 * @param model     Responsável pela criacao dos nomes de atributos que são
+	 *                  retornados para a página
+	 * 
+	 * @param attr      Responsável pela criacao dos nomes de atributos que são
+	 *                  retornados com o uso do 'redirect' para a página
+	 * 
+	 * @return Retorna a mesma página de CRUD de Usuários
 	 */
-
-	@Transactional(readOnly = false) // INFORMA QUE FAZ ALTERARÇÕES NO BANCO DE DADOS
+	@Transactional(readOnly = false)
 	@GetMapping("/remover/{id}")
 	public String remover(@PathVariable("id") Integer idUsuario, ModelMap model, RedirectAttributes attr) {
 
 		try {
-			// REMOVE O USUÁRIO PELO ID
 			usuarioRepository.deleteById(idUsuario);
-			// ENVIA A MENSAGEM DE REMOÇÃO PARA A TELA
+
 			attr.addFlashAttribute("msgSucesso", "Usuario removido com sucesso!");
 
+			/**
+			 * Lista de usuários para serem mostrados na página (BUSCA AUTOMÁTICA)
+			 */
 			List<Usuario> usuarios = usuarioRepository.findAll();
 
 			attr.addFlashAttribute("usuariosEncontrados", usuarios);
@@ -124,7 +188,7 @@ public class BuscaUsuarioController {
 			attr.addFlashAttribute("msgErro", "ERRO INTERNO NO SERVIDOR");
 		}
 
-		return "redirect:/usuarios/buscar";
+		return "redirect:/usuario/buscar";
 	}
 
 }

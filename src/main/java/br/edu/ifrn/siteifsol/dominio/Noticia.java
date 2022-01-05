@@ -1,5 +1,28 @@
 package br.edu.ifrn.siteifsol.dominio;
 
+/**
+ * 
+ * #####################################
+ * 
+ * Objetivo:	Esta classe tem o objetivo de ser o modelo da entidade Notícia
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * @author Severino Carvalho	(severinocarvalho14@gmail.com)
+ * 
+ * Data de Cricação:	04/07/2021
+ * 
+ * #####################################
+ * 
+ * Última alteração:	
+ * 
+ * @author Felipe Barros	(primariaconta22@gmail.com)
+ * Data:	04/01/2022
+ * Alteração:	Implementação de documentação da classe
+ * 
+ * #####################################	 			
+ * 
+ */
+
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -14,10 +37,16 @@ import javax.persistence.OneToOne;
 @Entity
 public class Noticia {
 
+	/**
+	 * Atributo identificador da classe
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	/**
+	 * Mapeamento de colunas para o Banco de Dados
+	 */
 	@Column(nullable = false)
 	private String titulo;
 
@@ -30,17 +59,12 @@ public class Noticia {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Arquivo foto;
 
-	/*
-	 * CONSTRUTOR PADRÃO DA CLASSE
+	/**
+	 * Métodos Construtores
 	 */
-
 	public Noticia() {
 		super();
 	}
-
-	/*
-	 * CONSTRUTOR PARAMETRIZADO DA CLASSE
-	 */
 
 	public Noticia(String titulo, String texto, String dataPublicacao, Arquivo foto) {
 		super();
@@ -51,9 +75,28 @@ public class Noticia {
 	}
 
 	/*
-	 * METODOS GET'S E SET'S
+	 * Implementação dos métodos hashCode e equals
 	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Noticia other = (Noticia) obj;
+		return id == other.id;
+	}
+
+	/**
+	 * Implementação dos métodos get's e set's
+	 */
 	public int getId() {
 		return id;
 	}
@@ -92,28 +135,6 @@ public class Noticia {
 
 	public void setFoto(Arquivo foto) {
 		this.foto = foto;
-	}
-
-	/*
-	 * IMPLEMENTAÇÃO DO EQUALS E HASHCODE SERVE PARA INDENTIFICAR CORRETAMENTE CADA
-	 * NOTÍCIA QUE É CRIADA
-	 */
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Noticia other = (Noticia) obj;
-		return id == other.id;
 	}
 
 }
