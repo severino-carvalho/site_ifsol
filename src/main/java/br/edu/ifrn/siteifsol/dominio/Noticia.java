@@ -56,6 +56,9 @@ public class Noticia {
 	@Column(nullable = false)
 	private String dataPublicacao;
 
+	@Column(nullable = false)
+	private String criadoPor;
+
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Arquivo foto;
 
@@ -66,11 +69,11 @@ public class Noticia {
 		super();
 	}
 
-	public Noticia(String titulo, String texto, String dataPublicacao, Arquivo foto) {
-		super();
+	public Noticia(String titulo, String texto, String dataPublicacao, String criadoPor, Arquivo foto) {
 		this.titulo = titulo;
 		this.texto = texto;
 		this.dataPublicacao = dataPublicacao;
+		this.criadoPor = criadoPor;
 		this.foto = foto;
 	}
 
@@ -127,6 +130,14 @@ public class Noticia {
 
 	public void setDataPublicacao(String dataPublicacao) {
 		this.dataPublicacao = dataPublicacao;
+	}
+
+	public String getCriadoPor() {
+		return criadoPor;
+	}
+
+	public void setCriadoPor(String criadoPor) {
+		this.criadoPor = criadoPor;
 	}
 
 	public Arquivo getFoto() {

@@ -144,6 +144,7 @@
 								<th>Foto</th>
 								<th>Título</th>
 								<th th:if="${mostrarTodosDados} == true">Texto</th>
+								<th th:if="${mostrarTodosDados} == true">Criado Por</th>
 								<th>Data de publicação</th>
 								<th>Operações</th>
 							</tr>
@@ -159,6 +160,9 @@
 								<td th:text="${n.titulo}"></td>
 								<td th:if="${mostrarTodosDados} == true" style="text-align: justify;"
 									name="texto_noticia" th:text="${n.texto}"></td>
+
+								<td th:if="${mostrarTodosDados} == true AND ${n.criadoPor} != null"
+									th:text="${n.criadoPor}"></td>
 
 								<td class="text-center" th:text="${n.dataPublicacao}"></td>
 								</td>

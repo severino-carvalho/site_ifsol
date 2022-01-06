@@ -31,6 +31,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
@@ -46,6 +48,7 @@ import br.edu.ifrn.siteifsol.dominio.Arquivo;
 import br.edu.ifrn.siteifsol.dominio.Noticia;
 import br.edu.ifrn.siteifsol.repositories.ArquivoRepository;
 import br.edu.ifrn.siteifsol.repositories.NoticiaRepository;
+import br.edu.ifrn.siteifsol.repositories.Usuariorepository;
 
 @Controller
 @RequestMapping("/noticia")
@@ -54,6 +57,10 @@ public class CadastroNoticiaController {
 	/**
 	 * Repositórios JPA par a auxiliar na manipulação dos dados
 	 */
+
+	@Autowired
+	private Usuariorepository usuariorepository;
+
 	@Autowired
 	private ArquivoRepository arquivoRepository;
 
@@ -131,9 +138,21 @@ public class CadastroNoticiaController {
 				}
 
 				/**
-				 * 
+				 * sistema para sabermos quem quer criar um novo empreendimento
+				 * Como o username para login é o email, pegamos o email do usuário logado no
+				 */
+				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+				String currentPrincipalName = authentication.getName();
+				String nomeUsuarioADM = usuariorepository.findByEmail(currentPrincipalName).get().getNome();
+
+				/**
+				 * Colocamos no campo 'Criado Por' a nome do usuário que está fazendo a criação
 				 * Colocamos no campo 'Data de Publicação' a data que a notícia foi criada
 				 */
+				if (noticia.getCriadoPor() == null || noticia.getCriadoPor().isEmpty()) {
+					noticia.setCriadoPor(nomeUsuarioADM);
+				}
+
 				if (noticia.getDataPublicacao() == null || noticia.getDataPublicacao().isEmpty()) {
 					noticia.setDataPublicacao(getData());
 				}
